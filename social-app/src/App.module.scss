@@ -1,0 +1,14 @@
+$blue: #1da1f2;
+$border-grey: #e6ecf0;
+
+.container {
+  max-width: 1220px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 10fr;
+}
+
+.content {
+  border-right: 1px solid $border-grey;
+  border-left: 1px solid $border-grey;
+}
