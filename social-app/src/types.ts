@@ -28,3 +28,12 @@ export interface StateTypes {
   postsPage: PostsType
   messagesPage: MessagesType
 }
+
+export interface StoreTypes {
+  _state: StateTypes
+  getState: () => StateTypes
+  rerender: () => void
+  addPost: () => void
+  onPostChange: (newText: string) => void
+  subscribe: (callback: () => void) => void
+}
