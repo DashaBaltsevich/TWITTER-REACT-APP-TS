@@ -1,0 +1,36 @@
+@import '../../App.module.scss';
+
+.b__dialogs {
+  border-right: 1px solid $border-grey;
+  &_title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    padding: 10px 16px;
+  }
+}
+.l__dialogs {
+  width: 300px;
+  &_item {
+    width: 100%;
+    background-color: #eff3f4;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition-duration: 0.2s;
+    &_link,
+    &_link_active {
+      display: flex;
+      align-items: center;
+    }
+    &:hover {
+      background-color: #f8f8f8;
+    }
+    &:has(.l__dialogs_item_link_active) {
+      border-right: 1px solid #005bff;
+    }
+  }
+  img {
+    width: 48px;
+    height: 48px;
+    margin-right: 12px;
+  }
+}

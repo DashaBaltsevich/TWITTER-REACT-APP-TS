@@ -1,0 +1,14 @@
+@import '../../App.module.scss';
+
+.s__home {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  &_content {
+    border-right: 1px solid $border-grey;
+  }
+  &_title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    padding: 10px 16px;
+  }
+}

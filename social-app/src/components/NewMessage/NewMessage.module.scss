@@ -1,0 +1,35 @@
+@import '../../App.module.scss';
+
+.f__message {
+  padding: 10px 16px;
+  border-top: 1px solid $border-grey;
+
+  &_content {
+    background-color: #eff3f4;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 20px;
+  }
+
+  &_field {
+    width: 100%;
+    display: block;
+    border: none;
+    overflow: hidden;
+    font-size: 16px;
+    &::placeholder {
+      font-size: 16px;
+    }
+  }
+  .btn__message {
+    margin-left: 20px;
+    padding-top: 5px;
+    svg {
+      width: 22px;
+      height: auto;
+      fill: $blue;
+    }
+  }
+}

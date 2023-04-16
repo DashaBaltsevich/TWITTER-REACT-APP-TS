@@ -1,0 +1,47 @@
+@import '../../../App.module.scss';
+
+.f__post {
+  padding: 20px 16px;
+  border-top: 1px solid $border-grey;
+  border-bottom: 1px solid $border-grey;
+  text-align: end;
+  position: relative;
+  &_content {
+    display: flex;
+    align-items: start;
+
+    img {
+      width: 48px;
+      height: 48px;
+      margin-right: 12px;
+    }
+  }
+
+  &_field {
+    border: none;
+    height: 60px;
+    padding: 5px;
+    font-size: 20px;
+    width: 100%;
+    &::placeholder {
+      font-size: 20px;
+    }
+    &_error {
+      color: red;
+      position: absolute;
+      bottom: 25px;
+    }
+  }
+
+  .btn__post {
+    border: 1px solid $blue;
+    background-color: $blue;
+    border-radius: 25px;
+    padding: 5px 16px;
+    margin-top: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+  }
+}

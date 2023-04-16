@@ -1,0 +1,42 @@
+@import '../../App.module.scss';
+
+.b__messages {
+  width: 100%;
+  height: 100vh;
+  &_content {
+    text-align: center;
+    padding: 20px 0 80px;
+    margin: 54px 16px 20px;
+    &:hover {
+      background-color: #eff3f4;
+    }
+    img {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.l__messages {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  margin-bottom: 15px;
+  padding: 0 16px;
+  &_item {
+    color: #fff;
+    background-color: $blue;
+    border-color: $blue;
+    padding: 8px;
+    border-radius: 24px;
+    border-bottom-right-radius: 4px;
+    margin-bottom: 10px;
+    transition-property: background-color, box-shadow;
+    cursor: pointer;
+    &:hover {
+      background-color: #1150cb;
+      border-color: #1150cb;
+    }
+  }
+}
