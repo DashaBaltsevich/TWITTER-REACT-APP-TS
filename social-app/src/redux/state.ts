@@ -1,5 +1,6 @@
-import { rerender } from '../rerender'
 import { StateTypes } from '../types'
+
+let rerender = () => {}
 
 export const state: StateTypes = {
   postsPage: {
@@ -57,10 +58,14 @@ export const addPost = (): void => {
     likeCount: 3
   }
   state.postsPage.posts.push(newPost)
-  rerender({ state })
+  rerender()
 }
 
 export const onPostChange = (newText: string): void => {
   state.postsPage.newText = newText
-  rerender({ state })
+  rerender()
+}
+
+export const subscribe = (observer: () => void) => {
+  rerender = observer
 }
