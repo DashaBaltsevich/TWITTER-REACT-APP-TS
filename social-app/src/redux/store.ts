@@ -1,4 +1,4 @@
-import { StoreTypes } from '../types'
+import { StoreTypes, TypeAction } from '../types'
 
 export const store: StoreTypes = {
   _state: {
@@ -49,24 +49,32 @@ export const store: StoreTypes = {
       ]
     }
   },
+
   getState() {
     return this._state
   },
-  rerender() {},
-  addPost(): void {
-    const newPost = {
-      id: 5,
-      post: this._state.postsPage.newText,
-      likeCount: 3
+
+  _callSubscriber() {},
+
+  subscribe(observer) {
+    this._callSubscriber = observer
+  },
+
+  dispatch(action) {
+    switch (action.type) {
+      case TypeAction.ADD_POST:
+        const newPost = {
+          id: 5,
+          post: this._state.postsPage.newText,
+          likeCount: 3
+        }
+        this._state.postsPage.posts.push(newPost)
+        this._callSubscriber()
+        break
+      case TypeAction.UPDATE_NEW_POST_TEXT:
+        this._state.postsPage.newText = action.text ? action.text : ''
+        this._callSubscriber()
+        break
     }
-    this._state.postsPage.posts.push(newPost)
-    this.rerender()
-  },
-  onPostChange(newText: string): void {
-    this._state.postsPage.newText = newText
-    this.rerender()
-  },
-  subscribe(observer: () => void) {
-    this.rerender = observer
   }
 }

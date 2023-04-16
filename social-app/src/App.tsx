@@ -3,16 +3,14 @@ import AppStyles from './App.module.scss'
 import { NavBar } from './components'
 import { HomePage, ProfilePage, MessagesPage } from './pages'
 import { Routes, Route } from 'react-router-dom'
-import { StateTypes } from './types'
+import { StateTypes, ActionTypes } from './types'
 
 const App = ({
   state,
-  addPost,
-  onPostChange
+  dispatch
 }: {
   state: StateTypes
-  addPost: () => void
-  onPostChange: (newText: string) => void
+  dispatch: (action: ActionTypes) => void
 }): JSX.Element => {
   return (
     <div className={AppStyles.container}>
@@ -22,11 +20,7 @@ const App = ({
           <Route
             path="/"
             element={
-              <HomePage
-                postsPage={state.postsPage}
-                addPost={addPost}
-                onPostChange={onPostChange}
-              />
+              <HomePage postsPage={state.postsPage} dispatch={dispatch} />
             }
           />
           <Route path="/profile" element={<ProfilePage />} />

@@ -2,20 +2,18 @@ import React from 'react'
 import { Post } from '../index'
 import './UserPosts.scss'
 import { NewPost } from '../Post/NewPost'
-import { PostsType } from '../../types'
+import { PostsType, ActionTypes } from '../../types'
 
 export const UserPosts = ({
   postsPage,
-  addPost,
-  onPostChange
+  dispatch
 }: {
   postsPage: PostsType
-  addPost: () => void
-  onPostChange: (newText: string) => void
+  dispatch: (action: ActionTypes) => void
 }): JSX.Element => {
   return (
     <div className="b-posts">
-      <NewPost addPost={addPost} onPostChange={onPostChange} />
+      <NewPost dispatch={dispatch} />
       <Post posts={postsPage.posts} />
     </div>
   )

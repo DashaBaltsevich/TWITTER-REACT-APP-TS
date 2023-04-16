@@ -1,6 +1,7 @@
 import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
+import { ActionTypes, TypeAction } from '../../../types'
 import Avatar from '../../../assets/avatar.png'
 import NewPostStyles from './NewPost.module.scss'
 
@@ -13,16 +14,14 @@ type InitialValue = {
 }
 
 export const NewPost = ({
-  addPost,
-  onPostChange
+  dispatch
 }: {
-  addPost: () => void
-  onPostChange: (newText: string) => void
+  dispatch: (action: ActionTypes) => void
 }) => {
   const initialValues: InitialValue = { text: '' }
 
   const onInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onPostChange(e.target.value)
+    dispatch({ type: TypeAction.UPDATE_NEW_POST_TEXT, text: e.target.value })
   }
 
   return (
@@ -31,7 +30,7 @@ export const NewPost = ({
       validationSchema={validationPostSchema}
       validateOnBlur={false}
       onSubmit={(values, { resetForm }) => {
-        addPost()
+        dispatch({ type: TypeAction.ADD_POST })
         console.log(values)
         resetForm()
       }}

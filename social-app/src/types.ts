@@ -32,8 +32,17 @@ export interface StateTypes {
 export interface StoreTypes {
   _state: StateTypes
   getState: () => StateTypes
-  rerender: () => void
-  addPost: () => void
-  onPostChange: (newText: string) => void
+  _callSubscriber: () => void
   subscribe: (callback: () => void) => void
+  dispatch: (action: ActionTypes) => void
+}
+
+export enum TypeAction {
+  ADD_POST,
+  UPDATE_NEW_POST_TEXT
+}
+
+export interface ActionTypes {
+  type: TypeAction
+  text?: string
 }
