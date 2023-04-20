@@ -1,4 +1,6 @@
-import { StoreTypes, TypeAction } from '../types'
+import { StoreTypes } from '../types'
+import { messagesReducer } from './messages-reducer'
+import { postsReducer } from './posts-reducer'
 
 export const store: StoreTypes = {
   _state: {
@@ -64,32 +66,8 @@ export const store: StoreTypes = {
   },
 
   dispatch(action) {
-    switch (action.type) {
-      case TypeAction.ADD_POST:
-        const newPost = {
-          id: 5,
-          post: this._state.postsPage.newText,
-          likeCount: 3
-        }
-        this._state.postsPage.posts.push(newPost)
-        this._callSubscriber()
-        break
-      case TypeAction.ADD_MESSAGE:
-        const newMessage = {
-          id: 4,
-          text: this._state.messagesPage.newMessageText
-        }
-        this._state.messagesPage.messages.push(newMessage)
-        this._callSubscriber()
-        break
-      case TypeAction.UPDATE_NEW_POST_TEXT:
-        this._state.postsPage.newText = action.text ? action.text : ''
-        this._callSubscriber()
-        break
-      case TypeAction.UPDATE_NEW_MESSAGE_TEXT:
-        this._state.messagesPage.newMessageText = action.text ? action.text : ''
-        this._callSubscriber()
-        break
-    }
+    this._state.postsPage = postsReducer(this._state.postsPage, action)
+    this._state.messagesPage = messagesReducer(this._state.messagesPage, action)
+    this._callSubscriber()
   }
 }
