@@ -46,7 +46,8 @@ export const store: StoreTypes = {
           id: 2,
           name: 'Masha'
         }
-      ]
+      ],
+      newMessageText: ''
     }
   },
 
@@ -54,7 +55,9 @@ export const store: StoreTypes = {
     return this._state
   },
 
-  _callSubscriber() {},
+  _callSubscriber() {
+    console.log(this._state)
+  },
 
   subscribe(observer) {
     this._callSubscriber = observer
@@ -71,8 +74,20 @@ export const store: StoreTypes = {
         this._state.postsPage.posts.push(newPost)
         this._callSubscriber()
         break
+      case TypeAction.ADD_MESSAGE:
+        const newMessage = {
+          id: 4,
+          text: this._state.messagesPage.newMessageText
+        }
+        this._state.messagesPage.messages.push(newMessage)
+        this._callSubscriber()
+        break
       case TypeAction.UPDATE_NEW_POST_TEXT:
         this._state.postsPage.newText = action.text ? action.text : ''
+        this._callSubscriber()
+        break
+      case TypeAction.UPDATE_NEW_MESSAGE_TEXT:
+        this._state.messagesPage.newMessageText = action.text ? action.text : ''
         this._callSubscriber()
         break
     }

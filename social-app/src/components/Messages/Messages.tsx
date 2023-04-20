@@ -1,13 +1,15 @@
 import React from 'react'
 import Avatar from '../../assets/avatar.png'
-import { MessageType } from '../../types'
+import { ActionTypes, MessageType } from '../../types'
 import MessagesStyles from './Messages.module.scss'
 import { NewMessage } from '../NewMessage/NewMessage'
 
 export const Messages = ({
-  messages
+  messages,
+  dispatch
 }: {
   messages: MessageType[]
+  dispatch: (action: ActionTypes) => void
 }): JSX.Element => {
   return (
     <div className={MessagesStyles.b__messages}>
@@ -23,7 +25,7 @@ export const Messages = ({
           </li>
         ))}
       </ul>
-      <NewMessage />
+      <NewMessage dispatch={dispatch} />
     </div>
   )
 }

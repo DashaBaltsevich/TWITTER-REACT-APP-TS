@@ -22,6 +22,7 @@ export interface PostsType {
 export interface MessagesType {
   messages: MessageType[]
   dialogUsers: DialogUserType[]
+  newMessageText: string
 }
 
 export interface StateTypes {
@@ -39,7 +40,9 @@ export interface StoreTypes {
 
 export enum TypeAction {
   ADD_POST,
-  UPDATE_NEW_POST_TEXT
+  ADD_MESSAGE,
+  UPDATE_NEW_POST_TEXT,
+  UPDATE_NEW_MESSAGE_TEXT
 }
 
 export interface ActionTypes {

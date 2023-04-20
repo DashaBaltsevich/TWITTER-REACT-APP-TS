@@ -3,21 +3,24 @@ import * as Yup from 'yup'
 import { BiSend } from 'react-icons/bi'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import NewMessageStyles from './NewMessage.module.scss'
+import { ActionTypes } from '../../types'
+import { updateNewMessageText, addMessage } from '../../redux/action-creator'
 
 const validationPostSchema = Yup.object({
-  text: Yup.string().required().min(4, 'Must be more than 4 characters')
+  newMessage: Yup.string().required().min(4, 'Must be more than 4 characters')
 })
 
 type NewMassageType = {
   newMessage: string
 }
 
-export const NewMessage = () => {
+export const NewMessage = ({
+  dispatch
+}: {
+  dispatch: (action: ActionTypes) => void
+}) => {
   const initialValues: NewMassageType = {
     newMessage: ''
-  }
-  const addMessage = ({ newMessage }: NewMassageType) => {
-    console.log(newMessage)
   }
 
   return (
@@ -25,7 +28,11 @@ export const NewMessage = () => {
       initialValues={initialValues}
       validationSchema={validationPostSchema}
       validateOnBlur={false}
-      onSubmit={addMessage}
+      onSubmit={(values, { resetForm }) => {
+        dispatch(addMessage())
+        console.log(values)
+        resetForm()
+      }}
     >
       {({ values }) => (
         <Form className={NewMessageStyles.f__message}>
@@ -38,10 +45,9 @@ export const NewMessage = () => {
               value={values.newMessage}
               placeholder="New Message"
               rows={1}
-              minRows={4}
-              maxRows={8}
-              autoResize={true}
-              // onInput={() => {}}
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                dispatch(updateNewMessageText(e.target.value))
+              }}
             />
             <ErrorMessage
               name="text"

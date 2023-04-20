@@ -26,7 +26,12 @@ const App = ({
           <Route path="/profile" element={<ProfilePage />} />
           <Route
             path="/dialog/*"
-            element={<MessagesPage messagesPage={state.messagesPage} />}
+            element={
+              <MessagesPage
+                messagesPage={state.messagesPage}
+                dispatch={dispatch}
+              />
+            }
           />
         </Routes>
       </div>
