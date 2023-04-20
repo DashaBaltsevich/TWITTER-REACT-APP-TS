@@ -1,8 +1,10 @@
 import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
+import { ActionTypes } from '../../../types'
 import Avatar from '../../../assets/avatar.png'
 import NewPostStyles from './NewPost.module.scss'
+import { addPost, updateNewPostText } from '../../../redux/action-creator'
 
 const validationPostSchema = Yup.object({
   text: Yup.string().required().min(4, 'Must be more than 4 characters')
@@ -13,16 +15,14 @@ type InitialValue = {
 }
 
 export const NewPost = ({
-  addPost,
-  onPostChange
+  dispatch
 }: {
-  addPost: () => void
-  onPostChange: (newText: string) => void
+  dispatch: (action: ActionTypes) => void
 }) => {
   const initialValues: InitialValue = { text: '' }
 
   const onInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onPostChange(e.target.value)
+    dispatch(updateNewPostText(e.target.value))
   }
 
   return (
@@ -31,7 +31,7 @@ export const NewPost = ({
       validationSchema={validationPostSchema}
       validateOnBlur={false}
       onSubmit={(values, { resetForm }) => {
-        addPost()
+        dispatch(addPost())
         console.log(values)
         resetForm()
       }}

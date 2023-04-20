@@ -1,10 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { state, subscribe } from './redux/state'
+import { store } from './redux/store'
 import './index.css'
 import App from './App'
 import { BrowserRouter } from 'react-router-dom'
-import { addPost, onPostChange } from './redux/state'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
@@ -12,7 +11,7 @@ let rerender = () => {
   root.render(
     <React.StrictMode>
       <BrowserRouter>
-        <App state={state} addPost={addPost} onPostChange={onPostChange} />
+        <App state={store.getState()} dispatch={store.dispatch.bind(store)} />
       </BrowserRouter>
     </React.StrictMode>
   )
@@ -20,4 +19,4 @@ let rerender = () => {
 
 rerender()
 
-subscribe(rerender)
+store.subscribe(rerender)
