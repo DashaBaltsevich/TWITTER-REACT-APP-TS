@@ -1,7 +1,35 @@
 import { ActionTypes, MessagesType, TypeAction } from '../types'
 
+const initialState: MessagesType = {
+  messages: [
+    {
+      id: 1,
+      text: '123'
+    },
+    {
+      id: 2,
+      text: '12d3'
+    },
+    {
+      id: 3,
+      text: '1dsd23'
+    }
+  ],
+  dialogUsers: [
+    {
+      id: 1,
+      name: 'Sasha'
+    },
+    {
+      id: 2,
+      name: 'Masha'
+    }
+  ],
+  newMessageText: ''
+}
+
 export const messagesReducer = (
-  state: MessagesType,
+  state: MessagesType = initialState,
   action: ActionTypes
 ): MessagesType => {
   switch (action.type) {
