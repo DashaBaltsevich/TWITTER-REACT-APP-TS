@@ -1,6 +1,6 @@
 export * from './NavBar'
 export * from './NavLinks'
 export * from './UserPosts'
-export * from './Post'
+export * from './UserPosts/Post'
 export * from './Dialogs'
 export * from './Messages'

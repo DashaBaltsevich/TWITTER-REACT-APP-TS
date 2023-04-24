@@ -2,7 +2,7 @@ import React from 'react'
 import Avatar from '../../assets/avatar.png'
 import { ActionTypes, MessageType } from '../../types'
 import MessagesStyles from './Messages.module.scss'
-import { NewMessage } from '../NewMessage/NewMessage'
+import { NewMessageContainer } from '../NewMessage/NewMessageContainer'
 
 export const Messages = ({
   messages,
@@ -25,7 +25,7 @@ export const Messages = ({
           </li>
         ))}
       </ul>
-      <NewMessage dispatch={dispatch} />
+      <NewMessageContainer dispatch={dispatch} />
     </div>
   )
 }

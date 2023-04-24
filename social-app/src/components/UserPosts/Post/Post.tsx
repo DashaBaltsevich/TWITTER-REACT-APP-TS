@@ -1,7 +1,7 @@
 import React from 'react'
-import Avatar from '../../assets/avatar.png'
+import Avatar from '../../../assets/avatar.png'
 import PostStyles from './Post.module.scss'
-import { PostType } from '../../types'
+import { PostType } from '../../../types'
 
 export const Post = ({ posts }: { posts: PostType[] }): JSX.Element => {
   return (
