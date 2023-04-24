@@ -4,6 +4,7 @@ import { store } from './redux/redux-store'
 import './index.css'
 import App from './App'
 import { BrowserRouter } from 'react-router-dom'
+import { MyContext } from './redux/context'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
@@ -11,7 +12,9 @@ let rerender = () => {
   root.render(
     <React.StrictMode>
       <BrowserRouter>
-        <App state={store.getState()} dispatch={store.dispatch.bind(store)} />
+        <MyContext.Provider value={store}>
+          <App />
+        </MyContext.Provider>
       </BrowserRouter>
     </React.StrictMode>
   )
