@@ -4,22 +4,16 @@ import { store } from './redux/redux-store'
 import './index.css'
 import App from './App'
 import { BrowserRouter } from 'react-router-dom'
-import { MyContext } from './redux/context'
+import { Provider } from 'react-redux'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
-let rerender = () => {
-  root.render(
-    <React.StrictMode>
-      <BrowserRouter>
-        <MyContext.Provider value={store}>
-          <App />
-        </MyContext.Provider>
-      </BrowserRouter>
-    </React.StrictMode>
-  )
-}
-
-rerender()
-
-store.subscribe(rerender)
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
+  </React.StrictMode>
+)

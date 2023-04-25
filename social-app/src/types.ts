@@ -30,13 +30,13 @@ export interface StateTypes {
   messagesPage: MessagesType
 }
 
-export interface StoreTypes {
-  _state: StateTypes
-  getState: () => StateTypes
-  _callSubscriber: () => void
-  subscribe: (callback: () => void) => void
-  dispatch: (action: ActionTypes) => void
-}
+// export interface StoreTypes {
+//   _state: StateTypes
+//   getState: () => StateTypes
+//   _callSubscriber: () => void
+//   subscribe: (callback: () => void) => void
+//   dispatch: (action: ActionTypes) => void
+// }
 
 export enum TypeAction {
   ADD_POST,

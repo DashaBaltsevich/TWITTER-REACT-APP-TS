@@ -1,4 +1,4 @@
 import React from 'react'
-import { StoreTypes } from '../types'
+import { RootState } from './redux-store'
 
-export const MyContext = React.createContext<StoreTypes | null>(null)
+export const MyContext = React.createContext<RootState | null>(null)
