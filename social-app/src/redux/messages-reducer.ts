@@ -33,21 +33,22 @@ export const messagesReducer = (
   action: ActionTypes
 ): MessagesType => {
   switch (action.type) {
-    case TypeAction.ADD_MESSAGE: {
+    case TypeAction.ADD_MESSAGE:
       const newMessage = {
         id: 4,
         text: state.newMessageText
       }
-      const newState = { ...state }
-      newState.messages = [...state.messages]
-      newState.messages.push(newMessage)
-      return newState
-    }
-    case TypeAction.UPDATE_NEW_MESSAGE_TEXT: {
-      const newState = { ...state }
-      newState.newMessageText = action.text ? action.text : ''
-      return newState
-    }
+      return {
+        ...state,
+        messages: [...state.messages, newMessage]
+      }
+
+    case TypeAction.UPDATE_NEW_MESSAGE_TEXT:
+      return {
+        ...state,
+        newMessageText: action.text ? action.text : ''
+      }
+
     default:
       return state
   }

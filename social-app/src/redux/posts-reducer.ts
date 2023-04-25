@@ -26,22 +26,22 @@ export const postsReducer = (
   action: ActionTypes
 ): PostsType => {
   switch (action.type) {
-    case TypeAction.ADD_POST: {
+    case TypeAction.ADD_POST:
       const newPost = {
         id: 5,
         post: state.newText,
         likeCount: 3
       }
-      const newState = { ...state }
-      newState.posts = [...state.posts]
-      newState.posts.push(newPost)
-      return newState
-    }
-    case TypeAction.UPDATE_NEW_POST_TEXT: {
-      const newState = { ...state }
-      newState.newText = action.text ? action.text : ''
-      return newState
-    }
+      return {
+        ...state,
+        posts: [...state.posts, newPost]
+      }
+
+    case TypeAction.UPDATE_NEW_POST_TEXT:
+      return {
+        ...state,
+        newText: action.text ? action.text : ''
+      }
     default:
       return state
   }
