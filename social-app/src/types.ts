@@ -28,13 +28,13 @@ export interface MessagesPageType {
 export interface UserType {
   id: number
   name: string
-  photo: string
-  followed: boolean
-  status: string
-  location: {
-    country: string
-    city: string
+  uniqueUrlName: string | null
+  photos: {
+    small: string | null
+    large: string | null
   }
+  followed: boolean
+  status: string | null
 }
 
 export interface UsersPageType {

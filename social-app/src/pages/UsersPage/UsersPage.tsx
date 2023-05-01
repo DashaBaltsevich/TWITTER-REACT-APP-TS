@@ -1,78 +1,43 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { ActionTypes, StateTypes, UserType, UsersPageType } from '../../types'
 import { followUser, setUsers, unFollowUser } from '../../redux/action-creator'
 import { Friends, Users } from '../../components'
 import styles from './UsersPage.module.scss'
+import axios from 'axios'
 
-const UsersPage = ({
-  users,
-  followUser,
-  unFollowUser,
-  setUsers
-}: {
+interface PropsType {
   users: UserType[]
   followUser: (id: number) => void
   unFollowUser: (id: number) => void
   setUsers: (users: UserType[]) => void
-}) => {
-  useEffect(() => {
-    if (users.length === 0) {
-      setUsers([
-        {
-          id: 1,
-          name: 'abc',
-          photo:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYmkp9a2rrD1Sskb9HLt5mDaTt4QaIs8CcBg&usqp=CAU',
-          followed: true,
-          status: 'svsd',
-          location: {
-            country: 'Belarus',
-            city: 'Minsk'
-          }
-        },
-        {
-          id: 2,
-          name: 'Sasha',
-          photo:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYmkp9a2rrD1Sskb9HLt5mDaTt4QaIs8CcBg&usqp=CAU',
-          followed: false,
-          status: 'dfvdf',
-          location: {
-            country: 'Russia',
-            city: 'Moscow'
-          }
-        },
-        {
-          id: 3,
-          name: 'Masha',
-          photo:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYmkp9a2rrD1Sskb9HLt5mDaTt4QaIs8CcBg&usqp=CAU',
-          followed: true,
-          status: 'srsr',
-          location: {
-            country: 'Ukraine',
-            city: 'Kiev'
-          }
-        }
-      ])
-    }
-  }, [setUsers, users.length])
+}
 
-  return (
-    <section className={styles.s__users}>
-      <Friends
-        users={users}
-        followUser={followUser}
-        unFollowUser={unFollowUser}
-      />
-      <Users
-        users={users}
-        followUser={followUser}
-        unFollowUser={unFollowUser}
-      />
-    </section>
-  )
+class UsersPage extends React.Component<PropsType> {
+  constructor(props: PropsType) {
+    super(props)
+    alert('dd')
+    axios
+      .get('https://social-network.samuraijs.com/api/1.0/users')
+      .then((response) => this.props.setUsers(response.data.items))
+  }
+
+  render() {
+    return (
+      <section className={styles.s__users}>
+        <Friends
+          users={this.props.users}
+          followUser={this.props.followUser}
+          unFollowUser={this.props.unFollowUser}
+        />
+        <Users
+          users={this.props.users}
+          followUser={this.props.followUser}
+          unFollowUser={this.props.unFollowUser}
+        />
+      </section>
+    )
+  }
 }
 
 const mapStateToProps = (state: StateTypes): UsersPageType => {
