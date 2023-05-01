@@ -1,10 +1,12 @@
 import { combineReducers, createStore } from 'redux'
 import { messagesReducer } from './messages-reducer'
 import { postsReducer } from './posts-reducer'
+import { usersReducer } from './users-reducer'
 
 export const reducers = combineReducers({
   postsPage: postsReducer,
-  messagesPage: messagesReducer
+  messagesPage: messagesReducer,
+  usersPage: usersReducer
 })
 export const store = createStore(reducers)
 

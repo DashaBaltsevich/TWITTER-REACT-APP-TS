@@ -1,0 +1,16 @@
+.l__users_item {
+  &_wrap {
+    display: flex;
+    flex-direction: row;
+  }
+  &_img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+  }
+  &_title {
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+}

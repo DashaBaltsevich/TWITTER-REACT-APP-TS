@@ -1,4 +1,4 @@
-import { TypeAction, ActionTypes } from '../types'
+import { TypeAction, ActionTypes, UserType } from '../types'
 
 export const addPost = (): ActionTypes => ({
   type: TypeAction.ADD_POST
@@ -16,4 +16,19 @@ export const addMessage = (): ActionTypes => ({
 export const updateNewMessageText = (text: string): ActionTypes => ({
   type: TypeAction.UPDATE_NEW_MESSAGE_TEXT,
   text: text
+})
+
+export const followUser = (id: number): ActionTypes => ({
+  type: TypeAction.FOLLOW_USER,
+  id: id
+})
+
+export const unFollowUser = (id: number): ActionTypes => ({
+  type: TypeAction.UNFOLLOW_USER,
+  id: id
+})
+
+export const setUsers = (users: UserType[]): ActionTypes => ({
+  type: TypeAction.SET_USERS,
+  users: users
 })

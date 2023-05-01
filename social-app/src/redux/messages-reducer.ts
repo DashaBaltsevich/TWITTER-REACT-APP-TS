@@ -1,6 +1,6 @@
-import { ActionTypes, MessagesType, TypeAction } from '../types'
+import { ActionTypes, MessagesPageType, TypeAction } from '../types'
 
-const initialState: MessagesType = {
+const initialState: MessagesPageType = {
   messages: [
     {
       id: 1,
@@ -29,9 +29,9 @@ const initialState: MessagesType = {
 }
 
 export const messagesReducer = (
-  state: MessagesType = initialState,
+  state: MessagesPageType = initialState,
   action: ActionTypes
-): MessagesType => {
+): MessagesPageType => {
   switch (action.type) {
     case TypeAction.ADD_MESSAGE:
       const newMessage = {

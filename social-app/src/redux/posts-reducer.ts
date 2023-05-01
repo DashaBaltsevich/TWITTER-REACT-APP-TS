@@ -1,6 +1,6 @@
-import { ActionTypes, PostsType, TypeAction } from '../types'
+import { ActionTypes, PostsPageType, TypeAction } from '../types'
 
-const initialState: PostsType = {
+const initialState: PostsPageType = {
   posts: [
     {
       id: 1,
@@ -22,9 +22,9 @@ const initialState: PostsType = {
 }
 
 export const postsReducer = (
-  state: PostsType = initialState,
+  state: PostsPageType = initialState,
   action: ActionTypes
-): PostsType => {
+): PostsPageType => {
   switch (action.type) {
     case TypeAction.ADD_POST:
       const newPost = {

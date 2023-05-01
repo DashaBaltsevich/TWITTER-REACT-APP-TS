@@ -1,7 +1,12 @@
 import React from 'react'
 import AppStyles from './App.module.scss'
 import { NavBar } from './components'
-import { HomePage, ProfilePage, MessagesPage } from './pages'
+import {
+  HomePage,
+  ProfilePage,
+  MessagesPage,
+  UsersPageContainer
+} from './pages'
 import { Routes, Route } from 'react-router-dom'
 
 const App = (): JSX.Element => {
@@ -13,6 +18,7 @@ const App = (): JSX.Element => {
           <Route path="/" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/dialog/*" element={<MessagesPage />} />
+          <Route path="/users" element={<UsersPageContainer />} />
         </Routes>
       </div>
     </div>

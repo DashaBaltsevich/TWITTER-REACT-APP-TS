@@ -28,6 +28,12 @@ export const NavLinks: FC = (): JSX.Element => {
           Messages
         </NavLink>
       </li>
+      <li className="l-nav__item">
+        <NavLink to="/users" className={setActive}>
+          <img src={Messages} alt="users" />
+          Friends
+        </NavLink>
+      </li>
     </ul>
   )
 }
