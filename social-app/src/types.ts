@@ -39,6 +39,9 @@ export interface UserType {
 
 export interface UsersPageType {
   users: UserType[]
+  pageSize: number
+  totalUsersCount: number
+  currentPage: number
 }
 
 export interface StateTypes {
@@ -54,7 +57,8 @@ export enum TypeAction {
   UPDATE_NEW_MESSAGE_TEXT,
   FOLLOW_USER,
   UNFOLLOW_USER,
-  SET_USERS
+  SET_USERS,
+  SET_CURRENT_PAGE
 }
 
 export interface ActionTypes {
@@ -62,4 +66,6 @@ export interface ActionTypes {
   text?: string
   id?: number
   users?: UserType[]
+  totalUsersCount?: number
+  currentPage?: number
 }

@@ -1,7 +1,10 @@
 import { ActionTypes, UsersPageType, TypeAction } from '../types'
 
 const initialState: UsersPageType = {
-  users: []
+  users: [],
+  pageSize: 5,
+  totalUsersCount: 21,
+  currentPage: 1
 }
 
 export const usersReducer = (
@@ -32,9 +35,14 @@ export const usersReducer = (
     case TypeAction.SET_USERS:
       return {
         ...state,
-        users: action.users
-          ? [...state.users, ...action.users]
-          : [...state.users]
+        users: action.users ? [...action.users] : [...state.users],
+        totalUsersCount: action.totalUsersCount ? action.totalUsersCount : 0
+      }
+    case TypeAction.SET_CURRENT_PAGE:
+      return {
+        ...state,
+        users: state.users,
+        currentPage: action.currentPage ? action.currentPage : 1
       }
     default:
       return state

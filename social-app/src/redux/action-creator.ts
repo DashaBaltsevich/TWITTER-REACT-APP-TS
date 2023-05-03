@@ -28,7 +28,16 @@ export const unFollowUser = (id: number): ActionTypes => ({
   id: id
 })
 
-export const setUsers = (users: UserType[]): ActionTypes => ({
+export const setUsers = (
+  users: UserType[],
+  totalUsersCount: number
+): ActionTypes => ({
   type: TypeAction.SET_USERS,
-  users: users
+  users: users,
+  totalUsersCount: totalUsersCount
+})
+
+export const setCurrentPage = (currentPage: number): ActionTypes => ({
+  type: TypeAction.SET_CURRENT_PAGE,
+  currentPage: currentPage
 })

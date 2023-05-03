@@ -10,4 +10,7 @@ export const reducers = combineReducers({
 })
 export const store = createStore(reducers)
 
+//@ts-ignore
+window.store = store.getState()
+
 export type RootState = ReturnType<typeof store.getState>
