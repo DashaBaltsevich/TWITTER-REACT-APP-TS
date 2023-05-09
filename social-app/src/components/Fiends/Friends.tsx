@@ -2,7 +2,6 @@ import React from 'react'
 import { UserType } from '../../types'
 import { UserPrevue } from '../../components'
 import styles from './Friends.module.scss'
-import { followUser, unFollowUser } from '../../redux/action-creator'
 
 interface FriendsPropsType {
   users: UserType[]
@@ -11,15 +10,15 @@ interface FriendsPropsType {
   currentPage: number
   followUser: (id: number) => void
   unFollowUser: (id: number) => void
-  setCurrentPage: (currentPage: number) => void
+  onPageChanged: (page: number) => void
 }
 
 export class Friends extends React.Component<FriendsPropsType> {
   handleFollowButton = (followed: boolean, id: number) => {
     if (followed) {
-      unFollowUser(id)
+      this.props.unFollowUser(id)
     } else {
-      followUser(id)
+      this.props.followUser(id)
     }
   }
   render(): React.ReactNode {

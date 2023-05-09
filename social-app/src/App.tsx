@@ -4,7 +4,7 @@ import { NavBar } from './components'
 import { HomePage, ProfilePage, MessagesPage, UsersContainer } from './pages'
 import { Routes, Route } from 'react-router-dom'
 
-export const baseURL = 'https://social-network.samuraijs.com/api/1.0/users'
+export const URL = 'https://social-network.samuraijs.com/api/1.0/users'
 
 const App = (): JSX.Element => {
   return (

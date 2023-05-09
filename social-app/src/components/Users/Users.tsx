@@ -2,7 +2,6 @@ import React from 'react'
 import { UserType } from '../../types'
 import { UserPrevue } from '..'
 import styles from './Users.module.scss'
-import { followUser, unFollowUser } from '../../redux/action-creator'
 
 interface UsersPropsType {
   users: UserType[]
@@ -11,16 +10,15 @@ interface UsersPropsType {
   currentPage: number
   followUser: (id: number) => void
   unFollowUser: (id: number) => void
-  setCurrentPage: (currentPage: number) => void
-  apiRequest: (currentPage: number) => void
+  onPageChanged: (page: number) => void
 }
 
 export class Users extends React.Component<UsersPropsType> {
   handleFollowButton = (followed: boolean, id: number) => {
     if (followed) {
-      unFollowUser(id)
+      this.props.unFollowUser(id)
     } else {
-      followUser(id)
+      this.props.followUser(id)
     }
   }
 
@@ -57,8 +55,7 @@ export class Users extends React.Component<UsersPropsType> {
                         : styles.buttonPage
                     }
                     onClick={() => {
-                      this.props.setCurrentPage(p)
-                      this.props.apiRequest(p)
+                      this.props.onPageChanged(p)
                     }}
                   >
                     {p}
@@ -75,9 +72,11 @@ export class Users extends React.Component<UsersPropsType> {
                 <li className={styles.l__users_item} key={user.id}>
                   <UserPrevue user={user} />
                   <button
-                    onClick={() =>
+                    onClick={() => {
+                      console.log(user)
                       this.handleFollowButton(user.followed, user.id)
-                    }
+                      console.log(user)
+                    }}
                   >
                     {user.followed ? 'Unfollow' : 'Follow'}
                   </button>
