@@ -1,1 +1,1 @@
-export { UsersPageContainer } from './UsersPage'
+export { UsersContainer } from './UsersPage'

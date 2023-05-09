@@ -8,6 +8,7 @@ import {
   unFollowUser
 } from '../../redux/action-creator'
 import { Friends, Users } from '../../components'
+import baseURL from '../../App'
 import styles from './UsersPage.module.scss'
 import axios from 'axios'
 
@@ -23,12 +24,12 @@ interface PropsType {
 }
 
 class UsersPage extends React.Component<PropsType> {
-  apiRequest = () => {
+  apiRequest = (currentPage = this.props.currentPage) => {
     axios
-      .get('https://social-network.samuraijs.com/api/1.0/users', {
+      .get(`${baseURL}`, {
         params: {
           count: this.props.pageSize,
-          page: this.props.currentPage
+          page: currentPage
         }
       })
       .then((response) =>
@@ -44,8 +45,12 @@ class UsersPage extends React.Component<PropsType> {
       <section className={styles.s__users}>
         <Friends
           users={this.props.users}
+          pageSize={this.props.pageSize}
+          totalUsersCount={this.props.totalUsersCount}
+          currentPage={this.props.currentPage}
           followUser={this.props.followUser}
           unFollowUser={this.props.unFollowUser}
+          setCurrentPage={this.props.setCurrentPage}
         />
         <Users
           users={this.props.users}
@@ -88,7 +93,7 @@ const mapDispatchToProps = (dispatch: (action: ActionTypes) => void) => {
   }
 }
 
-export const UsersPageContainer = connect(
+export const UsersContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(UsersPage)

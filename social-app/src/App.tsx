@@ -1,13 +1,10 @@
 import React from 'react'
 import AppStyles from './App.module.scss'
 import { NavBar } from './components'
-import {
-  HomePage,
-  ProfilePage,
-  MessagesPage,
-  UsersPageContainer
-} from './pages'
+import { HomePage, ProfilePage, MessagesPage, UsersContainer } from './pages'
 import { Routes, Route } from 'react-router-dom'
+
+export const baseURL = 'https://social-network.samuraijs.com/api/1.0/users'
 
 const App = (): JSX.Element => {
   return (
@@ -18,7 +15,7 @@ const App = (): JSX.Element => {
           <Route path="/" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/dialog/*" element={<MessagesPage />} />
-          <Route path="/users" element={<UsersPageContainer />} />
+          <Route path="/users" element={<UsersContainer />} />
         </Routes>
       </div>
     </div>
