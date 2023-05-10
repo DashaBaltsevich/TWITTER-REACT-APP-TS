@@ -13,16 +13,16 @@ type InitialValue = {
 }
 
 export const NewPost = ({
-  addNewPost,
-  updateNewPost
+  addPost,
+  updateNewPostText
 }: {
-  addNewPost: () => void
-  updateNewPost: (newTextPost: string) => void
+  addPost: () => void
+  updateNewPostText: (newTextPost: string) => void
 }) => {
   const initialValues: InitialValue = { text: '' }
 
   const onInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateNewPost(e.target.value)
+    updateNewPostText(e.target.value)
   }
 
   return (
@@ -31,7 +31,7 @@ export const NewPost = ({
       validationSchema={validationPostSchema}
       validateOnBlur={false}
       onSubmit={(values, { resetForm }) => {
-        addNewPost()
+        addPost()
         console.log(values)
         resetForm()
       }}

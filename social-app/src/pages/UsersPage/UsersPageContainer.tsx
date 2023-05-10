@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { ActionTypes, StateTypes, UserType, UsersPageType } from '../../types'
+import { StateTypes, UserType, UsersPageType } from '../../types'
 import {
   followUser,
   setCurrentPage,
@@ -81,27 +81,30 @@ const mapStateToProps = (state: StateTypes): UsersPageType => {
   }
 }
 
-const mapDispatchToProps = (dispatch: (action: ActionTypes) => void) => {
-  return {
-    followUser: (id: number) => {
-      dispatch(followUser(id))
-    },
-    unFollowUser: (id: number) => {
-      dispatch(unFollowUser(id))
-    },
-    setUsers: (users: UserType[], totalUsersCount: number) => {
-      dispatch(setUsers(users, totalUsersCount))
-    },
-    setCurrentPage: (currentPage: number) => {
-      dispatch(setCurrentPage(currentPage))
-    },
-    setIsLoading: (isLoading: boolean) => {
-      dispatch(setIsLoading(isLoading))
-    }
-  }
-}
+// const mapDispatchToProps = (dispatch: (action: ActionTypes) => void) => {
+//   return {
+//     followUser: (id: number) => {
+//       dispatch(followUser(id))
+//     },
+//     unFollowUser: (id: number) => {
+//       dispatch(unFollowUser(id))
+//     },
+//     setUsers: (users: UserType[], totalUsersCount: number) => {
+//       dispatch(setUsers(users, totalUsersCount))
+//     },
+//     setCurrentPage: (currentPage: number) => {
+//       dispatch(setCurrentPage(currentPage))
+//     },
+//     setIsLoading: (isLoading: boolean) => {
+//       dispatch(setIsLoading(isLoading))
+//     }
+//   }
+// }
 
-export const UsersContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UsersPageAPIContainer)
+export const UsersContainer = connect(mapStateToProps, {
+  followUser,
+  unFollowUser,
+  setUsers,
+  setCurrentPage,
+  setIsLoading
+})(UsersPageAPIContainer)

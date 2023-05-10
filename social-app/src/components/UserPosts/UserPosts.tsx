@@ -3,21 +3,21 @@ import './UserPosts.scss'
 import { NewPost } from '../NewPost'
 import { Posts } from './Post'
 import { connect } from 'react-redux'
-import { ActionTypes, PostType, StateTypes } from '../../types'
+import { PostType, StateTypes } from '../../types'
 import { addPost, updateNewPostText } from '../../redux/action-creator'
 
 const UserPosts = ({
   posts,
-  addNewPost,
-  updateNewPost
+  addPost,
+  updateNewPostText
 }: {
   posts: PostType[]
-  addNewPost: () => void
-  updateNewPost: (newTextPost: string) => void
+  addPost: () => void
+  updateNewPostText: (newTextPost: string) => void
 }): JSX.Element => {
   return (
     <div className="b-posts">
-      <NewPost addNewPost={addNewPost} updateNewPost={updateNewPost} />
+      <NewPost addPost={addPost} updateNewPostText={updateNewPostText} />
       <Posts posts={posts} />
     </div>
   )
@@ -29,15 +29,15 @@ const mapStateToProps = (state: StateTypes) => {
   }
 }
 
-const mapDispatchToProps = (dispatch: (action: ActionTypes) => void) => {
-  return {
-    updateNewPost: (newTextPost: string) =>
-      dispatch(updateNewPostText(newTextPost)),
-    addNewPost: () => dispatch(addPost())
-  }
-}
+// const mapDispatchToProps = (dispatch: (action: ActionTypes) => void) => {
+//   return {
+//     updateNewPost: (newTextPost: string) =>
+//       dispatch(updateNewPostText(newTextPost)),
+//     addNewPost: () => dispatch(addPost())
+//   }
+// }
 
-export const UserPostsContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UserPosts)
+export const UserPostsContainer = connect(mapStateToProps, {
+  updateNewPostText,
+  addPost
+})(UserPosts)
