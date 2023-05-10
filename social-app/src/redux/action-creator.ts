@@ -41,3 +41,8 @@ export const setCurrentPage = (currentPage: number): ActionTypes => ({
   type: TypeAction.SET_CURRENT_PAGE,
   currentPage: currentPage
 })
+
+export const setIsLoading = (isLoading: boolean): ActionTypes => ({
+  type: TypeAction.SET_LOADING_STATE,
+  isLoading: isLoading
+})

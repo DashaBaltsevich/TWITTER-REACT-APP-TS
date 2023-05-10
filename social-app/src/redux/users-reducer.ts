@@ -4,7 +4,8 @@ const initialState: UsersPageType = {
   users: [],
   pageSize: 5,
   totalUsersCount: 21,
-  currentPage: 1
+  currentPage: 1,
+  isLoading: true
 }
 
 export const usersReducer = (
@@ -44,6 +45,12 @@ export const usersReducer = (
         users: state.users,
         currentPage: action.currentPage ? action.currentPage : 1
       }
+    case TypeAction.SET_LOADING_STATE:
+      return {
+        ...state,
+        isLoading: action.isLoading !== undefined ? action.isLoading : false
+      }
+
     default:
       return state
   }

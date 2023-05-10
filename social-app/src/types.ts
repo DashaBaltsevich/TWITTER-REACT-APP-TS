@@ -42,6 +42,7 @@ export interface UsersPageType {
   pageSize: number
   totalUsersCount: number
   currentPage: number
+  isLoading: boolean
 }
 
 export interface StateTypes {
@@ -58,7 +59,8 @@ export enum TypeAction {
   FOLLOW_USER,
   UNFOLLOW_USER,
   SET_USERS,
-  SET_CURRENT_PAGE
+  SET_CURRENT_PAGE,
+  SET_LOADING_STATE
 }
 
 export interface ActionTypes {
@@ -68,4 +70,5 @@ export interface ActionTypes {
   users?: UserType[]
   totalUsersCount?: number
   currentPage?: number
+  isLoading?: boolean
 }
