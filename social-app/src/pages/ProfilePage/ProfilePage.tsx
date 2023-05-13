@@ -10,7 +10,7 @@ export const ProfilePage = ({
 }: {
   profile: UserProfilePageType
 }): JSX.Element => {
-  console.log(profile.contacts.twitter.split('@')[1])
+  // console.log(profile.contacts.twitter.split('@')[1])
   return (
     <section>
       <div>
@@ -26,7 +26,9 @@ export const ProfilePage = ({
       </div>
       <ul className={ProfilePageStyles.l__info}>
         <li className={ProfilePageStyles.l__info__item}>{profile.fullName}</li>
-        <li>@{profile.contacts.twitter.split('@')[1]}</li>
+        <li>
+          {/* @{profile.contacts.twitter && profile.contacts.twitter.split('@')[1]} */}
+        </li>
         {/* <li className={ProfilePageStyles.l__info__item}>{profile.aboutMe}</li>
         <li className={ProfilePageStyles.l__info__item}>
           <img src={Calendar} alt="calendar" />

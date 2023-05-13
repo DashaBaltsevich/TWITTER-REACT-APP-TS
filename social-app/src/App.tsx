@@ -8,6 +8,7 @@ import {
   UsersContainer
 } from './pages'
 import { Routes, Route } from 'react-router-dom'
+import { WithRouterProps } from './pages/ProfilePage/ProfilePageContainer'
 
 export const URL = 'https://social-network.samuraijs.com/api/1.0'
 
@@ -18,7 +19,10 @@ const App = (): JSX.Element => {
       <div className={AppStyles.content}>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/profile/*" element={<ProfilePageContainer />} />
+          <Route
+            path="/profile/:user_id"
+            element={<ProfilePageContainer router={{} as WithRouterProps} />}
+          />
           <Route path="/dialog/*" element={<MessagesPage />} />
           <Route path="/users" element={<UsersContainer />} />
         </Routes>
