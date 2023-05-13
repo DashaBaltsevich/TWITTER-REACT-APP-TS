@@ -44,11 +44,33 @@ export interface UsersPageType {
   currentPage: number
   isLoading: boolean
 }
+export interface UserProfilePageType {
+  userId: number | null
+  aboutMe: string
+  lookingForAJob: boolean
+  lookingForAJobDescription: string
+  fullName: string
+  contacts: {
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
+  }
+  photos: {
+    small: string | null
+    large: string | null
+  }
+}
 
 export interface StateTypes {
   postsPage: PostsPageType
   messagesPage: MessagesPageType
   usersPage: UsersPageType
+  userProfilePage: UserProfilePageType
 }
 
 export enum TypeAction {
@@ -60,7 +82,8 @@ export enum TypeAction {
   UNFOLLOW_USER,
   SET_USERS,
   SET_CURRENT_PAGE,
-  SET_LOADING_STATE
+  SET_LOADING_STATE,
+  SET_USER_PROFILE
 }
 
 export interface ActionTypes {
@@ -71,4 +94,5 @@ export interface ActionTypes {
   totalUsersCount?: number
   currentPage?: number
   isLoading?: boolean
+  profile?: UserProfilePageType
 }

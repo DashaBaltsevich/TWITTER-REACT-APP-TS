@@ -1,4 +1,9 @@
-import { TypeAction, ActionTypes, UserType } from '../types'
+import {
+  TypeAction,
+  ActionTypes,
+  UserType,
+  UserProfilePageType
+} from '../types'
 
 export const addPost = (): ActionTypes => ({
   type: TypeAction.ADD_POST
@@ -45,4 +50,9 @@ export const setCurrentPage = (currentPage: number): ActionTypes => ({
 export const setIsLoading = (isLoading: boolean): ActionTypes => ({
   type: TypeAction.SET_LOADING_STATE,
   isLoading: isLoading
+})
+
+export const setUserProfile = (profile: UserProfilePageType): ActionTypes => ({
+  type: TypeAction.SET_USER_PROFILE,
+  profile: profile
 })

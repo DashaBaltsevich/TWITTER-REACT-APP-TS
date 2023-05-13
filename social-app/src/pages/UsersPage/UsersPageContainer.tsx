@@ -30,7 +30,7 @@ class UsersPageAPIContainer extends React.Component<PropsType> {
   apiRequest = () => {
     this.props.setIsLoading(true)
     axios
-      .get(`${URL}`, {
+      .get(`${URL}/users`, {
         params: {
           count: this.props.pageSize,
           page: this.props.currentPage

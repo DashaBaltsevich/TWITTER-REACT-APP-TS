@@ -2,8 +2,10 @@ import { combineReducers, createStore } from 'redux'
 import { messagesReducer } from './messages-reducer'
 import { postsReducer } from './posts-reducer'
 import { usersReducer } from './users-reducer'
+import { userProfileReducer } from './profile-reducer'
 
 export const reducers = combineReducers({
+  userProfilePage: userProfileReducer,
   postsPage: postsReducer,
   messagesPage: messagesReducer,
   usersPage: usersReducer
