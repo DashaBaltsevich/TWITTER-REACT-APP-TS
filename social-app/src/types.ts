@@ -66,11 +66,23 @@ export interface UserProfilePageType {
   }
 }
 
+export interface UserDataType {
+  id: number
+  email: string
+  login: string
+}
+
+export interface UserInformationType {
+  userInformation: UserDataType | null
+  isAuthorized: boolean
+}
+
 export interface StateTypes {
   postsPage: PostsPageType
   messagesPage: MessagesPageType
   usersPage: UsersPageType
   userProfilePage: UserProfilePageType
+  auth: UserInformationType
 }
 
 export enum TypeAction {
@@ -83,7 +95,9 @@ export enum TypeAction {
   SET_USERS,
   SET_CURRENT_PAGE,
   SET_LOADING_STATE,
-  SET_USER_PROFILE
+  SET_USER_PROFILE,
+  SET_USER_INFORMATION,
+  SET_AUTHORIZATION_STATE
 }
 
 export interface ActionTypes {
@@ -95,4 +109,6 @@ export interface ActionTypes {
   currentPage?: number
   isLoading?: boolean
   profile?: UserProfilePageType
+  userInformation?: UserDataType
+  isAuthorized?: boolean
 }

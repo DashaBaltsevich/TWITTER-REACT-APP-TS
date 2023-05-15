@@ -2,7 +2,8 @@ import {
   TypeAction,
   ActionTypes,
   UserType,
-  UserProfilePageType
+  UserProfilePageType,
+  UserDataType
 } from '../types'
 
 export const addPost = (): ActionTypes => ({
@@ -55,4 +56,14 @@ export const setIsLoading = (isLoading: boolean): ActionTypes => ({
 export const setUserProfile = (profile: UserProfilePageType): ActionTypes => ({
   type: TypeAction.SET_USER_PROFILE,
   profile: profile
+})
+
+export const setUserInformation = (userData: UserDataType): ActionTypes => ({
+  type: TypeAction.SET_USER_INFORMATION,
+  userInformation: userData
+})
+
+export const setAuthorizationState = (isAuthorized: boolean): ActionTypes => ({
+  type: TypeAction.SET_AUTHORIZATION_STATE,
+  isAuthorized: isAuthorized
 })

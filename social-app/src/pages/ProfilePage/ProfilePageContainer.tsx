@@ -19,9 +19,9 @@ interface PropsType {
 
 class ProfilePageAPIContainer extends React.Component<PropsType> {
   componentDidMount(): void {
-    console.log(this.props.router)
+    let userId = this.props.router.params.user_id || 29063
     axios
-      .get(`${URL}/profile/${this.props.router.params.user_id}`)
+      .get(`${URL}/profile/${userId}`)
       .then((response) => this.props.setUserProfile(response.data))
   }
   render() {

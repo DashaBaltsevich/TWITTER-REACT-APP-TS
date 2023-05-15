@@ -1,11 +1,15 @@
-import React, { FC } from 'react'
+import React from 'react'
 // import NavBarStyles from './NavBar.module.scss'
 import { NavLinks } from '../index'
 
-export const NavBar: FC = (): JSX.Element => {
+export const NavBar = ({
+  isAuthorized
+}: {
+  isAuthorized: boolean
+}): JSX.Element => {
   return (
     <nav>
-      <NavLinks />
+      <NavLinks isAuthorized={isAuthorized} />
     </nav>
   )
 }

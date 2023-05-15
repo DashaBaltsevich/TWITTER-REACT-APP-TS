@@ -1,16 +1,23 @@
-import { combineReducers, createStore } from 'redux'
+import { combineReducers, createStore, applyMiddleware } from 'redux'
 import { messagesReducer } from './messages-reducer'
 import { postsReducer } from './posts-reducer'
 import { usersReducer } from './users-reducer'
 import { userProfileReducer } from './profile-reducer'
+import { authReducer } from './auth-reducer'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import thunk from 'redux-thunk'
 
 export const reducers = combineReducers({
   userProfilePage: userProfileReducer,
   postsPage: postsReducer,
   messagesPage: messagesReducer,
-  usersPage: usersReducer
+  usersPage: usersReducer,
+  auth: authReducer
 })
-export const store = createStore(reducers)
+export const store = createStore(
+  reducers,
+  composeWithDevTools(applyMiddleware(thunk))
+)
 
 //@ts-ignore
 window.store = store.getState()
