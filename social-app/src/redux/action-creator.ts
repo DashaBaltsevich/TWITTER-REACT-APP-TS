@@ -58,7 +58,9 @@ export const setUserProfile = (profile: UserProfilePageType): ActionTypes => ({
   profile: profile
 })
 
-export const setUserInformation = (userData: UserDataType): ActionTypes => ({
+export const setUserInformation = (
+  userData: UserDataType | null
+): ActionTypes => ({
   type: TypeAction.SET_USER_INFORMATION,
   userInformation: userData
 })

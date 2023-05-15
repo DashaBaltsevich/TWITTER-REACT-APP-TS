@@ -1,6 +1,6 @@
 import React from 'react'
 import AppStyles from './App.module.scss'
-import { NavBar, PrivateRoute } from './components'
+import { ModalWindow, NavBar, PrivateRoute } from './components'
 import {
   HomePage,
   ProfilePageContainer,
@@ -23,13 +23,33 @@ export const URL = 'https://social-network.samuraijs.com/api/1.0'
 interface PropsType {
   userInformation: UserDataType | null
   isAuthorized: boolean
-  setUserInformation: (userInformation: UserDataType) => void
+  setUserInformation: (userInformation: UserDataType | null) => void
   setAuthorizationState: (isAuthorized: boolean) => void
 }
-class AppAPI extends React.Component<PropsType> {
+
+interface StateType {
+  isLoginFormVisible: boolean
+}
+class AppAPI extends React.Component<PropsType, StateType> {
   constructor(props: PropsType) {
     super(props)
-    this.state = ''
+    this.state = {
+      isLoginFormVisible: false
+    }
+    this.setIsLoginFormVisible = this.setIsLoginFormVisible.bind(this)
+  }
+
+  setIsLoginFormVisible = (isVisible: boolean): void => {
+    this.setState({ isLoginFormVisible: isVisible })
+  }
+
+  handleLogOut = (): void => {
+    axios.delete(`${URL}/auth/login`).then((response) => {
+      if (response.data.resultCode === 0) {
+        this.props.setUserInformation(null)
+        this.props.setAuthorizationState(false)
+      }
+    })
   }
 
   async componentDidMount(): Promise<void> {
@@ -54,7 +74,11 @@ class AppAPI extends React.Component<PropsType> {
   render() {
     return (
       <div className={AppStyles.container}>
-        <NavBar isAuthorized={this.props.isAuthorized} />
+        <NavBar
+          isAuthorized={this.props.isAuthorized}
+          setIsLoginFormVisible={this.setIsLoginFormVisible}
+          handleLogOut={this.handleLogOut}
+        />
         <div className={AppStyles.content}>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -76,10 +100,16 @@ class AppAPI extends React.Component<PropsType> {
             />
 
             <Route path="/users" element={<UsersContainer />} />
-
-            <Route path="/login" element={<LogInPageContainer />} />
           </Routes>
         </div>
+        {this.state.isLoginFormVisible && (
+          <ModalWindow>
+            <LogInPageContainer
+              setIsLoginFormVisible={this.setIsLoginFormVisible}
+              setAuthorizationState={this.props.setAuthorizationState}
+            />
+          </ModalWindow>
+        )}
       </div>
     )
   }

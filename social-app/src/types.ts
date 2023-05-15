@@ -109,6 +109,6 @@ export interface ActionTypes {
   currentPage?: number
   isLoading?: boolean
   profile?: UserProfilePageType
-  userInformation?: UserDataType
+  userInformation?: UserDataType | null
   isAuthorized?: boolean
 }

@@ -6,9 +6,13 @@ import Profile from '../../assets/profile.svg'
 import './NavLinks.scss'
 
 export const NavLinks = ({
-  isAuthorized
+  isAuthorized,
+  setIsLoginFormVisible,
+  handleLogOut
 }: {
   isAuthorized: boolean
+  setIsLoginFormVisible: (isVisible: boolean) => void
+  handleLogOut: () => void
 }): JSX.Element => {
   const setActive = ({ isActive }: { isActive: boolean }): string =>
     isActive ? 'l-nav__link-active l-nav__link' : 'l-nav__link'
@@ -42,9 +46,19 @@ export const NavLinks = ({
         </NavLink>
       </li>
       <li className="l-nav__item">
-        <NavLink to="/login" className={setActive}>
-          <button>LogIn</button>
-        </NavLink>
+        {isAuthorized ? (
+          <button
+            onClick={() => {
+              if (window.confirm('Are you sure?')) {
+                handleLogOut()
+              }
+            }}
+          >
+            LogOut
+          </button>
+        ) : (
+          <button onClick={() => setIsLoginFormVisible(true)}>LogIn</button>
+        )}
       </li>
     </ul>
   )

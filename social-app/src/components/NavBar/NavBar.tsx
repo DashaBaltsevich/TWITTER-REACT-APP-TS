@@ -3,13 +3,21 @@ import React from 'react'
 import { NavLinks } from '../index'
 
 export const NavBar = ({
-  isAuthorized
+  isAuthorized,
+  setIsLoginFormVisible,
+  handleLogOut
 }: {
   isAuthorized: boolean
+  setIsLoginFormVisible: (isVisible: boolean) => void
+  handleLogOut: () => void
 }): JSX.Element => {
   return (
     <nav>
-      <NavLinks isAuthorized={isAuthorized} />
+      <NavLinks
+        isAuthorized={isAuthorized}
+        setIsLoginFormVisible={setIsLoginFormVisible}
+        handleLogOut={handleLogOut}
+      />
     </nav>
   )
 }

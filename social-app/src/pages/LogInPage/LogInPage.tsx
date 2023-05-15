@@ -2,8 +2,6 @@ import React from 'react'
 import { ErrorMessage, Field, Formik, Form } from 'formik'
 import * as yup from 'yup'
 import styles from './LogInPage.module.scss'
-import axios from 'axios'
-import { URL } from '../../App'
 
 const validationSchema = yup.object({
   email: yup
@@ -17,27 +15,24 @@ const validationSchema = yup.object({
     .min(4, 'Must be more than 4 characters')
 })
 
-interface LoginDataType {
+export interface LoginDataType {
   email: string
   password: string
   rememberMe: boolean
 }
 
-export const LogInPage = () => {
+export const LogInPage = ({
+  login
+}: {
+  login: (values: LoginDataType) => void
+}) => {
   const initialValues: LoginDataType = {
     email: '',
     password: '',
     rememberMe: false
   }
   const handleSubmitForm = (values: LoginDataType) => {
-    console.log(values)
-    axios
-      .post(`${URL}/auth/login`, {
-        email: values.email,
-        password: values.password,
-        rememberMe: values.rememberMe
-      })
-      .then((response) => console.log(response))
+    login(values)
   }
   return (
     <section>
