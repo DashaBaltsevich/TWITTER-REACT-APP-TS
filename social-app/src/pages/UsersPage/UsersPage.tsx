@@ -4,43 +4,51 @@ import styles from './UsersPage.module.scss'
 import { UserType } from '../../types'
 
 interface PropsType {
-  users: UserType[]
-  pageSize: number
-  totalUsersCount: number
-  currentPage: number
+  notFriends: {
+    users: UserType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+  }
+  friends: {
+    users: UserType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+  }
+  isLoading: boolean
   followUser: (id: number) => void
   unFollowUser: (id: number) => void
-  onPageChanged: (page: number) => void
+  onPageChanged: () => void
+  isAuthorized: boolean
 }
 
 export const UsersPage = ({
-  users,
-  pageSize,
-  totalUsersCount,
-  currentPage,
+  friends,
+  notFriends,
+  isLoading,
   followUser,
   unFollowUser,
-  onPageChanged
+  onPageChanged,
+  isAuthorized
 }: PropsType) => {
   return (
     <section className={styles.s__users}>
       <Friends
-        users={users}
-        pageSize={pageSize}
-        totalUsersCount={totalUsersCount}
-        currentPage={currentPage}
+        friends={friends}
+        isLoading={isLoading}
         followUser={followUser}
         unFollowUser={unFollowUser}
         onPageChanged={onPageChanged}
+        isAuthorized={isAuthorized}
       />
       <Users
-        users={users}
-        pageSize={pageSize}
-        totalUsersCount={totalUsersCount}
-        currentPage={currentPage}
+        notFriends={notFriends}
+        isLoading={isLoading}
         followUser={followUser}
         unFollowUser={unFollowUser}
         onPageChanged={onPageChanged}
+        isAuthorized={isAuthorized}
       />
     </section>
   )

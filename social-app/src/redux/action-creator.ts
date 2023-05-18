@@ -34,18 +34,27 @@ export const unFollowUser = (id: number): ActionTypes => ({
   id: id
 })
 
-export const setUsers = (
-  users: UserType[],
+export const setNotFriends = (
+  notFriends: UserType[],
   totalUsersCount: number
 ): ActionTypes => ({
-  type: TypeAction.SET_USERS,
-  users: users,
+  type: TypeAction.SET_NOT_FRIENDS,
+  notFriends: notFriends,
   totalUsersCount: totalUsersCount
 })
 
-export const setCurrentPage = (currentPage: number): ActionTypes => ({
-  type: TypeAction.SET_CURRENT_PAGE,
+export const setFriends = (friends: UserType[]): ActionTypes => ({
+  type: TypeAction.SET_FRIENDS,
+  friends: friends
+})
+
+export const setCurrentFriendsPage = (currentPage: number): ActionTypes => ({
+  type: TypeAction.SET_CURRENT_FRIENDS_PAGE,
   currentPage: currentPage
+})
+
+export const showMoreNotFriendsOnPage = (): ActionTypes => ({
+  type: TypeAction.SHOW_MORE_NOT_FRIENDS_ON_PAGE
 })
 
 export const setIsLoading = (isLoading: boolean): ActionTypes => ({

@@ -31,20 +31,21 @@ export const NavLinks = ({
         </NavLink>
       </li>
       {isAuthorized && (
-        <li className="l-nav__item">
-          <NavLink to="/dialog" className={setActive}>
-            <img src={Messages} alt="messages" />
-            Messages
-          </NavLink>
-        </li>
+        <>
+          <li className="l-nav__item">
+            <NavLink to="/dialog" className={setActive}>
+              <img src={Messages} alt="messages" />
+              Messages
+            </NavLink>
+          </li>
+          <li className="l-nav__item">
+            <NavLink to="/users" className={setActive}>
+              <img src={Messages} alt="users" />
+              Friends
+            </NavLink>
+          </li>
+        </>
       )}
-
-      <li className="l-nav__item">
-        <NavLink to="/users" className={setActive}>
-          <img src={Messages} alt="users" />
-          Friends
-        </NavLink>
-      </li>
       <li className="l-nav__item">
         {isAuthorized ? (
           <button

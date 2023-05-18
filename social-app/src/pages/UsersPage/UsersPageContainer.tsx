@@ -3,9 +3,11 @@ import { connect } from 'react-redux'
 import { StateTypes, UserType, UsersPageType } from '../../types'
 import {
   followUser,
-  setCurrentPage,
+  setCurrentFriendsPage,
+  setFriends,
   setIsLoading,
-  setUsers,
+  setNotFriends,
+  showMoreNotFriendsOnPage,
   unFollowUser
 } from '../../redux/action-creator'
 import { UsersPage } from './UsersPage'
@@ -14,40 +16,72 @@ import axios from 'axios'
 import { Preloader } from '../../components'
 
 interface PropsType {
-  users: UserType[]
-  pageSize: number
-  totalUsersCount: number
-  currentPage: number
+  notFriends: {
+    users: UserType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+  }
+  friends: {
+    users: UserType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+  }
   isLoading: boolean
   followUser: (id: number) => void
   unFollowUser: (id: number) => void
-  setUsers: (users: UserType[], totalUsersCount: number) => void
-  setCurrentPage: (currentPage: number) => void
+  setNotFriends: (notFriends: UserType[], totalUsersCount: number) => void
+  setFriends: (friends: UserType[], totalUsersCount: number) => void
+  setCurrentFriendsPage: (currentPage: number) => void
   setIsLoading: (isLoading: boolean) => void
+  showMoreNotFriendsOnPage: () => void
+  isAuthorized: boolean
 }
 
 class UsersPageAPIContainer extends React.Component<PropsType> {
-  apiRequest = () => {
+  apiNotFriendsRequest = () => {
     this.props.setIsLoading(true)
     axios
       .get(`${URL}/users`, {
         params: {
-          count: this.props.pageSize,
-          page: this.props.currentPage
-        }
+          count: this.props.notFriends.pageSize,
+          friend: false
+          // page: this.props.currentPage
+        },
+        withCredentials: true
       })
       .then((response) => {
         this.props.setIsLoading(false)
-        this.props.setUsers(response.data.items, response.data.totalCount)
+        this.props.setNotFriends(response.data.items, response.data.totalCount)
+      })
+      .catch((error) => console.log(error))
+  }
+  apiFriendsRequest = () => {
+    this.props.setIsLoading(true)
+    axios
+      .get(`${URL}/users`, {
+        params: {
+          count: this.props.friends.pageSize,
+          page: this.props.friends.currentPage,
+          friend: true
+        },
+        withCredentials: true
+      })
+      .then((response) => {
+        this.props.setIsLoading(false)
+        this.props.setFriends(response.data.items, response.data.totalCount)
       })
       .catch((error) => console.log(error))
   }
   componentDidMount(): void {
-    this.apiRequest()
+    this.apiFriendsRequest()
+    this.apiNotFriendsRequest()
   }
-  onPageChanged = (page: number) => {
-    this.props.setCurrentPage(page)
-    this.apiRequest()
+  onPageChanged = () => {
+    // this.props.setCurrentPage(page)
+    this.props.showMoreNotFriendsOnPage()
+    this.apiNotFriendsRequest()
   }
 
   render(): React.ReactNode {
@@ -55,13 +89,13 @@ class UsersPageAPIContainer extends React.Component<PropsType> {
       <>
         {!this.props.isLoading ? (
           <UsersPage
-            users={this.props.users}
-            pageSize={this.props.pageSize}
-            currentPage={this.props.currentPage}
-            totalUsersCount={this.props.totalUsersCount}
+            notFriends={this.props.notFriends}
+            friends={this.props.friends}
+            isLoading={this.props.isLoading}
             onPageChanged={this.onPageChanged}
             followUser={this.props.followUser}
             unFollowUser={this.props.unFollowUser}
+            isAuthorized={this.props.isAuthorized}
           />
         ) : (
           <Preloader />
@@ -73,10 +107,18 @@ class UsersPageAPIContainer extends React.Component<PropsType> {
 
 const mapStateToProps = (state: StateTypes): UsersPageType => {
   return {
-    users: state.usersPage.users,
-    pageSize: state.usersPage.pageSize,
-    totalUsersCount: state.usersPage.totalUsersCount,
-    currentPage: state.usersPage.currentPage,
+    notFriends: {
+      users: state.usersPage.notFriends.users,
+      pageSize: state.usersPage.notFriends.pageSize,
+      totalUsersCount: state.usersPage.notFriends.totalUsersCount,
+      currentPage: state.usersPage.notFriends.currentPage
+    },
+    friends: {
+      users: state.usersPage.friends.users,
+      pageSize: state.usersPage.friends.pageSize,
+      totalUsersCount: state.usersPage.friends.totalUsersCount,
+      currentPage: state.usersPage.friends.currentPage
+    },
     isLoading: state.usersPage.isLoading
   }
 }
@@ -101,10 +143,12 @@ const mapStateToProps = (state: StateTypes): UsersPageType => {
 //   }
 // }
 
-export const UsersContainer = connect(mapStateToProps, {
+export const UsersPageContainer = connect(mapStateToProps, {
   followUser,
   unFollowUser,
-  setUsers,
-  setCurrentPage,
-  setIsLoading
+  setFriends,
+  setNotFriends,
+  setCurrentFriendsPage,
+  setIsLoading,
+  showMoreNotFriendsOnPage
 })(UsersPageAPIContainer)

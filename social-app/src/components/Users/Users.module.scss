@@ -7,6 +7,13 @@
     font-weight: 600;
     font-size: 20px;
   }
+  .l__pages {
+    padding: 12px 16px;
+  }
+
+  .currentPage {
+    font-weight: 600;
+  }
 }
 
 .l__users {
@@ -31,12 +38,4 @@
     padding: 0 15px;
     font-weight: 700;
   }
-}
-
-.buttonPage {
-  color: yellow;
-}
-
-.currentPage {
-  font-weight: 600;
 }

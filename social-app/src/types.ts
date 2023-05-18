@@ -38,10 +38,18 @@ export interface UserType {
 }
 
 export interface UsersPageType {
-  users: UserType[]
-  pageSize: number
-  totalUsersCount: number
-  currentPage: number
+  notFriends: {
+    users: UserType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+  }
+  friends: {
+    users: UserType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+  }
   isLoading: boolean
 }
 export interface UserProfilePageType {
@@ -92,19 +100,22 @@ export enum TypeAction {
   UPDATE_NEW_MESSAGE_TEXT,
   FOLLOW_USER,
   UNFOLLOW_USER,
-  SET_USERS,
-  SET_CURRENT_PAGE,
+  SET_NOT_FRIENDS,
+  SET_FRIENDS,
+  SET_CURRENT_FRIENDS_PAGE,
   SET_LOADING_STATE,
   SET_USER_PROFILE,
   SET_USER_INFORMATION,
-  SET_AUTHORIZATION_STATE
+  SET_AUTHORIZATION_STATE,
+  SHOW_MORE_NOT_FRIENDS_ON_PAGE
 }
 
 export interface ActionTypes {
   type: TypeAction
   text?: string
   id?: number
-  users?: UserType[]
+  friends?: UserType[]
+  notFriends?: UserType[]
   totalUsersCount?: number
   currentPage?: number
   isLoading?: boolean

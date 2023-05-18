@@ -9,6 +9,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 interface PropsType {
   profile: UserProfilePageType
+  myId?: number
   setUserProfile: (profile: UserProfilePageType) => void
   router: {
     location: any
@@ -19,7 +20,7 @@ interface PropsType {
 
 class ProfilePageAPIContainer extends React.Component<PropsType> {
   componentDidMount(): void {
-    let userId = this.props.router.params.user_id || 29063
+    let userId = this.props.router.params.user_id || this.props?.myId || 29063
     axios
       .get(`${URL}/profile/${userId}`)
       .then((response) => this.props.setUserProfile(response.data))

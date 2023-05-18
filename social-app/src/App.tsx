@@ -5,7 +5,7 @@ import {
   HomePage,
   ProfilePageContainer,
   MessagesPage,
-  UsersContainer,
+  UsersPageContainer,
   LogInPageContainer
 } from './pages'
 import { Routes, Route } from 'react-router-dom'
@@ -84,7 +84,14 @@ class AppAPI extends React.Component<PropsType, StateType> {
             <Route path="/" element={<HomePage />} />
             <Route
               path="/profile"
-              element={<ProfilePageContainer router={{} as WithRouterProps} />}
+              element={
+                <PrivateRoute isAllowed={this.props.isAuthorized}>
+                  <ProfilePageContainer
+                    router={{} as WithRouterProps}
+                    myId={this.props.userInformation?.id}
+                  />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/profile/:user_id"
@@ -99,7 +106,14 @@ class AppAPI extends React.Component<PropsType, StateType> {
               }
             />
 
-            <Route path="/users" element={<UsersContainer />} />
+            <Route
+              path="/users"
+              element={
+                <PrivateRoute isAllowed={this.props.isAuthorized}>
+                  <UsersPageContainer isAuthorized={this.props.isAuthorized} />
+                </PrivateRoute>
+              }
+            />
           </Routes>
         </div>
         {this.state.isLoginFormVisible && (
