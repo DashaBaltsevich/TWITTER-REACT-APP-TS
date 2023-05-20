@@ -2,8 +2,7 @@ import React from 'react'
 import { UserType } from '../../types'
 import { UserPrevue } from '..'
 import styles from './Users.module.scss'
-import { URL } from '../../App'
-import axios from 'axios'
+import { userAPI } from '../../api/api'
 
 interface UsersPropsType {
   notFriends: {
@@ -20,28 +19,12 @@ interface UsersPropsType {
 }
 
 export class Users extends React.Component<UsersPropsType> {
-  handleFollowButton = (followed: boolean, id: number) => {
-    if (followed) {
-      this.props.unFollowUser(id)
-    } else {
-      try {
-        axios
-          .post(
-            `${URL}/follow/${id}`,
-            {},
-            {
-              withCredentials: this.props.isAuthorized
-            }
-          )
-          .then((response) => {
-            if (response.data.resultCode === 0) {
-              this.props.followUser(id)
-            }
-          })
-      } catch (err) {
-        console.dir(err)
+  handleFollowButton = (id: number) => {
+    userAPI.followUser(id).then((response) => {
+      if (response.data.resultCode === 0) {
+        this.props.followUser(id)
       }
-    }
+    })
   }
 
   range = (from: number, to: number, step = 1): number[] => {
@@ -87,14 +70,14 @@ export class Users extends React.Component<UsersPropsType> {
             }
           })}
         </ul> */}
-        {this.props.notFriends.users && (
+        {this.props.notFriends.users.length && (
           <ul className={styles.l__users}>
             {this.props.notFriends.users.map((user) => (
               <li className={styles.l__users_item} key={user.id}>
                 <UserPrevue user={user} />
                 <button
                   onClick={() => {
-                    this.handleFollowButton(user.followed, user.id)
+                    this.handleFollowButton(user.id)
                   }}
                 >
                   {user.followed ? 'Unfollow' : 'Follow'}

@@ -33,15 +33,11 @@ export const usersReducer = (
             return el
           })
         },
-        friends: { ...state.friends, users: { ...state.friends.users } }
+        friends: { ...state.friends, users: state.friends.users }
       }
     case TypeAction.UNFOLLOW_USER:
       return {
         ...state,
-        notFriends: {
-          ...state.notFriends,
-          users: { ...state.notFriends.users }
-        },
         friends: {
           ...state.friends,
           users: state.friends.users.map((el) => {
@@ -50,6 +46,10 @@ export const usersReducer = (
             }
             return el
           })
+        },
+        notFriends: {
+          ...state.notFriends,
+          users: [...state.notFriends.users]
         }
       }
     case TypeAction.SET_NOT_FRIENDS:
@@ -62,7 +62,7 @@ export const usersReducer = (
             : [...state.notFriends.users],
           totalUsersCount: action.totalUsersCount ? action.totalUsersCount : 0
         },
-        friends: { ...state.friends, users: state.friends.users }
+        friends: { ...state.friends, users: [...state.friends.users] }
       }
     case TypeAction.SET_FRIENDS:
       return {
@@ -76,7 +76,7 @@ export const usersReducer = (
         },
         notFriends: {
           ...state.notFriends,
-          users: state.notFriends.users
+          users: [...state.notFriends.users]
         }
       }
     case TypeAction.SET_CURRENT_FRIENDS_PAGE:
@@ -89,7 +89,7 @@ export const usersReducer = (
         },
         notFriends: {
           ...state.notFriends,
-          users: state.notFriends.users
+          users: [...state.notFriends.users]
         }
       }
     case TypeAction.SHOW_MORE_NOT_FRIENDS_ON_PAGE:
@@ -97,19 +97,19 @@ export const usersReducer = (
         ...state,
         notFriends: {
           ...state.notFriends,
-          users: state.notFriends.users,
+          users: [...state.notFriends.users],
           pageSize: (state.notFriends.pageSize += 3)
         },
-        friends: { ...state.friends, users: state.friends.users }
+        friends: { ...state.friends, users: [...state.friends.users] }
       }
     case TypeAction.SET_LOADING_STATE:
       return {
         ...state,
         isLoading: action.isLoading !== undefined ? action.isLoading : false,
-        friends: { ...state.friends, users: state.friends.users },
+        friends: { ...state.friends, users: [...state.friends.users] },
         notFriends: {
           ...state.notFriends,
-          users: state.notFriends.users
+          users: [...state.notFriends.users]
         }
       }
 

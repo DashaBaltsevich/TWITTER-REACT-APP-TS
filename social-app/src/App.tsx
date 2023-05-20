@@ -10,15 +10,13 @@ import {
 } from './pages'
 import { Routes, Route } from 'react-router-dom'
 import { WithRouterProps } from './pages/ProfilePage/ProfilePageContainer'
-import axios from 'axios'
 import { connect } from 'react-redux'
 import {
   setAuthorizationState,
   setUserInformation
 } from './redux/action-creator'
 import { StateTypes, UserDataType, UserInformationType } from './types'
-
-export const URL = 'https://social-network.samuraijs.com/api/1.0'
+import { authAPI } from './api/api'
 
 interface PropsType {
   userInformation: UserDataType | null
@@ -44,7 +42,7 @@ class AppAPI extends React.Component<PropsType, StateType> {
   }
 
   handleLogOut = (): void => {
-    axios.delete(`${URL}/auth/login`).then((response) => {
+    authAPI.logOut().then((response) => {
       if (response.data.resultCode === 0) {
         this.props.setUserInformation(null)
         this.props.setAuthorizationState(false)
@@ -54,21 +52,15 @@ class AppAPI extends React.Component<PropsType, StateType> {
 
   async componentDidMount(): Promise<void> {
     try {
-      await axios
-        .get(`${URL}/auth/me`, {
-          withCredentials: true
-        })
-        .then((response) => {
-          if (response.data.resultCode === 0) {
-            this.props.setUserInformation(response.data.data)
-            this.props.setAuthorizationState(true)
-          }
-        })
+      await authAPI.authorization().then((response) => {
+        if (response.data.resultCode === 0) {
+          this.props.setUserInformation(response.data.data)
+          this.props.setAuthorizationState(true)
+        }
+      })
     } catch (err) {
       console.log(err)
     }
-
-    console.log(this.props.isAuthorized)
   }
 
   render() {

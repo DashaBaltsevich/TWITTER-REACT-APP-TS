@@ -1,8 +1,7 @@
-import axios from 'axios'
 import React from 'react'
 import { connect } from 'react-redux'
 import { LogInPage, LoginDataType } from './LogInPage'
-import { URL } from '../../App'
+import { authAPI } from '../../api/api'
 
 interface PropsType {
   setIsLoginFormVisible: (isVisible: boolean) => void
@@ -11,19 +10,12 @@ interface PropsType {
 
 class LogInPageAPIContainer extends React.Component<PropsType> {
   login = (values: LoginDataType) => {
-    axios
-      .post(`${URL}/auth/login`, {
-        email: values.email,
-        password: values.password,
-        rememberMe: values.rememberMe
-      })
-      .then((response) => {
-        if (response.data.resultCode === 0) {
-          this.props.setAuthorizationState(true)
-          this.props.setIsLoginFormVisible(false)
-          console.log(response)
-        }
-      })
+    authAPI.login(values).then((response) => {
+      if (response.data.resultCode === 0) {
+        this.props.setAuthorizationState(true)
+        this.props.setIsLoginFormVisible(false)
+      }
+    })
   }
   render() {
     return <LogInPage login={this.login} />

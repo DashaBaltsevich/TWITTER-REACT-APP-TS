@@ -11,9 +11,8 @@ import {
   unFollowUser
 } from '../../redux/action-creator'
 import { UsersPage } from './UsersPage'
-import { URL } from '../../App'
-import axios from 'axios'
 import { Preloader } from '../../components'
+import { userAPI } from '../../api/api'
 
 interface PropsType {
   notFriends: {
@@ -42,37 +41,19 @@ interface PropsType {
 class UsersPageAPIContainer extends React.Component<PropsType> {
   apiNotFriendsRequest = () => {
     this.props.setIsLoading(true)
-    axios
-      .get(`${URL}/users`, {
-        params: {
-          count: this.props.notFriends.pageSize,
-          friend: false
-          // page: this.props.currentPage
-        },
-        withCredentials: true
-      })
-      .then((response) => {
-        this.props.setIsLoading(false)
-        this.props.setNotFriends(response.data.items, response.data.totalCount)
-      })
-      .catch((error) => console.log(error))
+    userAPI.getNotFriends(this.props.notFriends.pageSize).then((response) => {
+      this.props.setIsLoading(false)
+      this.props.setNotFriends(response.data.items, response.data.totalCount)
+    })
   }
   apiFriendsRequest = () => {
     this.props.setIsLoading(true)
-    axios
-      .get(`${URL}/users`, {
-        params: {
-          count: this.props.friends.pageSize,
-          page: this.props.friends.currentPage,
-          friend: true
-        },
-        withCredentials: true
-      })
+    userAPI
+      .getFriends(this.props.friends.pageSize, this.props.friends.currentPage)
       .then((response) => {
         this.props.setIsLoading(false)
         this.props.setFriends(response.data.items, response.data.totalCount)
       })
-      .catch((error) => console.log(error))
   }
   componentDidMount(): void {
     this.apiFriendsRequest()

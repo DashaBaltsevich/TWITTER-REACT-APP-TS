@@ -1,11 +1,10 @@
 import React from 'react'
 import { ProfilePage } from './ProfilePage'
-import axios from 'axios'
-import { URL } from '../../App'
 import { connect } from 'react-redux'
 import { StateTypes, UserProfilePageType } from '../../types'
 import { setUserProfile } from '../../redux/action-creator'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { profileAPI } from '../../api/api'
 
 interface PropsType {
   profile: UserProfilePageType
@@ -21,8 +20,8 @@ interface PropsType {
 class ProfilePageAPIContainer extends React.Component<PropsType> {
   componentDidMount(): void {
     let userId = this.props.router.params.user_id || this.props?.myId || 29063
-    axios
-      .get(`${URL}/profile/${userId}`)
+    profileAPI
+      .getUserProfile(userId)
       .then((response) => this.props.setUserProfile(response.data))
   }
   render() {

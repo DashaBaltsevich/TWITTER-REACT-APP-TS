@@ -28,7 +28,6 @@ export const userProfileReducer = (
 ): UserProfilePageType => {
   switch (action.type) {
     case TypeAction.SET_USER_PROFILE:
-      console.log(action.profile)
       const newProfile =
         action.profile !== undefined ? action.profile : initialState
       return {
