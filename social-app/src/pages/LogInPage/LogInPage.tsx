@@ -2,6 +2,7 @@ import React from 'react'
 import { ErrorMessage, Field, Formik, Form } from 'formik'
 import * as yup from 'yup'
 import styles from './LogInPage.module.scss'
+import Logo from '../../assets/logo.svg'
 
 const validationSchema = yup.object({
   email: yup
@@ -35,7 +36,12 @@ export const LogInPage = ({
     login(values)
   }
   return (
-    <section>
+    <section className={styles.s__login}>
+      <div className={styles.s__login_title_wrap}>
+        <h2 className={styles.s__login_title}>LogIn</h2>
+        <img src={Logo} alt="logo" />
+      </div>
+
       <Formik
         initialValues={initialValues}
         onSubmit={(values) => handleSubmitForm(values)}
@@ -60,7 +66,7 @@ export const LogInPage = ({
               <ErrorMessage
                 name="email"
                 component={({ children }: any) => (
-                  <p className="f-login__field-error">{children}</p>
+                  <p className={styles.f__login_field_error}>{children}</p>
                 )}
               />
             </div>
@@ -79,11 +85,13 @@ export const LogInPage = ({
               <ErrorMessage
                 name="password"
                 component={({ children }: any) => (
-                  <p className="f-login__field-error">{children}</p>
+                  <p className={styles.f__login_field_error}>{children}</p>
                 )}
               />
             </div>
-            <div className={styles.f__login_row}>
+            <div
+              className={`${styles.f__login_row} + ${styles.f__login_row_checkbox}`}
+            >
               <label
                 htmlFor="rememberMe"
                 className={styles.f__login_field_label}

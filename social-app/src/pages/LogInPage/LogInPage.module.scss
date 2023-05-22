@@ -1,1 +1,68 @@
+@import '../../App.module.scss';
 
+.s__login {
+  display: inline-flex;
+  align-items: center;
+  flex-direction: column;
+  vertical-align: middle;
+  text-align: start;
+  width: 410px;
+  color: #000;
+  font-size: 18px;
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  &_title {
+    margin-right: 20px;
+    &_wrap {
+      display: flex;
+    }
+  }
+
+  .f__login {
+    &_row {
+      margin-top: 20px;
+      &_checkbox {
+        display: flex;
+        align-items: center;
+        .f__login_field {
+          width: 20px;
+          margin-left: 20px;
+          &_label {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+    &_field {
+      padding: 20px 10px;
+      width: 250px;
+      height: 30px;
+      border: 1px $border-grey solid;
+      border-radius: 5px;
+      font-size: 16px;
+      background-color: #fff;
+
+      &_label {
+        display: inline-block;
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+
+      &_error {
+        margin-top: 5px;
+        color: #f44336;
+        font-size: 12px;
+      }
+    }
+    &_btn_submit {
+      color: #fff;
+      font-size: 18px;
+      margin-top: 40px;
+      width: 250px;
+      padding: 10px 10px;
+      border: 1px $blue solid;
+      background-color: $blue;
+    }
+  }
+}

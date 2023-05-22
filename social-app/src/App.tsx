@@ -109,7 +109,7 @@ class AppAPI extends React.Component<PropsType, StateType> {
           </Routes>
         </div>
         {this.state.isLoginFormVisible && (
-          <ModalWindow>
+          <ModalWindow setIsLoginFormVisible={this.setIsLoginFormVisible}>
             <LogInPageContainer
               setIsLoginFormVisible={this.setIsLoginFormVisible}
               setAuthorizationState={this.props.setAuthorizationState}
