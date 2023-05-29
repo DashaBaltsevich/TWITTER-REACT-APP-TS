@@ -1,9 +1,23 @@
-import { ActionTypes, TypeAction, UserInformationType } from '../types'
+import { TypeAction, UserInformationType, UserDataType } from '../types'
 
 const initialState: UserInformationType = {
   userInformation: null,
   isAuthorized: false
 }
+
+export type SetUserInformationActionType = {
+  type: TypeAction.SET_USER_INFORMATION
+  userInformation: UserDataType | null
+}
+
+export type SetAuthorizationStateActionType = {
+  type: TypeAction.SET_AUTHORIZATION_STATE
+  isAuthorized: boolean
+}
+
+type ActionTypes =
+  | SetUserInformationActionType
+  | SetAuthorizationStateActionType
 
 export const authReducer = (
   state: UserInformationType = initialState,
@@ -13,14 +27,12 @@ export const authReducer = (
     case TypeAction.SET_USER_INFORMATION:
       return {
         ...state,
-        userInformation:
-          action?.userInformation !== undefined ? action.userInformation : null
+        userInformation: action.userInformation
       }
     case TypeAction.SET_AUTHORIZATION_STATE:
       return {
         ...state,
-        isAuthorized:
-          action.isAuthorized !== undefined ? action.isAuthorized : false
+        isAuthorized: action.isAuthorized
       }
     default:
       return state

@@ -1,4 +1,4 @@
-import { UserProfilePageType, TypeAction, ActionTypes } from '../types'
+import { UserProfilePageType, TypeAction } from '../types'
 
 const initialState: UserProfilePageType = {
   userId: null,
@@ -22,14 +22,18 @@ const initialState: UserProfilePageType = {
   }
 }
 
+type SetUserProfileActionType = {
+  type: TypeAction.SET_USER_PROFILE
+  profile: UserProfilePageType
+}
+
 export const userProfileReducer = (
   state = initialState,
-  action: ActionTypes
+  action: SetUserProfileActionType
 ): UserProfilePageType => {
   switch (action.type) {
     case TypeAction.SET_USER_PROFILE:
-      const newProfile =
-        action.profile !== undefined ? action.profile : initialState
+      const newProfile = action.profile
       return {
         ...newProfile
       }

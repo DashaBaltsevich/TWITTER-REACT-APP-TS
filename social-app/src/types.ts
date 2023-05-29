@@ -109,17 +109,3 @@ export enum TypeAction {
   SET_AUTHORIZATION_STATE,
   SHOW_MORE_NOT_FRIENDS_ON_PAGE
 }
-
-export interface ActionTypes {
-  type: TypeAction
-  text?: string
-  id?: number
-  friends?: UserType[]
-  notFriends?: UserType[]
-  totalUsersCount?: number
-  currentPage?: number
-  isLoading?: boolean
-  profile?: UserProfilePageType
-  userInformation?: UserDataType | null
-  isAuthorized?: boolean
-}

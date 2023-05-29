@@ -1,4 +1,4 @@
-import { ActionTypes, MessagesPageType, TypeAction } from '../types'
+import { MessagesPageType, TypeAction } from '../types'
 
 const initialState: MessagesPageType = {
   messages: [
@@ -28,9 +28,18 @@ const initialState: MessagesPageType = {
   newMessageText: ''
 }
 
+export type AddMessageActionType = {
+  type: TypeAction.ADD_MESSAGE
+}
+
+export type UpdateNewMessageTextActionType = {
+  type: TypeAction.UPDATE_NEW_MESSAGE_TEXT
+  text: string
+}
+
 export const messagesReducer = (
   state: MessagesPageType = initialState,
-  action: ActionTypes
+  action: AddMessageActionType | UpdateNewMessageTextActionType
 ): MessagesPageType => {
   switch (action.type) {
     case TypeAction.ADD_MESSAGE:
@@ -46,7 +55,7 @@ export const messagesReducer = (
     case TypeAction.UPDATE_NEW_MESSAGE_TEXT:
       return {
         ...state,
-        newMessageText: action.text ? action.text : ''
+        newMessageText: action.text
       }
 
     default:

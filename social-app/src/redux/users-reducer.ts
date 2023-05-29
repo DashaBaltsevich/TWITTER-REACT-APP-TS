@@ -1,4 +1,4 @@
-import { ActionTypes, UsersPageType, TypeAction } from '../types'
+import { UsersPageType, TypeAction, UserType } from '../types'
 
 const initialState: UsersPageType = {
   notFriends: {
@@ -15,6 +15,51 @@ const initialState: UsersPageType = {
   },
   isLoading: true
 }
+
+export type FollowUserActionType = {
+  type: TypeAction.FOLLOW_USER
+  id: number
+}
+
+export type UnfollowUserActionType = {
+  type: TypeAction.UNFOLLOW_USER
+  id: number
+}
+
+export type SetNotFriendsActionType = {
+  type: TypeAction.SET_NOT_FRIENDS
+  notFriends: UserType[]
+  totalUsersCount: number
+}
+
+export type SetFriendsActionType = {
+  type: TypeAction.SET_FRIENDS
+  friends: UserType[]
+  totalUsersCount: number
+}
+
+export type SetCurrentFriendsPageActionType = {
+  type: TypeAction.SET_CURRENT_FRIENDS_PAGE
+  currentPage: number
+}
+
+export type ShowMoreNotFriendsOnPageActionType = {
+  type: TypeAction.SHOW_MORE_NOT_FRIENDS_ON_PAGE
+}
+
+export type SetLoadingStateActionType = {
+  type: TypeAction.SET_LOADING_STATE
+  isLoading: boolean
+}
+
+type ActionTypes =
+  | FollowUserActionType
+  | UnfollowUserActionType
+  | SetNotFriendsActionType
+  | SetFriendsActionType
+  | SetCurrentFriendsPageActionType
+  | ShowMoreNotFriendsOnPageActionType
+  | SetLoadingStateActionType
 
 export const usersReducer = (
   state: UsersPageType = initialState,
