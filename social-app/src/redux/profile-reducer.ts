@@ -1,28 +1,28 @@
 import { UserProfilePageType, TypeAction } from '../types'
 
 const initialState: UserProfilePageType = {
-  userId: null,
-  aboutMe: '',
-  lookingForAJob: false,
-  lookingForAJobDescription: '',
-  fullName: '',
+  aboutMe: null,
   contacts: {
-    github: '',
-    vk: '',
-    facebook: '',
-    instagram: '',
-    twitter: '',
-    website: '',
-    youtube: '',
-    mainLink: ''
+    github: null,
+    vk: null,
+    facebook: null,
+    instagram: null,
+    twitter: null,
+    website: null,
+    youtube: null,
+    mainLink: null
   },
+  fullName: '',
+  lookingForAJob: false,
+  lookingForAJobDescription: null,
   photos: {
     small: '',
     large: ''
-  }
+  },
+  userId: null
 }
 
-type SetUserProfileActionType = {
+export type SetUserProfileActionType = {
   type: TypeAction.SET_USER_PROFILE
   profile: UserProfilePageType
 }
@@ -35,6 +35,7 @@ export const userProfileReducer = (
     case TypeAction.SET_USER_PROFILE:
       const newProfile = action.profile
       return {
+        ...state,
         ...newProfile
       }
     default:

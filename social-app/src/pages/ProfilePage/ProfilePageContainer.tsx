@@ -2,14 +2,13 @@ import React from 'react'
 import { ProfilePage } from './ProfilePage'
 import { connect } from 'react-redux'
 import { StateTypes, UserProfilePageType } from '../../types'
-import { setUserProfile } from '../../redux/action-creator'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { profileAPI } from '../../api/api'
+import { getUserProfileThunkCreator } from '../../redux/thunk-creator'
 
 interface PropsType {
   profile: UserProfilePageType
   myId?: number
-  setUserProfile: (profile: UserProfilePageType) => void
+  getUserProfileThunkCreator: (userId: number) => void
   router: {
     location: any
     navigate: any
@@ -20,9 +19,7 @@ interface PropsType {
 class ProfilePageAPIContainer extends React.Component<PropsType> {
   componentDidMount(): void {
     let userId = this.props.router.params.user_id || this.props?.myId || 29063
-    profileAPI
-      .getUserProfile(userId)
-      .then((response) => this.props.setUserProfile(response.data))
+    this.props.getUserProfileThunkCreator(userId)
   }
   render() {
     return <ProfilePage profile={this.props.profile} />
@@ -58,5 +55,5 @@ const withRouter = (Component: typeof ProfilePageAPIContainer) => {
 const ProfilePageAPIContainerWithRouter = withRouter(ProfilePageAPIContainer)
 
 export const ProfilePageContainer = connect(mapStateToProps, {
-  setUserProfile
+  getUserProfileThunkCreator
 })(ProfilePageAPIContainerWithRouter)

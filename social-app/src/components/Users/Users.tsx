@@ -2,7 +2,6 @@ import React from 'react'
 import { UserType } from '../../types'
 import { UserPrevue } from '..'
 import styles from './Users.module.scss'
-import { userAPI } from '../../api/api'
 
 interface UsersPropsType {
   notFriends: {
@@ -12,20 +11,17 @@ interface UsersPropsType {
     currentPage: number
   }
   isLoading: boolean
-  followUser: (id: number) => void
-  unFollowUser: (id: number) => void
+  handleFollowButton: (id: number, followed: boolean) => void
   onPageChanged: () => void
   isAuthorized: boolean
 }
 
 export class Users extends React.Component<UsersPropsType> {
-  handleFollowButton = (id: number) => {
-    userAPI.followUser(id).then((response) => {
-      if (response.data.resultCode === 0) {
-        this.props.followUser(id)
-      }
-    })
-  }
+  // handleFollowButton = (id: number, followed: boolean) => {
+  //   followed
+  //     ? this.props.unFollowUserThunkCreator(id)
+  //     : this.props.followUserThunkCreator(id)
+  // }
 
   range = (from: number, to: number, step = 1): number[] => {
     let i = from
@@ -77,7 +73,7 @@ export class Users extends React.Component<UsersPropsType> {
                 <UserPrevue user={user} />
                 <button
                   onClick={() => {
-                    this.handleFollowButton(user.id)
+                    this.props.handleFollowButton(user.id, user.followed)
                   }}
                 >
                   {user.followed ? 'Unfollow' : 'Follow'}

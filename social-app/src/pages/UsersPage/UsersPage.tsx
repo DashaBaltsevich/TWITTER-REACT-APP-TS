@@ -17,8 +17,7 @@ interface PropsType {
     currentPage: number
   }
   isLoading: boolean
-  followUser: (id: number) => void
-  unFollowUser: (id: number) => void
+  handleFollowButton: (id: number, followed: boolean) => void
   onPageChanged: () => void
   isAuthorized: boolean
 }
@@ -27,8 +26,7 @@ export const UsersPage = ({
   friends,
   notFriends,
   isLoading,
-  followUser,
-  unFollowUser,
+  handleFollowButton,
   onPageChanged,
   isAuthorized
 }: PropsType) => {
@@ -37,16 +35,14 @@ export const UsersPage = ({
       <Friends
         friends={friends}
         isLoading={isLoading}
-        followUser={followUser}
-        unFollowUser={unFollowUser}
+        handleFollowButton={handleFollowButton}
         onPageChanged={onPageChanged}
         isAuthorized={isAuthorized}
       />
       <Users
         notFriends={notFriends}
         isLoading={isLoading}
-        followUser={followUser}
-        unFollowUser={unFollowUser}
+        handleFollowButton={handleFollowButton}
         onPageChanged={onPageChanged}
         isAuthorized={isAuthorized}
       />

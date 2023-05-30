@@ -2,7 +2,6 @@ import React from 'react'
 import { UserType } from '../../types'
 import { UserPrevue } from '../../components'
 import styles from './Friends.module.scss'
-import { userAPI } from '../../api/api'
 
 interface FriendsPropsType {
   friends: {
@@ -12,17 +11,15 @@ interface FriendsPropsType {
     currentPage: number
   }
   isLoading: boolean
-  followUser: (id: number) => void
-  unFollowUser: (id: number) => void
+  handleFollowButton: (id: number, followed: boolean) => void
   onPageChanged: (page: number) => void
   isAuthorized: boolean
 }
 
 export class Friends extends React.Component<FriendsPropsType> {
-  handleFollowButton = (id: number) => {
-    userAPI.unFollowUserApi(id)
-    this.props.unFollowUser(id)
-  }
+  // handleFollowButton = (id: number) => {
+  //   this.props.unFollowUserThunkCreator(id)
+  // }
   render(): React.ReactNode {
     return (
       <div className={styles.b__friends}>
@@ -32,7 +29,11 @@ export class Friends extends React.Component<FriendsPropsType> {
             {this.props.friends.users.map((user) => (
               <li className={styles.l__users_item} key={user.id}>
                 <UserPrevue user={user} />
-                <button onClick={() => this.handleFollowButton(user.id)}>
+                <button
+                  onClick={() =>
+                    this.props.handleFollowButton(user.id, user.followed)
+                  }
+                >
                   {user.followed ? 'Unfollow' : 'Follow'}
                 </button>
               </li>

@@ -67,34 +67,38 @@ export const usersReducer = (
 ): UsersPageType => {
   switch (action.type) {
     case TypeAction.FOLLOW_USER:
+      state.notFriends.users.forEach((el) => {
+        if (el.id === action?.id) {
+          state.friends.users.push({ ...el, followed: true })
+        }
+      })
       return {
         ...state,
+        friends: { ...state.friends, users: [...state.friends.users] },
         notFriends: {
           ...state.notFriends,
-          users: state.notFriends.users.map((el) => {
-            if (el.id === action?.id) {
-              return { ...el, followed: true }
-            }
-            return el
+          users: state.notFriends.users.filter((el) => {
+            return el.id !== action.id
           })
-        },
-        friends: { ...state.friends, users: state.friends.users }
+        }
       }
     case TypeAction.UNFOLLOW_USER:
+      state.friends.users.forEach((el) => {
+        if (el.id === action?.id) {
+          state.notFriends.users.push({ ...el, followed: false })
+        }
+      })
       return {
         ...state,
-        friends: {
-          ...state.friends,
-          users: state.friends.users.map((el) => {
-            if (el.id === action.id) {
-              return { ...el, followed: false }
-            }
-            return el
-          })
-        },
         notFriends: {
           ...state.notFriends,
           users: [...state.notFriends.users]
+        },
+        friends: {
+          ...state.friends,
+          users: state.friends.users.filter((el) => {
+            return el.id !== action.id
+          })
         }
       }
     case TypeAction.SET_NOT_FRIENDS:

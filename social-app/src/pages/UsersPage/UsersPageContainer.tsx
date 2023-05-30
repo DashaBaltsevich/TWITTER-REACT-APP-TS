@@ -12,7 +12,12 @@ import {
 } from '../../redux/action-creator'
 import { UsersPage } from './UsersPage'
 import { Preloader } from '../../components'
-import { userAPI } from '../../api/api'
+import {
+  followUserThunkCreator,
+  getFriendsThunkCreator,
+  getNotFriendsThunkCreator,
+  unFollowUserThunkCreator
+} from '../../redux/thunk-creator'
 
 interface PropsType {
   notFriends: {
@@ -28,32 +33,29 @@ interface PropsType {
     currentPage: number
   }
   isLoading: boolean
-  followUser: (id: number) => void
-  unFollowUser: (id: number) => void
-  setNotFriends: (notFriends: UserType[], totalUsersCount: number) => void
-  setFriends: (friends: UserType[], totalUsersCount: number) => void
+  followUserThunkCreator: (id: number) => void
+  unFollowUserThunkCreator: (id: number) => void
   setCurrentFriendsPage: (currentPage: number) => void
-  setIsLoading: (isLoading: boolean) => void
   showMoreNotFriendsOnPage: () => void
   isAuthorized: boolean
+  getFriendsThunkCreator: (currentPage: number, totalUsersCount: number) => void
+  getNotFriendsThunkCreator: (currentPage: number) => void
 }
 
 class UsersPageAPIContainer extends React.Component<PropsType> {
   apiNotFriendsRequest = () => {
-    this.props.setIsLoading(true)
-    userAPI.getNotFriends(this.props.notFriends.pageSize).then((response) => {
-      this.props.setIsLoading(false)
-      this.props.setNotFriends(response.data.items, response.data.totalCount)
-    })
+    this.props.getNotFriendsThunkCreator(this.props.notFriends.pageSize)
+    // this.props.setIsLoading(true)
+    // userAPI.getNotFriends(this.props.notFriends.pageSize).then((response) => {
+    //   this.props.setIsLoading(false)
+    //   this.props.setNotFriends(response.data.items, response.data.totalCount)
+    // })
   }
   apiFriendsRequest = () => {
-    this.props.setIsLoading(true)
-    userAPI
-      .getFriends(this.props.friends.pageSize, this.props.friends.currentPage)
-      .then((response) => {
-        this.props.setIsLoading(false)
-        this.props.setFriends(response.data.items, response.data.totalCount)
-      })
+    this.props.getFriendsThunkCreator(
+      this.props.friends.pageSize,
+      this.props.friends.currentPage
+    )
   }
   componentDidMount(): void {
     this.apiFriendsRequest()
@@ -65,6 +67,12 @@ class UsersPageAPIContainer extends React.Component<PropsType> {
     this.apiNotFriendsRequest()
   }
 
+  handleFollowButton = (id: number, followed: boolean) => {
+    followed
+      ? this.props.unFollowUserThunkCreator(id)
+      : this.props.followUserThunkCreator(id)
+  }
+
   render(): React.ReactNode {
     return (
       <>
@@ -74,8 +82,7 @@ class UsersPageAPIContainer extends React.Component<PropsType> {
             friends={this.props.friends}
             isLoading={this.props.isLoading}
             onPageChanged={this.onPageChanged}
-            followUser={this.props.followUser}
-            unFollowUser={this.props.unFollowUser}
+            handleFollowButton={this.handleFollowButton}
             isAuthorized={this.props.isAuthorized}
           />
         ) : (
@@ -131,5 +138,9 @@ export const UsersPageContainer = connect(mapStateToProps, {
   setNotFriends,
   setCurrentFriendsPage,
   setIsLoading,
-  showMoreNotFriendsOnPage
+  showMoreNotFriendsOnPage,
+  getFriendsThunkCreator,
+  getNotFriendsThunkCreator,
+  followUserThunkCreator,
+  unFollowUserThunkCreator
 })(UsersPageAPIContainer)

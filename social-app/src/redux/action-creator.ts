@@ -13,6 +13,7 @@ import {
   UpdateNewMessageTextActionType
 } from './messages-reducer'
 import { AddPostActionType, UpdateNewPostTextActionType } from './posts-reducer'
+import { SetUserProfileActionType } from './profile-reducer'
 import {
   FollowUserActionType,
   SetCurrentFriendsPageActionType,
@@ -92,7 +93,9 @@ export const setIsLoading = (
   isLoading: isLoading
 })
 
-export const setUserProfile = (profile: UserProfilePageType) => ({
+export const setUserProfile = (
+  profile: UserProfilePageType
+): SetUserProfileActionType => ({
   type: TypeAction.SET_USER_PROFILE,
   profile: profile
 })

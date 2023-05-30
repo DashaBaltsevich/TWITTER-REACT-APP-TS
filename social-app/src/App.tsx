@@ -11,18 +11,23 @@ import {
 import { Routes, Route } from 'react-router-dom'
 import { WithRouterProps } from './pages/ProfilePage/ProfilePageContainer'
 import { connect } from 'react-redux'
-import {
-  setAuthorizationState,
-  setUserInformation
-} from './redux/action-creator'
 import { StateTypes, UserDataType, UserInformationType } from './types'
-import { authAPI } from './api/api'
+import {
+  authorizationThunkCreator,
+  logInThunkCreator,
+  logOutThunkCreator
+} from './redux/thunk-creator'
+import { LoginDataType } from './pages/LogInPage/LogInPage'
 
 interface PropsType {
   userInformation: UserDataType | null
   isAuthorized: boolean
-  setUserInformation: (userInformation: UserDataType | null) => void
-  setAuthorizationState: (isAuthorized: boolean) => void
+  authorizationThunkCreator: () => void
+  logInThunkCreator: (
+    values: LoginDataType,
+    setIsLoginFormVisible: (isLoginFormVisible: boolean) => void
+  ) => void
+  logOutThunkCreator: () => void
 }
 
 interface StateType {
@@ -42,22 +47,12 @@ class AppAPI extends React.Component<PropsType, StateType> {
   }
 
   handleLogOut = (): void => {
-    authAPI.logOut().then((response) => {
-      if (response.data.resultCode === 0) {
-        this.props.setUserInformation(null)
-        this.props.setAuthorizationState(false)
-      }
-    })
+    this.props.logOutThunkCreator()
   }
 
   async componentDidMount(): Promise<void> {
     try {
-      await authAPI.authorization().then((response) => {
-        if (response.data.resultCode === 0) {
-          this.props.setUserInformation(response.data.data)
-          this.props.setAuthorizationState(true)
-        }
-      })
+      await this.props.authorizationThunkCreator()
     } catch (err) {
       console.log(err)
     }
@@ -112,7 +107,7 @@ class AppAPI extends React.Component<PropsType, StateType> {
           <ModalWindow setIsLoginFormVisible={this.setIsLoginFormVisible}>
             <LogInPageContainer
               setIsLoginFormVisible={this.setIsLoginFormVisible}
-              setAuthorizationState={this.props.setAuthorizationState}
+              logInThunkCreator={this.props.logInThunkCreator}
             />
           </ModalWindow>
         )}
@@ -129,8 +124,9 @@ const mapStateToProps = (state: StateTypes): UserInformationType => {
 }
 
 const App = connect(mapStateToProps, {
-  setUserInformation,
-  setAuthorizationState
+  authorizationThunkCreator,
+  logInThunkCreator,
+  logOutThunkCreator
 })(AppAPI)
 
 export default App

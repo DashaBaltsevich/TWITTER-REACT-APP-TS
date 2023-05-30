@@ -53,25 +53,25 @@ export interface UsersPageType {
   isLoading: boolean
 }
 export interface UserProfilePageType {
-  userId: number | null
-  aboutMe: string
-  lookingForAJob: boolean
-  lookingForAJobDescription: string
-  fullName: string
+  aboutMe: string | null
   contacts: {
-    github: string
-    vk: string
-    facebook: string
-    instagram: string
-    twitter: string
-    website: string
-    youtube: string
-    mainLink: string
+    github: string | null
+    vk: string | null
+    facebook: string | null
+    instagram: string | null
+    twitter: string | null
+    website: string | null
+    youtube: string | null
+    mainLink: string | null
   }
+  fullName: string
+  lookingForAJob: boolean
+  lookingForAJobDescription: string | null
   photos: {
     small: string | null
     large: string | null
   }
+  userId: number | null
 }
 
 export interface UserDataType {
