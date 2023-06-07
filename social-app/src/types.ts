@@ -14,11 +14,6 @@ export type PostType = {
   likeCount: number
 }
 
-export interface PostsPageType {
-  posts: PostType[]
-  newText: string
-}
-
 export interface MessagesPageType {
   messages: MessageType[]
   dialogUsers: DialogUserType[]
@@ -52,7 +47,8 @@ export interface UsersPageType {
   }
   isLoading: boolean
 }
-export interface UserProfilePageType {
+
+export interface UserProfileType {
   aboutMe: string | null
   contacts: {
     github: string | null
@@ -73,6 +69,12 @@ export interface UserProfilePageType {
   }
   userId: number | null
 }
+export interface UserProfilePageType {
+  profile: UserProfileType | null
+  status: string | null
+  posts: PostType[]
+  newText: string
+}
 
 export interface UserDataType {
   id: number
@@ -86,7 +88,6 @@ export interface UserInformationType {
 }
 
 export interface StateTypes {
-  postsPage: PostsPageType
   messagesPage: MessagesPageType
   usersPage: UsersPageType
   userProfilePage: UserProfilePageType
@@ -107,5 +108,7 @@ export enum TypeAction {
   SET_USER_PROFILE,
   SET_USER_INFORMATION,
   SET_AUTHORIZATION_STATE,
-  SHOW_MORE_NOT_FRIENDS_ON_PAGE
+  SHOW_MORE_NOT_FRIENDS_ON_PAGE,
+  GET_USER_STATUS,
+  UPDATE_STATUS
 }

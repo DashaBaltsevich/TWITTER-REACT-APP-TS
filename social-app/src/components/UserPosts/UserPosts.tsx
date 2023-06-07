@@ -3,29 +3,32 @@ import './UserPosts.scss'
 import { NewPost } from '../NewPost'
 import { Posts } from './Post'
 import { connect } from 'react-redux'
-import { PostType, StateTypes } from '../../types'
+import { PostType, StateTypes, UserProfileType } from '../../types'
 import { addPost, updateNewPostText } from '../../redux/action-creator'
 
 const UserPosts = ({
   posts,
+  profile,
   addPost,
   updateNewPostText
 }: {
   posts: PostType[]
+  profile: UserProfileType | null
   addPost: () => void
   updateNewPostText: (newTextPost: string) => void
 }): JSX.Element => {
   return (
     <div className="b-posts">
       <NewPost addPost={addPost} updateNewPostText={updateNewPostText} />
-      <Posts posts={posts} />
+      <Posts posts={posts} name={profile && profile.fullName} />
     </div>
   )
 }
 
 const mapStateToProps = (state: StateTypes) => {
   return {
-    posts: state.postsPage.posts
+    posts: state.userProfilePage.posts,
+    profile: state.userProfilePage.profile
   }
 }
 

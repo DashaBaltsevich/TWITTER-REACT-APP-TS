@@ -1,9 +1,4 @@
-import {
-  TypeAction,
-  UserType,
-  UserProfilePageType,
-  UserDataType
-} from '../types'
+import { TypeAction, UserType, UserProfileType, UserDataType } from '../types'
 import {
   SetAuthorizationStateActionType,
   SetUserInformationActionType
@@ -12,8 +7,13 @@ import {
   AddMessageActionType,
   UpdateNewMessageTextActionType
 } from './messages-reducer'
-import { AddPostActionType, UpdateNewPostTextActionType } from './posts-reducer'
-import { SetUserProfileActionType } from './profile-reducer'
+import {
+  SetUserProfileActionType,
+  UpdateStatusType,
+  AddPostActionType,
+  GetStatusType,
+  UpdateNewPostTextActionType
+} from './profile-reducer'
 import {
   FollowUserActionType,
   SetCurrentFriendsPageActionType,
@@ -94,10 +94,20 @@ export const setIsLoading = (
 })
 
 export const setUserProfile = (
-  profile: UserProfilePageType
+  profile: UserProfileType
 ): SetUserProfileActionType => ({
   type: TypeAction.SET_USER_PROFILE,
   profile: profile
+})
+
+export const setUserStatus = (status: string): GetStatusType => ({
+  type: TypeAction.GET_USER_STATUS,
+  status
+})
+
+export const updateStatus = (newStatus: string): UpdateStatusType => ({
+  type: TypeAction.UPDATE_STATUS,
+  newStatus
 })
 
 export const setUserInformation = (

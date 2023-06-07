@@ -8,7 +8,9 @@ import {
   setNotFriends,
   setUserInformation,
   setUserProfile,
-  unFollowUser
+  unFollowUser,
+  setUserStatus,
+  updateStatus
 } from './action-creator'
 import { AppDispatch } from './redux-store'
 
@@ -56,6 +58,7 @@ export const getFriendsThunkCreator = (
     dispatch(setIsLoading(true))
     userAPI.getFriends(pageSize, currentPage).then((response) => {
       dispatch(setIsLoading(false))
+      console.log(response.data)
       dispatch(setFriends(response.data.items, response.data.totalCount))
     })
   }
@@ -90,5 +93,17 @@ export const getUserProfileThunkCreator =
   (userId: number) => (dispatch: AppDispatch) => {
     profileAPI.getUserProfile(userId).then((response) => {
       dispatch(setUserProfile(response.data))
+    })
+    profileAPI.getUserStatus(userId).then((response) => {
+      dispatch(setUserStatus(response.data))
+    })
+  }
+
+export const updateStatusThunkCreator =
+  (newStatus: string) => (dispatch: AppDispatch) => {
+    profileAPI.updateStatus(newStatus).then((response) => {
+      if (response.data.resultCode === 0) {
+        dispatch(updateStatus(newStatus))
+      }
     })
   }

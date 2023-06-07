@@ -1,19 +1,25 @@
 import React from 'react'
 import { ProfilePage } from './ProfilePage'
 import { connect } from 'react-redux'
-import { StateTypes, UserProfilePageType } from '../../types'
+import { PostType, StateTypes, UserProfileType } from '../../types'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { getUserProfileThunkCreator } from '../../redux/thunk-creator'
+import {
+  getUserProfileThunkCreator,
+  updateStatusThunkCreator
+} from '../../redux/thunk-creator'
 
 interface PropsType {
-  profile: UserProfilePageType
+  profile: UserProfileType | null
   myId?: number
   getUserProfileThunkCreator: (userId: number) => void
+  updateStatusThunkCreator: (newStatus: string) => void
   router: {
     location: any
     navigate: any
     params: any
   }
+  posts: PostType[]
+  status: string | null
 }
 
 class ProfilePageAPIContainer extends React.Component<PropsType> {
@@ -22,15 +28,28 @@ class ProfilePageAPIContainer extends React.Component<PropsType> {
     this.props.getUserProfileThunkCreator(userId)
   }
   render() {
-    return <ProfilePage profile={this.props.profile} />
+    return (
+      <ProfilePage
+        profile={this.props.profile}
+        updateStatusThunkCreator={this.props.updateStatusThunkCreator}
+        posts={this.props.posts}
+        status={this.props.status}
+      />
+    )
   }
 }
 
 const mapStateToProps = (
   state: StateTypes
-): { profile: UserProfilePageType } => {
+): {
+  profile: UserProfileType | null
+  posts: PostType[]
+  status: string | null
+} => {
   return {
-    profile: state.userProfilePage
+    profile: state.userProfilePage.profile,
+    posts: state.userProfilePage.posts,
+    status: state.userProfilePage.status
   }
 }
 
@@ -55,5 +74,6 @@ const withRouter = (Component: typeof ProfilePageAPIContainer) => {
 const ProfilePageAPIContainerWithRouter = withRouter(ProfilePageAPIContainer)
 
 export const ProfilePageContainer = connect(mapStateToProps, {
-  getUserProfileThunkCreator
+  getUserProfileThunkCreator,
+  updateStatusThunkCreator
 })(ProfilePageAPIContainerWithRouter)

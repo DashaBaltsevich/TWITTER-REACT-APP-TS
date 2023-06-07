@@ -29,7 +29,7 @@ export class UserPrevue extends React.Component<PropsType> {
           </div>
           <span>{this.props.user.uniqueUrlName}</span>
           <div style={{ marginBottom: '10px' }}>
-            {this.props.user.status ? this.props.user.status : 'status'}
+            {this.props.user.status ? this.props.user.status : 'no status'}
           </div>
         </div>
       </div>

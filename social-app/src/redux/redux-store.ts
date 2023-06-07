@@ -1,6 +1,5 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux'
 import { messagesReducer } from './messages-reducer'
-import { postsReducer } from './posts-reducer'
 import { usersReducer } from './users-reducer'
 import { userProfileReducer } from './profile-reducer'
 import { authReducer } from './auth-reducer'
@@ -9,7 +8,6 @@ import thunk from 'redux-thunk'
 
 export const reducers = combineReducers({
   userProfilePage: userProfileReducer,
-  postsPage: postsReducer,
   messagesPage: messagesReducer,
   usersPage: usersReducer,
   auth: authReducer
