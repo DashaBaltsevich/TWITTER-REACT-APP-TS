@@ -4,7 +4,7 @@ import Cover from '../../assets/cover.png'
 import Avatar from '../../assets/avatar.png'
 // import Calendar from '../../assets/calendar.svg'
 import { PostType, UserProfileType } from '../../types'
-import { Posts, ProfileStatus } from '../../components'
+import { Posts, ProfileStatus, UsersContainer } from '../../components'
 
 export const ProfilePage = ({
   profile,
@@ -17,8 +17,6 @@ export const ProfilePage = ({
   posts: PostType[]
   status: string | null
 }): JSX.Element => {
-  // console.log(profile.contacts.twitter.split('@')[1])
-  console.log(profile?.aboutMe)
   return (
     <section className={Styles.s__profile}>
       <div className={Styles.b__content_profile}>
@@ -54,6 +52,9 @@ export const ProfilePage = ({
         <li className={ProfilePageStyles.l__info__item}>WebSite: ...</li> */}
         </ul>
         <Posts posts={posts} name={profile && profile.fullName} />
+      </div>
+      <div>
+        <UsersContainer />
       </div>
     </section>
   )

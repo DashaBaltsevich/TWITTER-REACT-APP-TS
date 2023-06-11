@@ -5,7 +5,7 @@ import {
   HomePage,
   ProfilePageContainer,
   MessagesPage,
-  UsersPageContainer,
+  UsersPage,
   LogInPageContainer
 } from './pages'
 import { Routes, Route } from 'react-router-dom'
@@ -97,7 +97,7 @@ class AppAPI extends React.Component<PropsType, StateType> {
               path="/users"
               element={
                 <PrivateRoute isAllowed={this.props.isAuthorized}>
-                  <UsersPageContainer isAuthorized={this.props.isAuthorized} />
+                  <UsersPage />
                 </PrivateRoute>
               }
             />

@@ -11,11 +11,16 @@ export class ProfileStatus extends React.Component<PropsTypes> {
     status: this.props.status
   }
 
-  toggleEditMode() {
-    this.setState({ editMode: !this.state.editMode })
+  activateEditMode = () => {
+    this.setState({ editMode: true })
   }
 
-  onStatusChange(event: any) {
+  deactivateEditMode = () => {
+    this.setState({ editMode: false })
+    this.props.updateStatusThunkCreator(this.state.status)
+  }
+
+  onStatusChange = (event: any) => {
     this.setState({ status: event?.target.value })
   }
 
@@ -23,17 +28,18 @@ export class ProfileStatus extends React.Component<PropsTypes> {
     return (
       <>
         {this.state.editMode ? (
-          <input
+          <textarea
             value={this.state.status}
-            onBlur={() => {
-              this.toggleEditMode.bind(this)
-              this.props.updateStatusThunkCreator(this.state.status)
+            onBlur={this.deactivateEditMode}
+            onChange={this.onStatusChange}
+            style={{
+              width: '100%',
+              height: '52px'
             }}
-            onChange={this.onStatusChange.bind(this)}
           />
         ) : (
-          <p onDoubleClick={this.toggleEditMode.bind(this)} autoFocus={true}>
-            {this.props.status}
+          <p onDoubleClick={this.activateEditMode} autoFocus={true}>
+            {this.props.status || 'no status'}
           </p>
         )}
       </>

@@ -7,6 +7,20 @@
     font-weight: 600;
     font-size: 20px;
   }
+
+  .l__pages {
+    padding: 0 16px;
+    &_item {
+      font-size: 16px;
+      margin-right: 2px;
+      &_current {
+        font-weight: 600;
+      }
+      &:hover {
+        color: $blue;
+      }
+    }
+  }
 }
 
 .l__users {
@@ -17,6 +31,7 @@
     padding: 12px 16px;
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     &:hover {
       background-color: #eff3f4;
@@ -24,11 +39,10 @@
   }
   button {
     background-color: black;
-    max-height: 32px;
     border: none;
     border-radius: 16px;
     color: #fff;
-    padding: 0 15px;
+    padding: 9px 15px;
     font-weight: 700;
   }
 }

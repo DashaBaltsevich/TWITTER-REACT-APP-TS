@@ -118,10 +118,8 @@ export const usersReducer = (
         ...state,
         friends: {
           ...state.friends,
-          users: action.friends
-            ? [...action.friends]
-            : [...state.friends.users],
-          totalUsersCount: action.totalUsersCount ? action.totalUsersCount : 0
+          users: [...action.friends],
+          totalUsersCount: action.totalUsersCount ?? 0
         },
         notFriends: {
           ...state.notFriends,

@@ -10,7 +10,9 @@ import {
   setUserProfile,
   unFollowUser,
   setUserStatus,
-  updateStatus
+  updateStatus,
+  setCurrentFriendsPage,
+  showMoreNotFriendsOnPage
 } from './action-creator'
 import { AppDispatch } from './redux-store'
 
@@ -52,13 +54,13 @@ export const logOutThunkCreator = () => {
 
 export const getFriendsThunkCreator = (
   pageSize: number,
-  currentPage: number
+  pageNumber: number = 1
 ) => {
   return (dispatch: AppDispatch) => {
     dispatch(setIsLoading(true))
-    userAPI.getFriends(pageSize, currentPage).then((response) => {
+    dispatch(setCurrentFriendsPage(pageNumber))
+    userAPI.getFriends(pageSize, pageNumber).then((response) => {
       dispatch(setIsLoading(false))
-      console.log(response.data)
       dispatch(setFriends(response.data.items, response.data.totalCount))
     })
   }
@@ -68,6 +70,17 @@ export const getNotFriendsThunkCreator = (pageSize: number) => {
   return (dispatch: AppDispatch) => {
     dispatch(setIsLoading(true))
     userAPI.getNotFriends(pageSize).then((response) => {
+      dispatch(setIsLoading(false))
+      dispatch(setNotFriends(response.data.items, response.data.totalCount))
+    })
+  }
+}
+
+export const showMoreNotFriendsOnPageThunkCreator = () => {
+  return (dispatch: AppDispatch) => {
+    dispatch(setIsLoading(true))
+    dispatch(showMoreNotFriendsOnPage())
+    userAPI.getNotFriends().then((response) => {
       dispatch(setIsLoading(false))
       dispatch(setNotFriends(response.data.items, response.data.totalCount))
     })
