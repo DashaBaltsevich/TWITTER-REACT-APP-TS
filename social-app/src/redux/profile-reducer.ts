@@ -1,3 +1,4 @@
+import { EditProfileValuesType } from '../components/EditProfileMode/EditProfileMode'
 import { UserProfilePageType, TypeAction, UserProfileType } from '../types'
 
 const initialState: UserProfilePageType = {
@@ -47,6 +48,11 @@ export type UpdateNewPostTextActionType = {
   text: string
 }
 
+export type UpdateProfileActionType = {
+  type: TypeAction.UPDATE_PROFILE
+  newProfileInformation: EditProfileValuesType
+}
+
 export const userProfileReducer = (
   state = initialState,
   action:
@@ -55,6 +61,7 @@ export const userProfileReducer = (
     | AddPostActionType
     | UpdateNewPostTextActionType
     | GetStatusType
+    | UpdateProfileActionType
 ): UserProfilePageType => {
   switch (action.type) {
     case TypeAction.SET_USER_PROFILE:
@@ -88,6 +95,21 @@ export const userProfileReducer = (
         ...state,
         status: action.newStatus
       }
+    case TypeAction.UPDATE_PROFILE:
+      const profile = state.profile
+        ? {
+            ...state,
+            profile: {
+              ...state.profile,
+              ...action.newProfileInformation,
+              contacts: { ...action.newProfileInformation.contacts },
+              photos: { ...state.profile.photos }
+            },
+            posts: [...state.posts]
+          }
+        : { ...state }
+
+      return profile
     default:
       return state
   }

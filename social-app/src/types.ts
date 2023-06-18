@@ -67,7 +67,7 @@ export interface UserProfileType {
     small: string | null
     large: string | null
   }
-  userId: number | null
+  userId: number
 }
 export interface UserProfilePageType {
   profile: UserProfileType | null
@@ -110,5 +110,6 @@ export enum TypeAction {
   SET_AUTHORIZATION_STATE,
   SHOW_MORE_NOT_FRIENDS_ON_PAGE,
   GET_USER_STATUS,
-  UPDATE_STATUS
+  UPDATE_STATUS,
+  UPDATE_PROFILE
 }

@@ -1,3 +1,4 @@
+import { EditProfileValuesType } from '../components/EditProfileMode/EditProfileMode'
 import { TypeAction, UserType, UserProfileType, UserDataType } from '../types'
 import {
   SetAuthorizationStateActionType,
@@ -12,7 +13,8 @@ import {
   UpdateStatusType,
   AddPostActionType,
   GetStatusType,
-  UpdateNewPostTextActionType
+  UpdateNewPostTextActionType,
+  UpdateProfileActionType
 } from './profile-reducer'
 import {
   FollowUserActionType,
@@ -115,6 +117,13 @@ export const setUserInformation = (
 ): SetUserInformationActionType => ({
   type: TypeAction.SET_USER_INFORMATION,
   userInformation: userData
+})
+
+export const updateProfile = (
+  newProfileInformation: EditProfileValuesType
+): UpdateProfileActionType => ({
+  type: TypeAction.UPDATE_PROFILE,
+  newProfileInformation
 })
 
 export const setAuthorizationState = (

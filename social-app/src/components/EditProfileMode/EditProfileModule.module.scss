@@ -1,0 +1,113 @@
+@import '../../App.module.scss';
+
+.s__edit_mode {
+  display: inline-block;
+  align-items: center;
+  flex-direction: column;
+  vertical-align: middle;
+  text-align: start;
+  width: 600px;
+  color: #000;
+  font-size: 18px;
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 0 20px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 500px;
+  &_title {
+    font-size: 18px;
+    text-align: start;
+    &_wrap {
+      position: sticky;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: space-between;
+      background-color: #fff;
+      align-items: center;
+      padding: 20px 0 20px;
+      z-index: 1;
+    }
+  }
+}
+
+.f__edit_mode {
+  h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  &_field {
+    padding: 20px 10px;
+    width: 540px;
+    height: 30px;
+    border: 1px $border-grey solid !important;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #fff;
+    &_row {
+      margin-bottom: 20px;
+      p {
+        font-size: 16px;
+      }
+    }
+    &_label {
+      display: inline-block;
+      margin-bottom: 10px;
+      font-size: 16px;
+      &_checkbox {
+        position: relative;
+        display: block;
+        width: 45px;
+        height: 22px;
+        border-radius: 40px;
+        border: 1px solid #ededed;
+        transition: transform 200ms cubic-bezier(0.41, -0.01, 0.63, 1.09);
+        cursor: pointer;
+        background: rgba(#fff, 0.3);
+        margin-top: 10px;
+        &::before,
+        &::after {
+          position: absolute;
+          top: 1px;
+          left: 2px;
+          width: 19px;
+          height: 19px;
+          border-radius: 36px;
+          content: '';
+          border-radius: 36px;
+          transition: all 220ms cubic-bezier(0.76, 0.01, 0.15, 0.97);
+        }
+
+        &::after {
+          background-color: grey;
+        }
+      }
+    }
+    &:checked ~ label {
+      transform: scale(1.01);
+
+      &::before {
+        width: 36px;
+      }
+
+      &::after {
+        transform: translateX(21px);
+        background: $blue;
+      }
+    }
+  }
+
+  input[type='checkbox'] {
+    display: none;
+  }
+
+  &_button {
+    color: #fff;
+    background-color: #000;
+    border-radius: 16px;
+    padding: 8px 15px;
+    font-weight: 700;
+    border: none;
+  }
+}

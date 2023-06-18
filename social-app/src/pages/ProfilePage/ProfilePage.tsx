@@ -10,12 +10,17 @@ export const ProfilePage = ({
   profile,
   updateStatusThunkCreator,
   posts,
-  status
+  status,
+  isMyProfile,
+  handleEditButton
 }: {
   profile: UserProfileType | null
   updateStatusThunkCreator: (newStatus: string) => void
   posts: PostType[]
   status: string | null
+  isMyProfile: boolean
+  isEditMode: boolean
+  handleEditButton: () => void
 }): JSX.Element => {
   return (
     <section className={Styles.s__profile}>
@@ -28,7 +33,14 @@ export const ProfilePage = ({
               alt="avatar"
               className={Styles.avatar}
             />
-            <button className={Styles.btn__edit}>Edit profile</button>
+            {isMyProfile && (
+              <button
+                onClick={() => handleEditButton()}
+                className={Styles.btn__edit}
+              >
+                Edit profile
+              </button>
+            )}
           </div>
         </div>
         <ul className={Styles.l__info}>

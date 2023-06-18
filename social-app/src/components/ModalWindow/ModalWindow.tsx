@@ -3,20 +3,20 @@ import { createPortal } from 'react-dom'
 import styles from './ModalWindow.module.scss'
 
 export const ModalWindow = ({
-  setIsLoginFormVisible,
+  setIsFormVisible,
   children
 }: {
-  setIsLoginFormVisible: (isLoginFormVisible: boolean) => void
+  setIsFormVisible: (isLoginFormVisible: boolean) => void
   children: ReactElement
 }) => {
   const div = document.createElement('div')
 
   const closeOnClickAction = (e: any) => {
     ;(e.target as Element).classList.contains(`${styles.b__modal_window}`) &&
-      setIsLoginFormVisible(false)
+      setIsFormVisible(false)
   }
   const closeOnEscapeAction = (e: any) => {
-    e.key === 'Escape' && setIsLoginFormVisible(false)
+    e.key === 'Escape' && setIsFormVisible(false)
   }
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export const ModalWindow = ({
           {children}
           <div className={styles.b__modal_window__btn_wrap}>
             <button
-              onClick={() => setIsLoginFormVisible(false)}
+              onClick={() => setIsFormVisible(false)}
               className={styles.b__modal_window__btn}
             />
           </div>

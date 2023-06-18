@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { EditProfileValuesType } from '../components/EditProfileMode/EditProfileMode'
 
 const instance = axios.create({
   withCredentials: true,
@@ -42,6 +43,9 @@ export const profileAPI = {
     return instance.put('profile/status', {
       status: newStatus
     })
+  },
+  updateProfile(newProfileInformation: EditProfileValuesType) {
+    return instance.put(`profile`, { ...newProfileInformation })
   }
 }
 

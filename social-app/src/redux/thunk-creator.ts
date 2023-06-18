@@ -1,4 +1,5 @@
 import { authAPI, profileAPI, userAPI } from '../api/api'
+import { EditProfileValuesType } from '../components/EditProfileMode/EditProfileMode'
 import { LoginDataType } from '../pages/LogInPage/LogInPage'
 import {
   followUser,
@@ -12,7 +13,8 @@ import {
   setUserStatus,
   updateStatus,
   setCurrentFriendsPage,
-  showMoreNotFriendsOnPage
+  showMoreNotFriendsOnPage,
+  updateProfile
 } from './action-creator'
 import { AppDispatch } from './redux-store'
 
@@ -117,6 +119,15 @@ export const updateStatusThunkCreator =
     profileAPI.updateStatus(newStatus).then((response) => {
       if (response.data.resultCode === 0) {
         dispatch(updateStatus(newStatus))
+      }
+    })
+  }
+
+export const updateProfileThunkCreator =
+  (newProfileInformation: EditProfileValuesType) => (dispatch: AppDispatch) => {
+    profileAPI.updateProfile(newProfileInformation).then((response) => {
+      if (response.data.resultCode === 0) {
+        dispatch(updateProfile(newProfileInformation))
       }
     })
   }

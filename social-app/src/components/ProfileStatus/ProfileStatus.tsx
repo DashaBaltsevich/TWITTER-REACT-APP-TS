@@ -1,11 +1,11 @@
 import React from 'react'
 
-type PropsTypes = {
+type PropsType = {
   status: string
   updateStatusThunkCreator: (newStatus: string) => void
 }
 
-export class ProfileStatus extends React.Component<PropsTypes> {
+export class ProfileStatus extends React.Component<PropsType> {
   state = {
     editMode: false,
     status: this.props.status
@@ -22,6 +22,14 @@ export class ProfileStatus extends React.Component<PropsTypes> {
 
   onStatusChange = (event: any) => {
     this.setState({ status: event?.target.value })
+  }
+
+  componentDidUpdate(prevProps: Readonly<PropsType>): void {
+    if (prevProps.status !== this.props.status) {
+      this.setState({
+        status: this.props.status
+      })
+    }
   }
 
   render() {
