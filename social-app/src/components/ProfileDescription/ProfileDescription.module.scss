@@ -1,0 +1,56 @@
+@import '../../App.module.scss';
+
+.b__info {
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+  margin-bottom: 30px;
+  margin-top: -40px;
+  &_name {
+    font-size: 22px;
+  }
+  &_subname {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgb(83, 100, 113);
+  }
+  &_status {
+    margin: 20px 0;
+  }
+  &_description {
+    span {
+      font-size: 16px;
+    }
+    p {
+      margin: 5px 0 15px;
+    }
+  }
+  &_work {
+    // margin-bottom: 15px;
+    font-size: 14px;
+    color: rgb(83, 100, 113);
+  }
+  &_data {
+    display: flex;
+    align-items: center;
+    color: rgb(83, 100, 113);
+    font-size: 14px;
+    margin-top: 20px;
+    img {
+      margin-right: 6px;
+    }
+  }
+  &_contacts {
+    margin: 20px 0 0px;
+    &_icon_active {
+      transform: rotateX(180deg);
+    }
+    ul {
+      margin-top: 8px;
+      font-size: 14px;
+    }
+    button {
+      margin-left: 5px;
+    }
+  }
+}

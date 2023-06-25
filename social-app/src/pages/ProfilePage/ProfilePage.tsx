@@ -2,9 +2,8 @@ import React from 'react'
 import Styles from './ProfilePage.module.scss'
 import Cover from '../../assets/cover.png'
 import Avatar from '../../assets/avatar.png'
-// import Calendar from '../../assets/calendar.svg'
 import { PostType, UserProfileType } from '../../types'
-import { Posts, ProfileStatus, UsersContainer } from '../../components'
+import { Posts, ProfileDescription, UsersContainer } from '../../components'
 
 export const ProfilePage = ({
   profile,
@@ -43,26 +42,11 @@ export const ProfilePage = ({
             )}
           </div>
         </div>
-        <ul className={Styles.l__info}>
-          <li className={Styles.l__info__item}>{profile?.fullName}</li>
-          <li>
-            <ProfileStatus
-              status={status ?? 'no status'}
-              updateStatusThunkCreator={updateStatusThunkCreator}
-            />
-          </li>
-          <li>
-            {/* @{profile.contacts.twitter && profile.contacts.twitter.split('@')[1]} */}
-          </li>
-          {/* <li className={ProfilePageStyles.l__info__item}>{profile.aboutMe}</li>
-        <li className={ProfilePageStyles.l__info__item}>
-          <img src={Calendar} alt="calendar" />
-          Joined November 2019
-        </li>
-        <li className={ProfilePageStyles.l__info__item}>City: Minsk</li>
-        <li className={ProfilePageStyles.l__info__item}>Education: BSU</li>
-        <li className={ProfilePageStyles.l__info__item}>WebSite: ...</li> */}
-        </ul>
+        <ProfileDescription
+          profile={profile}
+          status={status}
+          updateStatusThunkCreator={updateStatusThunkCreator}
+        />
         <Posts posts={posts} name={profile && profile.fullName} />
       </div>
       <div>

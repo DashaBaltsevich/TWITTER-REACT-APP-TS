@@ -15,6 +15,9 @@
   overflow-y: scroll;
   overflow-x: hidden;
   height: 500px;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
   &_title {
     font-size: 18px;
     text-align: start;

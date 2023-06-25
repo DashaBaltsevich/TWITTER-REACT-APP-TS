@@ -33,16 +33,6 @@
       font-size: 16px;
       color: $blue;
     }
-
-    .l__info {
-      display: flex;
-      flex-direction: column;
-      padding: 0 16px;
-      margin-bottom: 30px;
-      li:first-child {
-        margin-bottom: 10px;
-      }
-    }
   }
 
   @media (max-width: 1024px) {
