@@ -17,16 +17,11 @@ import {
   logInThunkCreator,
   logOutThunkCreator
 } from './redux/thunk-creator'
-import { LoginDataType } from './pages/LogInPage/LogInPage'
 
 interface PropsType {
   userInformation: UserDataType | null
   isAuthorized: boolean
   authorizationThunkCreator: () => void
-  logInThunkCreator: (
-    values: LoginDataType,
-    setIsLoginFormVisible: (isLoginFormVisible: boolean) => void
-  ) => void
   logOutThunkCreator: () => void
 }
 
@@ -107,7 +102,6 @@ class AppAPI extends React.Component<PropsType, StateType> {
           <ModalWindow setIsFormVisible={this.setIsLoginFormVisible}>
             <LogInPageContainer
               setIsLoginFormVisible={this.setIsLoginFormVisible}
-              logInThunkCreator={this.props.logInThunkCreator}
             />
           </ModalWindow>
         )}

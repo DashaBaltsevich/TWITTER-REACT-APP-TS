@@ -31,16 +31,27 @@ export const authorizationThunkCreator = () => {
 
 export const logInThunkCreator = (
   values: LoginDataType,
-  setIsLoginFormVisible: (isLoginFormVisible: boolean) => void
+  setIsLoginFormVisible: (isLoginFormVisible: boolean) => void,
+  setStatus: (status: object) => void
 ) => {
   return (dispatch: AppDispatch) => {
     authAPI.login(values).then((response) => {
       if (response.data.resultCode === 0) {
         dispatch(setAuthorizationState(true))
         setIsLoginFormVisible(false)
+      } else if (response.data.resultCode === 10) {
+        getCaptchaUrl(setStatus)
+      } else {
+        setStatus({ error: `${response.data.messages[0]}` })
       }
     })
   }
+}
+
+const getCaptchaUrl = (setStatus: (status: object) => void) => {
+  authAPI.captcha().then((response) => {
+    setStatus({ captcha: `${response.data.url}` })
+  })
 }
 
 export const logOutThunkCreator = () => {

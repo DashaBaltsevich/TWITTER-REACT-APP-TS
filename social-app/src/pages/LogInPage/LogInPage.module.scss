@@ -58,11 +58,16 @@
     &_btn_submit {
       color: #fff;
       font-size: 18px;
-      margin-top: 40px;
+      margin-top: 30px;
       width: 250px;
       padding: 10px 10px;
       border: 1px $blue solid;
       background-color: $blue;
+    }
+    &_error {
+      color: red;
+      font-size: 12px;
+      margin-top: 20px;
     }
   }
 }

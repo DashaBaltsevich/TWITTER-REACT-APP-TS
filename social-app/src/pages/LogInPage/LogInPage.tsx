@@ -14,27 +14,34 @@ const validationSchema = yup.object({
     .string()
     .required('Password is required')
     .min(4, 'Must be more than 4 characters')
+  // captcha: yup.string().required('Captcha is required')
 })
 
 export interface LoginDataType {
   email: string
   password: string
   rememberMe: boolean
+  captcha?: null | string
 }
 
 export const LogInPage = ({
   login
 }: {
-  login: (values: LoginDataType) => void
+  login: (values: LoginDataType, setStatus: (status: object) => void) => void
 }) => {
   const initialValues: LoginDataType = {
     email: '',
     password: '',
-    rememberMe: false
+    rememberMe: false,
+    captcha: ''
   }
-  const handleSubmitForm = (values: LoginDataType) => {
-    login(values)
-  }
+  // const [captchaUrl, setCaptchaUrl] = useState(null)
+  // useEffect(() => {
+  //   authAPI.captcha().then((response) => {
+  //     setCaptchaUrl(response.data.url)
+  //   })
+  // }, [])
+
   return (
     <section className={styles.s__login}>
       <div className={styles.s__login_title_wrap}>
@@ -44,12 +51,23 @@ export const LogInPage = ({
 
       <Formik
         initialValues={initialValues}
-        onSubmit={(values) => handleSubmitForm(values)}
-        // onReset={}
+        onSubmit={(values, submitProps) => {
+          const result: LoginDataType = {
+            email: values.email,
+            password: values.password,
+            rememberMe: values.rememberMe
+          }
+          if (values.captcha?.trim() !== '') {
+            result.captcha = values.captcha
+          }
+          login(result, submitProps.setStatus)
+          console.log(values)
+          // submitProps.resetForm()
+        }}
         validateOnBlur={false}
         validationSchema={validationSchema}
       >
-        {({ values }) => (
+        {({ values, status }) => (
           <Form className={styles.f__login}>
             <div className={styles.f__login_row}>
               <label htmlFor="email" className={styles.f__login_field_label}>
@@ -106,6 +124,21 @@ export const LogInPage = ({
                 className={styles.f__login_field}
               />
             </div>
+            {status?.captcha && (
+              <div className={styles.f__login_row}>
+                <img src={status.captcha} alt="captcha" />
+                <br />
+                <Field
+                  type="text"
+                  id="captcha"
+                  name="captcha"
+                  className={styles.f__login_field}
+                />
+              </div>
+            )}
+            {status?.error && (
+              <div className={styles.f__login_error}>{status.error}</div>
+            )}
             <button type="submit" className={styles.f__login_btn_submit}>
               Войти
             </button>

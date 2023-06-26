@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { EditProfileValuesType } from '../components/EditProfileMode/EditProfileMode'
+import { LoginDataType } from '../pages/LogInPage/LogInPage'
 
 const instance = axios.create({
   withCredentials: true,
@@ -50,17 +51,16 @@ export const profileAPI = {
 }
 
 export const authAPI = {
-  login(values: { email: string; password: string; rememberMe: boolean }) {
-    return instance.post('auth/login', {
-      email: values.email,
-      password: values.password,
-      rememberMe: values.rememberMe
-    })
+  login(values: LoginDataType) {
+    return instance.post('auth/login', values)
   },
   authorization() {
-    return instance.get('/auth/me')
+    return instance.get('auth/me')
   },
   logOut() {
-    return instance.delete('/auth/login')
+    return instance.delete('auth/login')
+  },
+  captcha() {
+    return instance.get('security/get-captcha-url')
   }
 }
