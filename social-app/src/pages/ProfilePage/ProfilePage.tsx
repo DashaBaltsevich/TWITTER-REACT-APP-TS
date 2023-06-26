@@ -11,7 +11,11 @@ export const ProfilePage = ({
   posts,
   status,
   isMyProfile,
-  handleEditButton
+  handleEditButton,
+  isMyFriend,
+  followUserThunkCreator,
+  unFollowUserThunkCreator,
+  setIsMyFriend
 }: {
   profile: UserProfileType | null
   updateStatusThunkCreator: (newStatus: string) => void
@@ -20,7 +24,20 @@ export const ProfilePage = ({
   isMyProfile: boolean
   isEditMode: boolean
   handleEditButton: () => void
+  isMyFriend: boolean
+  followUserThunkCreator: (userId: number) => void
+  unFollowUserThunkCreator: (userId: number) => void
+  setIsMyFriend: (isMyFriend: boolean) => void
 }): JSX.Element => {
+  const handleFollow = (userId: number) => {
+    if (isMyFriend) {
+      unFollowUserThunkCreator(userId)
+      setIsMyFriend(false)
+    } else {
+      followUserThunkCreator(userId)
+      setIsMyFriend(true)
+    }
+  }
   return (
     <section className={Styles.s__profile}>
       <div className={Styles.b__content_profile}>
@@ -32,14 +49,22 @@ export const ProfilePage = ({
               alt="avatar"
               className={Styles.avatar}
             />
-            {isMyProfile && (
-              <button
-                onClick={() => handleEditButton()}
-                className={Styles.btn__edit}
-              >
-                Edit profile
-              </button>
-            )}
+            {profile &&
+              (isMyProfile ? (
+                <button
+                  onClick={() => handleEditButton()}
+                  className={Styles.btn__edit}
+                >
+                  Edit profile
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleFollow(profile.userId)}
+                  className={Styles.btn__edit}
+                >
+                  {isMyFriend ? 'Unfollow' : 'Follow'}
+                </button>
+              ))}
           </div>
         </div>
         <ProfileDescription

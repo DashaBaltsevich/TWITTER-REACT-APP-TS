@@ -47,6 +47,9 @@ export const profileAPI = {
   },
   updateProfile(newProfileInformation: EditProfileValuesType) {
     return instance.put(`profile`, { ...newProfileInformation })
+  },
+  isMyFriend(id: number) {
+    return instance.get(`follow/${id}`)
   }
 }
 

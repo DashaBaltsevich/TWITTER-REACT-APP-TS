@@ -14,7 +14,9 @@ import {
   AddPostActionType,
   GetStatusType,
   UpdateNewPostTextActionType,
-  UpdateProfileActionType
+  UpdateProfileActionType,
+  GetIsMyFriendActionType,
+  SetIsMyFriendActionType
 } from './profile-reducer'
 import {
   FollowUserActionType,
@@ -56,6 +58,20 @@ export const followUser = (id: number): FollowUserActionType => ({
 export const unFollowUser = (id: number): UnfollowUserActionType => ({
   type: TypeAction.UNFOLLOW_USER,
   id: id
+})
+
+export const getIsMyFriend = (
+  isMyFriend: boolean
+): GetIsMyFriendActionType => ({
+  type: TypeAction.GET_IS_MY_FRIEND,
+  isMyFriend: isMyFriend
+})
+
+export const setIsMyFriend = (
+  isMyFriend: boolean
+): SetIsMyFriendActionType => ({
+  type: TypeAction.SET_IS_MY_FRIEND,
+  isMyFriend
 })
 
 export const setNotFriends = (

@@ -4,12 +4,15 @@ import { connect } from 'react-redux'
 import { PostType, StateTypes, UserProfileType } from '../../types'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import {
+  followUserThunkCreator,
   getUserProfileThunkCreator,
+  unFollowUserThunkCreator,
   updateProfileThunkCreator,
   updateStatusThunkCreator
 } from '../../redux/thunk-creator'
 import { EditProfileModeContainer, ModalWindow } from '../../components'
 import { EditProfileValuesType } from '../../components/EditProfileMode/EditProfileMode'
+import { setIsMyFriend } from '../../redux/action-creator'
 
 interface PropsType {
   profile: UserProfileType | null
@@ -19,6 +22,9 @@ interface PropsType {
   updateProfileThunkCreator: (
     newProfileInformation: EditProfileValuesType
   ) => void
+  followUserThunkCreator: (userId: number) => void
+  unFollowUserThunkCreator: (userId: number) => void
+  setIsMyFriend: (isMyFriend: boolean) => void
   router: {
     location: any
     navigate: any
@@ -26,6 +32,7 @@ interface PropsType {
   }
   posts: PostType[]
   status: string | null
+  isMyFriend: boolean
 }
 
 class ProfilePageAPIContainer extends React.Component<PropsType> {
@@ -59,6 +66,10 @@ class ProfilePageAPIContainer extends React.Component<PropsType> {
           isMyProfile={this.props.myId === 29063}
           isEditMode={this.state.isEditMode}
           handleEditButton={this.handleEditButton}
+          isMyFriend={this.props.isMyFriend}
+          followUserThunkCreator={this.props.followUserThunkCreator}
+          unFollowUserThunkCreator={this.props.unFollowUserThunkCreator}
+          setIsMyFriend={this.props.setIsMyFriend}
         />
         {this.state.isEditMode && (
           <ModalWindow setIsFormVisible={this.setIsEditModeFormVisible}>
@@ -80,11 +91,13 @@ const mapStateToProps = (
   profile: UserProfileType | null
   posts: PostType[]
   status: string | null
+  isMyFriend: boolean
 } => {
   return {
     profile: state.userProfilePage.profile,
     posts: state.userProfilePage.posts,
-    status: state.userProfilePage.status
+    status: state.userProfilePage.status,
+    isMyFriend: state.userProfilePage.isMyFriend
   }
 }
 
@@ -111,5 +124,8 @@ const ProfilePageAPIContainerWithRouter = withRouter(ProfilePageAPIContainer)
 export const ProfilePageContainer = connect(mapStateToProps, {
   getUserProfileThunkCreator,
   updateStatusThunkCreator,
-  updateProfileThunkCreator
+  updateProfileThunkCreator,
+  followUserThunkCreator,
+  unFollowUserThunkCreator,
+  setIsMyFriend
 })(ProfilePageAPIContainerWithRouter)

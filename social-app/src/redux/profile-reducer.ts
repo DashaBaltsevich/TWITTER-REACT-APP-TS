@@ -21,7 +21,8 @@ const initialState: UserProfilePageType = {
     }
   ],
   newText: '',
-  status: null
+  status: null,
+  isMyFriend: false
 }
 
 export type SetUserProfileActionType = {
@@ -53,6 +54,16 @@ export type UpdateProfileActionType = {
   newProfileInformation: EditProfileValuesType
 }
 
+export type GetIsMyFriendActionType = {
+  type: TypeAction.GET_IS_MY_FRIEND
+  isMyFriend: boolean
+}
+
+export type SetIsMyFriendActionType = {
+  type: TypeAction.SET_IS_MY_FRIEND
+  isMyFriend: boolean
+}
+
 export const userProfileReducer = (
   state = initialState,
   action:
@@ -62,6 +73,8 @@ export const userProfileReducer = (
     | UpdateNewPostTextActionType
     | GetStatusType
     | UpdateProfileActionType
+    | GetIsMyFriendActionType
+    | SetIsMyFriendActionType
 ): UserProfilePageType => {
   switch (action.type) {
     case TypeAction.SET_USER_PROFILE:
@@ -110,6 +123,16 @@ export const userProfileReducer = (
         : { ...state }
 
       return profile
+    case TypeAction.GET_IS_MY_FRIEND:
+      return {
+        ...state,
+        isMyFriend: action.isMyFriend
+      }
+    case TypeAction.SET_IS_MY_FRIEND:
+      return {
+        ...state,
+        isMyFriend: action.isMyFriend
+      }
     default:
       return state
   }

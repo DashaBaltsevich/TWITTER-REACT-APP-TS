@@ -74,6 +74,7 @@ export interface UserProfilePageType {
   status: string | null
   posts: PostType[]
   newText: string
+  isMyFriend: boolean
 }
 
 export interface UserDataType {
@@ -111,5 +112,7 @@ export enum TypeAction {
   SHOW_MORE_NOT_FRIENDS_ON_PAGE,
   GET_USER_STATUS,
   UPDATE_STATUS,
-  UPDATE_PROFILE
+  UPDATE_PROFILE,
+  GET_IS_MY_FRIEND,
+  SET_IS_MY_FRIEND
 }

@@ -14,7 +14,8 @@ import {
   updateStatus,
   setCurrentFriendsPage,
   showMoreNotFriendsOnPage,
-  updateProfile
+  updateProfile,
+  getIsMyFriend
 } from './action-creator'
 import { AppDispatch } from './redux-store'
 
@@ -117,11 +118,16 @@ export const unFollowUserThunkCreator =
 
 export const getUserProfileThunkCreator =
   (userId: number) => (dispatch: AppDispatch) => {
+    console.log(userId)
     profileAPI.getUserProfile(userId).then((response) => {
       dispatch(setUserProfile(response.data))
     })
     profileAPI.getUserStatus(userId).then((response) => {
       dispatch(setUserStatus(response.data))
+    })
+    profileAPI.isMyFriend(userId).then((response) => {
+      console.log(response)
+      dispatch(getIsMyFriend(response.data))
     })
   }
 
