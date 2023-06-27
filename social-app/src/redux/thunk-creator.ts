@@ -118,7 +118,6 @@ export const unFollowUserThunkCreator =
 
 export const getUserProfileThunkCreator =
   (userId: number) => (dispatch: AppDispatch) => {
-    console.log(userId)
     profileAPI.getUserProfile(userId).then((response) => {
       dispatch(setUserProfile(response.data))
     })
@@ -126,7 +125,6 @@ export const getUserProfileThunkCreator =
       dispatch(setUserStatus(response.data))
     })
     profileAPI.isMyFriend(userId).then((response) => {
-      console.log(response)
       dispatch(getIsMyFriend(response.data))
     })
   }

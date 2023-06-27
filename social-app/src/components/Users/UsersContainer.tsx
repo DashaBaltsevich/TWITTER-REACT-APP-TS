@@ -8,6 +8,13 @@ import {
 } from '../../redux/thunk-creator'
 import { showMoreNotFriendsOnPage } from '../../redux/action-creator'
 import { Preloader } from '../Preloader'
+import {
+  getCurrentPage,
+  getIsLoading,
+  getNotFriends,
+  getPageSize,
+  getTotalUsersCount
+} from '../../redux/users-selector'
 
 interface PropsType {
   notFriends: {
@@ -37,6 +44,7 @@ class UsersContainerAPI extends React.Component<PropsType> {
   }
 
   render() {
+    console.log('render')
     return (
       <>
         {!this.props.isLoading ? (
@@ -57,12 +65,12 @@ class UsersContainerAPI extends React.Component<PropsType> {
 const mapStateToProps = (state: StateTypes) => {
   return {
     notFriends: {
-      users: state.usersPage.notFriends.users,
-      pageSize: state.usersPage.notFriends.pageSize,
-      totalUsersCount: state.usersPage.notFriends.totalUsersCount,
-      currentPage: state.usersPage.notFriends.currentPage
+      users: getNotFriends(state),
+      pageSize: getPageSize(state),
+      totalUsersCount: getTotalUsersCount(state),
+      currentPage: getCurrentPage(state)
     },
-    isLoading: state.usersPage.isLoading
+    isLoading: getIsLoading(state)
   }
 }
 
