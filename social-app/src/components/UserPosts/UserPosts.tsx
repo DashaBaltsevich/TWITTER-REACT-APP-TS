@@ -1,20 +1,46 @@
 import React from 'react'
-import { Post } from '../index'
 import './UserPosts.scss'
-import { NewPost } from '../Post/NewPost'
-import { PostsType, ActionTypes } from '../../types'
+import { NewPost } from '../NewPost'
+import { Posts } from './Post'
+import { connect } from 'react-redux'
+import { PostType, StateTypes, UserProfileType } from '../../types'
+import { addPost, updateNewPostText } from '../../redux/action-creator'
 
-export const UserPosts = ({
-  postsPage,
-  dispatch
+const UserPosts = ({
+  posts,
+  profile,
+  addPost,
+  updateNewPostText
 }: {
-  postsPage: PostsType
-  dispatch: (action: ActionTypes) => void
+  posts: PostType[]
+  profile: UserProfileType | null
+  addPost: () => void
+  updateNewPostText: (newTextPost: string) => void
 }): JSX.Element => {
   return (
     <div className="b-posts">
-      <NewPost dispatch={dispatch} />
-      <Post posts={postsPage.posts} />
+      <NewPost addPost={addPost} updateNewPostText={updateNewPostText} />
+      <Posts posts={posts} name={profile && profile.fullName} />
     </div>
   )
 }
+
+const mapStateToProps = (state: StateTypes) => {
+  return {
+    posts: state.userProfilePage.posts,
+    profile: state.userProfilePage.profile
+  }
+}
+
+// const mapDispatchToProps = (dispatch: (action: ActionTypes) => void) => {
+//   return {
+//     updateNewPost: (newTextPost: string) =>
+//       dispatch(updateNewPostText(newTextPost)),
+//     addNewPost: () => dispatch(addPost())
+//   }
+// }
+
+export const UserPostsContainer = connect(mapStateToProps, {
+  updateNewPostText,
+  addPost
+})(UserPosts)

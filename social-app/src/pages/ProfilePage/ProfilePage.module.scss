@@ -1,39 +1,41 @@
 @import '../../App.module.scss';
 
-.avatar__wrap {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: end;
-  position: relative;
-  width: 100%;
-  padding: 0 16px;
-  bottom: 60px;
-  left: 0;
-  .avatar {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    border: 4px solid #fff;
+.s__profile {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  .b__content_profile {
+    border-right: 1px solid $border-grey;
+    .avatar__wrap {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: end;
+      position: relative;
+      width: 100%;
+      padding: 0 16px;
+      bottom: 60px;
+      left: 0;
+      .avatar {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        border: 4px solid #fff;
+      }
+    }
+
+    .btn__edit {
+      border: 1px solid $blue;
+      border-radius: 25px;
+      padding: 10px 16px;
+      margin-bottom: 10px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: $blue;
+    }
   }
-}
 
-.btn__edit {
-  border: 1px solid $blue;
-  border-radius: 25px;
-  padding: 10px 16px;
-  margin-bottom: 10px;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  color: $blue;
-}
-
-.l__info {
-  display: flex;
-  flex-direction: column;
-  padding: 0 16px;
-  li:first-child {
-    margin-bottom: 10px;
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr 0fr;
   }
 }

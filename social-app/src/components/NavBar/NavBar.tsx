@@ -1,11 +1,23 @@
-import React, { FC } from 'react'
+import React from 'react'
 // import NavBarStyles from './NavBar.module.scss'
-import { NavLinks } from '../NavLinks'
+import { NavLinks } from '../index'
 
-export const NavBar: FC = (): JSX.Element => {
+export const NavBar = ({
+  isAuthorized,
+  setIsLoginFormVisible,
+  handleLogOut
+}: {
+  isAuthorized: boolean
+  setIsLoginFormVisible: (isVisible: boolean) => void
+  handleLogOut: () => void
+}): JSX.Element => {
   return (
     <nav>
-      <NavLinks />
+      <NavLinks
+        isAuthorized={isAuthorized}
+        setIsLoginFormVisible={setIsLoginFormVisible}
+        handleLogOut={handleLogOut}
+      />
     </nav>
   )
 }

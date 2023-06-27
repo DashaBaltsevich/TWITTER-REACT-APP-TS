@@ -1,0 +1,57 @@
+@import '../../App.module.scss';
+.b__users {
+  background-color: #f7f9f9;
+  border-radius: 16px;
+  margin: 40px 20px 0 20px;
+  padding: 12px;
+  &_title {
+    padding: 0px 16px 12px;
+    font-weight: 600;
+    font-size: 20px;
+  }
+  .l__pages {
+    padding: 12px 16px;
+  }
+
+  .currentPage {
+    font-weight: 600;
+  }
+
+  &_button {
+    margin-top: 20px;
+    margin-left: 16px;
+    color: $blue;
+    font-size: 16px;
+    text-align: start;
+  }
+}
+
+.l__users {
+  display: flex;
+  flex-direction: column;
+  &_item {
+    cursor: pointer;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    &:hover {
+      background-color: #eff3f4;
+    }
+    &_button {
+      background-color: black;
+      border: none;
+      border-radius: 16px;
+      color: #fff;
+      padding: 8px 15px;
+      font-weight: 700;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .b__users {
+    display: none;
+  }
+}

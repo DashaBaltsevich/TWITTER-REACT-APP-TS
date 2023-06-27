@@ -1,0 +1,1 @@
+export { FriendsContainer } from './FriendsContainer'

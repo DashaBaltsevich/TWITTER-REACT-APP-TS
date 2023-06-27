@@ -3,8 +3,9 @@ import * as Yup from 'yup'
 import { BiSend } from 'react-icons/bi'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import NewMessageStyles from './NewMessage.module.scss'
-import { ActionTypes } from '../../types'
-import { updateNewMessageText, addMessage } from '../../redux/action-creator'
+import { connect } from 'react-redux'
+import { StateTypes } from '../../types'
+import { addMessage, updateNewMessageText } from '../../redux/action-creator'
 
 const validationPostSchema = Yup.object({
   newMessage: Yup.string().required().min(4, 'Must be more than 4 characters')
@@ -14,10 +15,12 @@ type NewMassageType = {
   newMessage: string
 }
 
-export const NewMessage = ({
-  dispatch
+const NewMessage = ({
+  addMessage,
+  updateNewMessageText
 }: {
-  dispatch: (action: ActionTypes) => void
+  addMessage: () => void
+  updateNewMessageText: (newTextMessage: string) => void
 }) => {
   const initialValues: NewMassageType = {
     newMessage: ''
@@ -29,7 +32,7 @@ export const NewMessage = ({
       validationSchema={validationPostSchema}
       validateOnBlur={false}
       onSubmit={(values, { resetForm }) => {
-        dispatch(addMessage())
+        addMessage()
         console.log(values)
         resetForm()
       }}
@@ -46,7 +49,7 @@ export const NewMessage = ({
               placeholder="New Message"
               rows={1}
               onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                dispatch(updateNewMessageText(e.target.value))
+                updateNewMessageText(e.target.value)
               }}
             />
             <ErrorMessage
@@ -64,3 +67,22 @@ export const NewMessage = ({
     </Formik>
   )
 }
+
+const mapStateToProps = (state: StateTypes) => {
+  return {
+    messages: state.messagesPage.messages
+  }
+}
+
+// const mapDispatchToProps = (dispatch: (action: ActionTypes) => void) => {
+//   return {
+//     updateNewMessage: (newTextMessage: string) =>
+//       dispatch(updateNewMessageText(newTextMessage)),
+//     addNewMessage: () => dispatch(addMessage())
+//   }
+// }
+
+export const NewMessageContainer = connect(mapStateToProps, {
+  updateNewMessageText,
+  addMessage
+})(NewMessage)

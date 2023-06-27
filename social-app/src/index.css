@@ -41,11 +41,6 @@ button {
   padding: 0;
 }
 
-input[type='checkbox'],
-input[type='radio'] {
-  display: none;
-}
-
 input[type='text'],
 input[type='password'],
 input[type='email'],
