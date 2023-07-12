@@ -3,13 +3,12 @@ import { NavLink } from 'react-router-dom'
 import Avatar from '../../assets/avatar.png'
 import DialogsStyles from './Dialogs.module.scss'
 import { DialogUserType, StateTypes } from '../../types'
-import { connect } from 'react-redux'
+import { useAppSelector } from '../../hooks'
 
-const Dialogs = ({
-  dialogUsers
-}: {
-  dialogUsers: DialogUserType[]
-}): JSX.Element => {
+export const Dialogs = (): JSX.Element => {
+  const dialogUsers: DialogUserType[] = useAppSelector(
+    (state: StateTypes) => state.messagesPage.dialogUsers
+  )
   const setActive = ({ isActive }: { isActive: boolean }): string =>
     isActive
       ? DialogsStyles.l__dialogs_item_link_active
@@ -33,11 +32,3 @@ const Dialogs = ({
     )
   )
 }
-
-const mapStateToProps = (state: StateTypes) => {
-  return {
-    dialogUsers: state.messagesPage.dialogUsers
-  }
-}
-
-export const DialogsContainer = connect(mapStateToProps)(Dialogs)

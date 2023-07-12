@@ -1,1 +1,1 @@
-export { NewMessageContainer } from './NewMessage'
+export { NewMessage } from './NewMessage'

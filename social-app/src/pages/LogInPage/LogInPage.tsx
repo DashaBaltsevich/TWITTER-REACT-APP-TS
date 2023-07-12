@@ -35,12 +35,6 @@ export const LogInPage = ({
     rememberMe: false,
     captcha: ''
   }
-  // const [captchaUrl, setCaptchaUrl] = useState(null)
-  // useEffect(() => {
-  //   authAPI.captcha().then((response) => {
-  //     setCaptchaUrl(response.data.url)
-  //   })
-  // }, [])
 
   return (
     <section className={styles.s__login}>

@@ -8,7 +8,7 @@ export const Posts = ({
   name
 }: {
   posts: PostType[]
-  name: string | null
+  name: string | undefined
 }): JSX.Element => {
   return (
     <ul className={PostStyles.l__posts}>

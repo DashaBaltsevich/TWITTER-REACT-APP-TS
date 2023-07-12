@@ -1,1 +1,1 @@
-export { MessagesContainer } from './Messages'
+export { Messages } from './Messages'

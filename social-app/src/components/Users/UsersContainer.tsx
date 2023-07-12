@@ -1,81 +1,55 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Users } from './Users'
-import { connect } from 'react-redux'
-import { StateTypes, UserType } from '../../types'
 import {
   followUserThunkCreator,
-  getNotFriendsThunkCreator
-} from '../../redux/thunk-creator'
-import { showMoreNotFriendsOnPage } from '../../redux/action-creator'
-import { Preloader } from '../Preloader'
-import {
-  getCurrentPage,
-  getIsLoading,
-  getNotFriends,
-  getPageSize,
-  getTotalUsersCount
-} from '../../redux/users-selector'
-
-interface PropsType {
-  notFriends: {
-    users: UserType[]
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-  }
-  isLoading: boolean
-  getNotFriendsThunkCreator: (pageSize: number) => void
-  followUserThunkCreator: (id: number) => void
-  showMoreNotFriendsOnPage: () => void
-}
-
-class UsersContainerAPI extends React.Component<PropsType> {
-  componentDidMount() {
-    this.props.getNotFriendsThunkCreator(this.props.notFriends.pageSize)
-  }
-
-  handlePagination = async () => {
-    await this.props.showMoreNotFriendsOnPage()
-    this.props.getNotFriendsThunkCreator(this.props.notFriends.pageSize)
-  }
-
-  handleFollowButton = (id: number) => {
-    this.props.followUserThunkCreator(id)
-  }
-
-  render() {
-    console.log('render')
-    return (
-      <>
-        {!this.props.isLoading ? (
-          <Users
-            users={this.props.notFriends.users}
-            handleFollowButton={this.handleFollowButton}
-            handlePagination={this.handlePagination}
-            pageSize={this.props.notFriends.pageSize}
-          />
-        ) : (
-          <Preloader />
-        )}
-      </>
-    )
-  }
-}
-
-const mapStateToProps = (state: StateTypes) => {
-  return {
-    notFriends: {
-      users: getNotFriends(state),
-      pageSize: getPageSize(state),
-      totalUsersCount: getTotalUsersCount(state),
-      currentPage: getCurrentPage(state)
-    },
-    isLoading: getIsLoading(state)
-  }
-}
-
-export const UsersContainer = connect(mapStateToProps, {
-  showMoreNotFriendsOnPage,
   getNotFriendsThunkCreator,
-  followUserThunkCreator
-})(UsersContainerAPI)
+  showMoreNotFriendsOnPageThunkCreator
+} from '../../redux/thunk-creator'
+import { Preloader } from '../Preloader'
+import { useAppDispatch, useAppSelector } from '../../hooks'
+import { RootState } from '../../redux/redux-store'
+// import { setScrollHeightNotFriendList } from '../../redux/action-creator'
+
+export const UsersContainer = () => {
+  const notFriends = useAppSelector(
+    (state: RootState) => state.usersPage.notFriends
+  )
+  const scrollHeight = useAppSelector(
+    (state: RootState) => state.usersPage.notFriends.scrollHeight
+  )
+  console.log(scrollHeight)
+  const pageNumber = useAppSelector(
+    (state: RootState) => state.usersPage.notFriends.currentPage
+  )
+  console.log(pageNumber)
+  const isLoading = useAppSelector(
+    (state: RootState) => state.usersPage.isLoading
+  )
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(getNotFriendsThunkCreator(notFriends.pageSize))
+  }, [notFriends.pageSize, dispatch])
+
+  const showMoreNotFriends = () => {
+    // dispatch(setScrollHeightNotFriendList(scrollHeight))
+    dispatch(showMoreNotFriendsOnPageThunkCreator(pageNumber))
+  }
+
+  const handleFollowButton = (id: number) => {
+    dispatch(followUserThunkCreator(id))
+  }
+
+  return (
+    <>
+      {!isLoading ? (
+        <Users
+          users={notFriends.users}
+          handleFollowButton={handleFollowButton}
+          showMoreNotFriends={showMoreNotFriends}
+        />
+      ) : (
+        <Preloader />
+      )}
+    </>
+  )
+}

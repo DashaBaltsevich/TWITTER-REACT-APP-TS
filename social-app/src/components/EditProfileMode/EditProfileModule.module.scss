@@ -113,4 +113,10 @@
     font-weight: 700;
     border: none;
   }
+
+  &_error {
+    margin: 10px 0;
+    color: red;
+    font-size: 12px;
+  }
 }

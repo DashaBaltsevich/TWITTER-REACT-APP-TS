@@ -10,15 +10,16 @@ interface FriendsPropsType {
     totalUsersCount: number
     currentPage: number
   }
-  pageSize: number
-  totalUsersCount: number
-  currentPage: number
   handleUnfollowButton: (id: number) => void
   handlePagination: (pageNumber: number) => void
 }
 
-export class Friends extends React.Component<FriendsPropsType> {
-  range = (from: number, to: number, step = 1): number[] => {
+export const Friends = ({
+  friends,
+  handleUnfollowButton,
+  handlePagination
+}: FriendsPropsType) => {
+  const range = (from: number, to: number, step = 1): number[] => {
     let i = from
     const range = []
 
@@ -29,54 +30,48 @@ export class Friends extends React.Component<FriendsPropsType> {
 
     return range
   }
-  pagesNumber = this.range(
+  const pagesNumber = range(
     1,
-    Math.ceil(this.props.totalUsersCount / this.props.pageSize)
+    Math.ceil(friends.totalUsersCount / friends.pageSize)
   )
 
-  render(): React.ReactNode {
-    return (
-      <div className={styles.b__friends}>
-        <div className={styles.b__friends_title}>Friends</div>
-        <ul className={styles.l__pages}>
-          {this.pagesNumber.map((p: number, i) => {
-            if (i > 9) {
-              return ''
-            } else {
-              return (
-                <li key={p}>
-                  <button
-                    className={
-                      p === this.props.currentPage
-                        ? `${styles.l__pages_item} ${styles.l__pages_item_current}`
-                        : styles.l__pages_item
-                    }
-                    onClick={() => 
-                      this.props.handlePagination(p)
-                    }
-                  >
-                    {p}
-                  </button>
-                </li>
-              )
-            }
-          })}
-        </ul>
-        {this.props.friends.users && (
-          <ul className={styles.l__users}>
-            {this.props.friends.users.map((user) => (
-              <li className={styles.l__users_item} key={user.id}>
-                <UserPrevue user={user} />
+  return (
+    <div className={styles.b__friends}>
+      <div className={styles.b__friends_title}>Friends</div>
+      <ul className={styles.l__pages}>
+        {pagesNumber.map((p: number, i) => {
+          if (i > 9) {
+            return ''
+          } else {
+            return (
+              <li key={p}>
                 <button
-                  onClick={() => this.props.handleUnfollowButton(user.id)}
+                  className={
+                    p === friends.currentPage
+                      ? `${styles.l__pages_item} ${styles.l__pages_item_current}`
+                      : styles.l__pages_item
+                  }
+                  onClick={() => handlePagination(p)}
                 >
-                  Unfollow
+                  {p}
                 </button>
               </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    )
-  }
+            )
+          }
+        })}
+      </ul>
+      {friends.users && (
+        <ul className={styles.l__users}>
+          {friends.users.map((user) => (
+            <li className={styles.l__users_item} key={user.id}>
+              <UserPrevue user={user} />
+              <button onClick={() => handleUnfollowButton(user.id)}>
+                Unfollow
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
 }

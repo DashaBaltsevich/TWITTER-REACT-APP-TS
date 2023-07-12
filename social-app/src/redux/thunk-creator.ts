@@ -1,3 +1,4 @@
+import { ThunkDispatch } from 'redux-thunk'
 import { authAPI, profileAPI, userAPI } from '../api/api'
 import { EditProfileValuesType } from '../components/EditProfileMode/EditProfileMode'
 import { LoginDataType } from '../pages/LogInPage/LogInPage'
@@ -17,11 +18,12 @@ import {
   updateProfile,
   getIsMyFriend
 } from './action-creator'
-import { AppDispatch } from './redux-store'
+import { ProfileActionTypes } from './profile-reducer'
+import { AppDispatch, RootState } from './redux-store'
 
 export const authorizationThunkCreator = () => {
-  return (dispatch: AppDispatch) => {
-    authAPI.authorization().then((response) => {
+  return async (dispatch: AppDispatch) => {
+    await authAPI.authorization().then((response) => {
       if (response.data.resultCode === 0) {
         dispatch(setUserInformation(response.data.data))
         dispatch(setAuthorizationState(true))
@@ -34,9 +36,9 @@ export const logInThunkCreator = (
   values: LoginDataType,
   setIsLoginFormVisible: (isLoginFormVisible: boolean) => void,
   setStatus: (status: object) => void
-) => {
-  return (dispatch: AppDispatch) => {
-    authAPI.login(values).then((response) => {
+): any => {
+  return async (dispatch: AppDispatch) => {
+    await authAPI.login(values).then((response) => {
       if (response.data.resultCode === 0) {
         dispatch(setAuthorizationState(true))
         setIsLoginFormVisible(false)
@@ -49,15 +51,15 @@ export const logInThunkCreator = (
   }
 }
 
-const getCaptchaUrl = (setStatus: (status: object) => void) => {
-  authAPI.captcha().then((response) => {
+const getCaptchaUrl = async (setStatus: (status: object) => void) => {
+  await authAPI.captcha().then((response) => {
     setStatus({ captcha: `${response.data.url}` })
   })
 }
 
-export const logOutThunkCreator = () => {
-  return (dispatch: AppDispatch) => {
-    authAPI.logOut().then((response) => {
+export const logOutThunkCreator = (): any => {
+  return async (dispatch: AppDispatch) => {
+    await authAPI.logOut().then((response) => {
       if (response.data.resultCode === 0) {
         dispatch(setUserInformation(null))
         dispatch(setAuthorizationState(false))
@@ -69,20 +71,20 @@ export const logOutThunkCreator = () => {
 export const getFriendsThunkCreator = (
   pageSize: number,
   pageNumber: number = 1
-) => {
-  return (dispatch: AppDispatch) => {
+): any => {
+  return async (dispatch: AppDispatch) => {
     dispatch(setIsLoading(true))
     dispatch(setCurrentFriendsPage(pageNumber))
-    userAPI.getFriends(pageSize, pageNumber).then((response) => {
+    await userAPI.getFriends(pageSize, pageNumber).then((response) => {
       dispatch(setIsLoading(false))
       dispatch(setFriends(response.data.items, response.data.totalCount))
     })
   }
 }
 
-export const getNotFriendsThunkCreator = (pageSize: number) => {
-  return (dispatch: AppDispatch) => {
-    dispatch(setIsLoading(true))
+export const getNotFriendsThunkCreator = (pageSize: number): any => {
+  return async (dispatch: AppDispatch) => {
+    await dispatch(setIsLoading(true))
     userAPI.getNotFriends(pageSize).then((response) => {
       dispatch(setIsLoading(false))
       dispatch(setNotFriends(response.data.items, response.data.totalCount))
@@ -90,11 +92,13 @@ export const getNotFriendsThunkCreator = (pageSize: number) => {
   }
 }
 
-export const showMoreNotFriendsOnPageThunkCreator = () => {
-  return (dispatch: AppDispatch) => {
+export const showMoreNotFriendsOnPageThunkCreator = (
+  pageNumber: number
+): any => {
+  return async (dispatch: AppDispatch) => {
     dispatch(setIsLoading(true))
     dispatch(showMoreNotFriendsOnPage())
-    userAPI.getNotFriends().then((response) => {
+    await userAPI.getNotFriends(pageNumber).then((response) => {
       dispatch(setIsLoading(false))
       dispatch(setNotFriends(response.data.items, response.data.totalCount))
     })
@@ -102,8 +106,9 @@ export const showMoreNotFriendsOnPageThunkCreator = () => {
 }
 
 export const followUserThunkCreator =
-  (id: number) => (dispatch: AppDispatch) => {
-    userAPI.followUser(id).then((response) => {
+  (id: number): any =>
+  async (dispatch: AppDispatch) => {
+    await userAPI.followUser(id).then((response) => {
       if (response.data.resultCode === 0) {
         dispatch(followUser(id))
       }
@@ -111,27 +116,30 @@ export const followUserThunkCreator =
   }
 
 export const unFollowUserThunkCreator =
-  (id: number) => (dispatch: AppDispatch) => {
-    userAPI.unFollowUserApi(id)
+  (id: number): any =>
+  async (dispatch: AppDispatch) => {
+    await userAPI.unFollowUserApi(id)
     dispatch(unFollowUser(id))
   }
 
 export const getUserProfileThunkCreator =
-  (userId: number) => (dispatch: AppDispatch) => {
-    profileAPI.getUserProfile(userId).then((response) => {
+  (userId: any): any =>
+  async (dispatch: AppDispatch) => {
+    await profileAPI.getUserProfile(userId).then((response) => {
       dispatch(setUserProfile(response.data))
     })
-    profileAPI.getUserStatus(userId).then((response) => {
+    await profileAPI.getUserStatus(userId).then((response) => {
       dispatch(setUserStatus(response.data))
     })
-    profileAPI.isMyFriend(userId).then((response) => {
+    await profileAPI.isMyFriend(userId).then((response) => {
       dispatch(getIsMyFriend(response.data))
     })
   }
 
 export const updateStatusThunkCreator =
-  (newStatus: string) => (dispatch: AppDispatch) => {
-    profileAPI.updateStatus(newStatus).then((response) => {
+  (newStatus: string): any =>
+  async (dispatch: AppDispatch) => {
+    await profileAPI.updateStatus(newStatus).then((response) => {
       if (response.data.resultCode === 0) {
         dispatch(updateStatus(newStatus))
       }
@@ -139,10 +147,24 @@ export const updateStatusThunkCreator =
   }
 
 export const updateProfileThunkCreator =
-  (newProfileInformation: EditProfileValuesType) => (dispatch: AppDispatch) => {
-    profileAPI.updateProfile(newProfileInformation).then((response) => {
+  (
+    newProfileInformation: EditProfileValuesType,
+    setStatus: (status: object) => void,
+    setIsEditModeFormVisible: (isEditModeFormVisible: boolean) => void
+  ): any =>
+  async (
+    dispatch: ThunkDispatch<RootState, {}, ProfileActionTypes>
+  ): Promise<void> => {
+    await profileAPI.updateProfile(newProfileInformation).then((response) => {
+      console.log(response)
       if (response.data.resultCode === 0) {
         dispatch(updateProfile(newProfileInformation))
+        setIsEditModeFormVisible(false)
+      } else if (response.data.resultCode === 1) {
+        setStatus({ error: `${response.data.messages[0]}` })
       }
     })
   }
+
+// : ThunkDispatch<RootState, {}, AnyAction>
+// : ThunkAction<void, RootState, {}, Action>

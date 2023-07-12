@@ -22,32 +22,48 @@
       font-size: 16px;
     }
     p {
-      margin: 5px 0 15px;
+      margin: 5px 0 20px;
     }
   }
   &_work {
-    // margin-bottom: 15px;
     font-size: 14px;
     color: rgb(83, 100, 113);
+    margin-bottom: 20px;
   }
   &_data {
     display: flex;
     align-items: center;
     color: rgb(83, 100, 113);
     font-size: 14px;
-    margin-top: 20px;
     img {
       margin-right: 6px;
     }
   }
   &_contacts {
-    margin: 20px 0 0px;
+    margin-bottom: 20px;
     &_icon_active {
       transform: rotateX(180deg);
     }
     ul {
       margin-top: 8px;
+      padding-left: 40px;
       font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      list-style-type: disc;
+      li {
+        display: list-item;
+        list-style-type: circle;
+        &::marker {
+          color: $blue;
+        }
+        a {
+          margin-left: 8px;
+        }
+      }
+      li + li {
+        margin-top: 8px;
+      }
     }
     button {
       margin-left: 5px;

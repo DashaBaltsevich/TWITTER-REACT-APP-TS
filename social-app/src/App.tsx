@@ -3,13 +3,11 @@ import AppStyles from './App.module.scss'
 import { ModalWindow, NavBar, PrivateRoute } from './components'
 import {
   HomePage,
-  ProfilePageContainer,
   MessagesPage,
   UsersPage,
   LogInPageContainer
-} from './pages'
+} from './pages/index'
 import { Routes, Route } from 'react-router-dom'
-import { WithRouterProps } from './pages/ProfilePage/ProfilePageContainer'
 import { connect } from 'react-redux'
 import { StateTypes, UserDataType, UserInformationType } from './types'
 import {
@@ -17,6 +15,7 @@ import {
   logInThunkCreator,
   logOutThunkCreator
 } from './redux/thunk-creator'
+import { ProfilePageContainer } from './pages/ProfilePage/ProfilePageContainer'
 
 interface PropsType {
   userInformation: UserDataType | null
@@ -68,16 +67,13 @@ class AppAPI extends React.Component<PropsType, StateType> {
               path="/profile"
               element={
                 <PrivateRoute isAllowed={this.props.isAuthorized}>
-                  <ProfilePageContainer
-                    router={{} as WithRouterProps}
-                    myId={this.props.userInformation?.id}
-                  />
+                  <ProfilePageContainer />
                 </PrivateRoute>
               }
             />
             <Route
               path="/profile/:user_id"
-              element={<ProfilePageContainer router={{} as WithRouterProps} />}
+              element={<ProfilePageContainer />}
             />
             <Route
               path="/dialog/*"

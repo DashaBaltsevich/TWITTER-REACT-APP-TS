@@ -2,17 +2,19 @@ import React, { useState } from 'react'
 import Styles from './ProfileDescription.module.scss'
 import Calendar from '../../assets/calendar.svg'
 import { ProfileStatus } from '..'
-import { UserProfileType } from '../../types'
 import { IoMdArrowDropdown } from 'react-icons/io'
+import { UserProfileType } from '../../types'
 
 export const ProfileDescription = ({
   profile,
-  updateStatusThunkCreator,
-  status
+  status,
+  updateStatus,
+  isMyProfile
 }: {
   profile: UserProfileType | null
-  updateStatusThunkCreator: (newStatus: string) => void
   status: string | null
+  updateStatus: (status: string) => void
+  isMyProfile: boolean
 }) => {
   const [isContactsVisible, setIsContactsVisible] = useState(false)
   return (
@@ -21,8 +23,9 @@ export const ProfileDescription = ({
       <span className={Styles.b__info_subname}>@{profile?.fullName}</span>
       <div className={Styles.b__info_status}>
         <ProfileStatus
-          status={status ?? 'no status'}
-          updateStatusThunkCreator={updateStatusThunkCreator}
+          stateStatus={status}
+          updateStatus={updateStatus}
+          isMyProfile={isMyProfile}
         />
       </div>
       <li>
@@ -62,14 +65,23 @@ export const ProfileDescription = ({
             </button>
             {isContactsVisible && (
               <ul>
-                <li>{profile.contacts.facebook}</li>
-                <li>{profile.contacts.vk}</li>
-                <li>{profile.contacts.twitter}</li>
-                <li>{profile.contacts.mainLink}</li>
-                <li>{profile.contacts.github}</li>
-                <li>{profile.contacts.instagram}</li>
-                <li>{profile.contacts.website}</li>
-                <li>{profile.contacts.youtube}</li>
+                {Object.keys(profile.contacts).map((element) => {
+                  const el = element as keyof typeof profile.contacts
+                  return (
+                    profile.contacts[el] && (
+                      <li key={element}>
+                        {el}:
+                        <a
+                          href={`https://${profile.contacts[el]}` || '/'}
+                          rel="noopener noreferrer external"
+                          target="_blank"
+                        >
+                          {profile.contacts[el]}
+                        </a>
+                      </li>
+                    )
+                  )
+                })}
               </ul>
             )}
           </div>

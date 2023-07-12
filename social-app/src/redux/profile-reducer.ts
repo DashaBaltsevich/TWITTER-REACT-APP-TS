@@ -64,17 +64,19 @@ export type SetIsMyFriendActionType = {
   isMyFriend: boolean
 }
 
+export type ProfileActionTypes =
+  | SetUserProfileActionType
+  | UpdateStatusType
+  | AddPostActionType
+  | UpdateNewPostTextActionType
+  | GetStatusType
+  | UpdateProfileActionType
+  | GetIsMyFriendActionType
+  | SetIsMyFriendActionType
+
 export const userProfileReducer = (
-  state = initialState,
-  action:
-    | SetUserProfileActionType
-    | UpdateStatusType
-    | AddPostActionType
-    | UpdateNewPostTextActionType
-    | GetStatusType
-    | UpdateProfileActionType
-    | GetIsMyFriendActionType
-    | SetIsMyFriendActionType
+  state: UserProfilePageType = initialState,
+  action: ProfileActionTypes
 ): UserProfilePageType => {
   switch (action.type) {
     case TypeAction.SET_USER_PROFILE:

@@ -1,11 +1,14 @@
 import React from 'react'
 import Avatar from '../../assets/avatar.png'
 import MessagesStyles from './Messages.module.scss'
-import { NewMessageContainer } from '../index'
-import { connect } from 'react-redux'
-import { MessageType, StateTypes } from '../../types'
+import { RootState } from '../../redux/redux-store'
+import { useAppSelector } from '../../hooks'
+import { NewMessage } from '..'
 
-const Messages = ({ messages }: { messages: MessageType[] }): JSX.Element => {
+export const Messages = () => {
+  const messages = useAppSelector(
+    (state: RootState) => state.messagesPage.messages
+  )
   return (
     messages && (
       <div className={MessagesStyles.b__messages}>
@@ -21,16 +24,8 @@ const Messages = ({ messages }: { messages: MessageType[] }): JSX.Element => {
             </li>
           ))}
         </ul>
-        <NewMessageContainer />
+        <NewMessage />
       </div>
     )
   )
 }
-
-const mapStateToProps = (state: StateTypes) => {
-  return {
-    messages: state.messagesPage.messages
-  }
-}
-
-export const MessagesContainer = connect(mapStateToProps)(Messages)

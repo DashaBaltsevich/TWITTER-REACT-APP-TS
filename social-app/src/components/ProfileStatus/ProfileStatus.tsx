@@ -1,56 +1,57 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-type PropsType = {
-  status: string
-  updateStatusThunkCreator: (newStatus: string) => void
-}
+export const ProfileStatus = ({
+  stateStatus,
+  updateStatus,
+  isMyProfile
+}: {
+  stateStatus: string | null
+  updateStatus: (status: string) => void
+  isMyProfile: boolean
+}) => {
+  const [editMode, setEditMode] = useState(false)
+  const [status, setStatus] = useState<string | null>('')
 
-export class ProfileStatus extends React.Component<PropsType> {
-  state = {
-    editMode: false,
-    status: this.props.status
+  const activateEditMode = () => {
+    setEditMode(true)
   }
 
-  activateEditMode = () => {
-    this.setState({ editMode: true })
-  }
-
-  deactivateEditMode = () => {
-    this.setState({ editMode: false })
-    this.props.updateStatusThunkCreator(this.state.status)
-  }
-
-  onStatusChange = (event: any) => {
-    this.setState({ status: event?.target.value })
-  }
-
-  componentDidUpdate(prevProps: Readonly<PropsType>): void {
-    if (prevProps.status !== this.props.status) {
-      this.setState({
-        status: this.props.status
-      })
+  const deactivateEditMode = () => {
+    setEditMode(false)
+    if (status !== stateStatus) {
+      updateStatus(status ?? '')
     }
   }
 
-  render() {
-    return (
-      <>
-        {this.state.editMode ? (
+  const onStatusChange = (event: any) => {
+    setStatus(event?.target.value)
+  }
+
+  useEffect(() => {
+    setStatus(stateStatus)
+  }, [stateStatus])
+
+  return (
+    <>
+      {isMyProfile ? (
+        editMode ? (
           <textarea
-            value={this.state.status}
-            onBlur={this.deactivateEditMode}
-            onChange={this.onStatusChange}
+            value={status || ''}
+            onBlur={deactivateEditMode}
+            onChange={onStatusChange}
             style={{
               width: '100%',
               height: '52px'
             }}
           />
         ) : (
-          <p onDoubleClick={this.activateEditMode} autoFocus={true}>
-            {this.props.status || 'no status'}
+          <p onDoubleClick={activateEditMode} autoFocus={true}>
+            {stateStatus || 'no status'}
           </p>
-        )}
-      </>
-    )
-  }
+        )
+      ) : (
+        <p>{stateStatus || 'no status'}</p>
+      )}
+    </>
+  )
 }

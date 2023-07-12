@@ -2,41 +2,49 @@ import React from 'react'
 import Styles from './ProfilePage.module.scss'
 import Cover from '../../assets/cover.png'
 import Avatar from '../../assets/avatar.png'
-import { PostType, UserProfileType } from '../../types'
 import { Posts, ProfileDescription, UsersContainer } from '../../components'
-
-export const ProfilePage = ({
-  profile,
-  updateStatusThunkCreator,
-  posts,
-  status,
-  isMyProfile,
-  handleEditButton,
-  isMyFriend,
+import { useAppDispatch, useAppSelector } from '../../hooks'
+import { RootState } from '../../redux/redux-store'
+import {
   followUserThunkCreator,
   unFollowUserThunkCreator,
-  setIsMyFriend
+  updateStatusThunkCreator
+} from '../../redux/thunk-creator'
+import { setIsMyFriend } from '../../redux/action-creator'
+
+export const ProfilePage = ({
+  handleEditButton
 }: {
-  profile: UserProfileType | null
-  updateStatusThunkCreator: (newStatus: string) => void
-  posts: PostType[]
-  status: string | null
-  isMyProfile: boolean
-  isEditMode: boolean
   handleEditButton: () => void
-  isMyFriend: boolean
-  followUserThunkCreator: (userId: number) => void
-  unFollowUserThunkCreator: (userId: number) => void
-  setIsMyFriend: (isMyFriend: boolean) => void
-}): JSX.Element => {
+}) => {
+  const profile = useAppSelector(
+    (state: RootState) => state.userProfilePage.profile
+  )
+  const status = useAppSelector(
+    (state: RootState) => state.userProfilePage.status
+  )
+  const posts = useAppSelector(
+    (state: RootState) => state.userProfilePage.posts
+  )
+  const isMyFriend = useAppSelector(
+    (state: RootState) => state.userProfilePage.isMyFriend
+  )
+  const isMyProfile = useAppSelector(
+    (state: RootState) =>
+      state.auth.userInformation?.id === state.userProfilePage.profile?.userId
+  )
+  const dispatch = useAppDispatch()
   const handleFollow = (userId: number) => {
     if (isMyFriend) {
-      unFollowUserThunkCreator(userId)
-      setIsMyFriend(false)
+      dispatch(unFollowUserThunkCreator(userId))
+      dispatch(setIsMyFriend(false))
     } else {
-      followUserThunkCreator(userId)
-      setIsMyFriend(true)
+      dispatch(followUserThunkCreator(userId))
+      dispatch(setIsMyFriend(true))
     }
+  }
+  const updateStatus = (status: string) => {
+    dispatch(updateStatusThunkCreator(status))
   }
   return (
     <section className={Styles.s__profile}>
@@ -70,9 +78,10 @@ export const ProfilePage = ({
         <ProfileDescription
           profile={profile}
           status={status}
-          updateStatusThunkCreator={updateStatusThunkCreator}
+          updateStatus={updateStatus}
+          isMyProfile={isMyProfile}
         />
-        <Posts posts={posts} name={profile && profile.fullName} />
+        <Posts posts={posts} name={profile?.fullName} />
       </div>
       <div>
         <UsersContainer />

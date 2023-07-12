@@ -23,9 +23,11 @@ import {
   SetCurrentFriendsPageActionType,
   SetFriendsActionType,
   SetLoadingStateActionType,
+  SetMoreNotFriendsActionType,
   SetNotFriendsActionType,
   ShowMoreNotFriendsOnPageActionType,
-  UnfollowUserActionType
+  UnfollowUserActionType,
+  setScrollHeightNotFriendListActionType
 } from './users-reducer'
 
 export const addPost = (): AddPostActionType => ({
@@ -80,6 +82,15 @@ export const setNotFriends = (
 ): SetNotFriendsActionType => ({
   type: TypeAction.SET_NOT_FRIENDS,
   notFriends: notFriends,
+  totalUsersCount: totalUsersCount
+})
+
+export const setMoreNotFriends = (
+  notFriends: UserType[],
+  totalUsersCount: number
+): SetMoreNotFriendsActionType => ({
+  type: TypeAction.SET_MORE_NOT_FRIENDS,
+  moreNotFriends: notFriends,
   totalUsersCount: totalUsersCount
 })
 
@@ -139,7 +150,7 @@ export const updateProfile = (
   newProfileInformation: EditProfileValuesType
 ): UpdateProfileActionType => ({
   type: TypeAction.UPDATE_PROFILE,
-  newProfileInformation
+  newProfileInformation: newProfileInformation
 })
 
 export const setAuthorizationState = (
@@ -147,4 +158,11 @@ export const setAuthorizationState = (
 ): SetAuthorizationStateActionType => ({
   type: TypeAction.SET_AUTHORIZATION_STATE,
   isAuthorized: isAuthorized
+})
+
+export const setScrollHeightNotFriendList = (
+  scrollHeight: number | null
+): setScrollHeightNotFriendListActionType => ({
+  type: TypeAction.SET_SCROLL_HEIGHT_NOT_FRIEND_LIST,
+  scrollHeight
 })

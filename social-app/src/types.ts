@@ -38,6 +38,7 @@ export interface UsersPageType {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    scrollHeight: number | null
   }
   friends: {
     users: UserType[]
@@ -103,6 +104,7 @@ export enum TypeAction {
   FOLLOW_USER,
   UNFOLLOW_USER,
   SET_NOT_FRIENDS,
+  SET_MORE_NOT_FRIENDS,
   SET_FRIENDS,
   SET_CURRENT_FRIENDS_PAGE,
   SET_LOADING_STATE,
@@ -114,5 +116,6 @@ export enum TypeAction {
   UPDATE_STATUS,
   UPDATE_PROFILE,
   GET_IS_MY_FRIEND,
-  SET_IS_MY_FRIEND
+  SET_IS_MY_FRIEND,
+  SET_SCROLL_HEIGHT_NOT_FRIEND_LIST
 }

@@ -1,10 +1,10 @@
-import { combineReducers, createStore, applyMiddleware } from 'redux'
+import { combineReducers, createStore, applyMiddleware, Action } from 'redux'
 import { messagesReducer } from './messages-reducer'
 import { usersReducer } from './users-reducer'
 import { userProfileReducer } from './profile-reducer'
 import { authReducer } from './auth-reducer'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import thunk from 'redux-thunk'
+import thunk, { ThunkAction } from 'redux-thunk'
 
 export const reducers = combineReducers({
   userProfilePage: userProfileReducer,
@@ -17,8 +17,6 @@ export const store = createStore(
   composeWithDevTools(applyMiddleware(thunk))
 )
 
-//@ts-ignore
-window.store = store.getState()
-
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
+export type ThunkActionType = ThunkAction<void, RootState, unknown, Action>

@@ -3,9 +3,8 @@ import * as Yup from 'yup'
 import { BiSend } from 'react-icons/bi'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import NewMessageStyles from './NewMessage.module.scss'
-import { connect } from 'react-redux'
-import { StateTypes } from '../../types'
 import { addMessage, updateNewMessageText } from '../../redux/action-creator'
+import { useAppDispatch } from '../../hooks'
 
 const validationPostSchema = Yup.object({
   newMessage: Yup.string().required().min(4, 'Must be more than 4 characters')
@@ -15,13 +14,8 @@ type NewMassageType = {
   newMessage: string
 }
 
-const NewMessage = ({
-  addMessage,
-  updateNewMessageText
-}: {
-  addMessage: () => void
-  updateNewMessageText: (newTextMessage: string) => void
-}) => {
+export const NewMessage = () => {
+  const dispatch = useAppDispatch()
   const initialValues: NewMassageType = {
     newMessage: ''
   }
@@ -32,7 +26,7 @@ const NewMessage = ({
       validationSchema={validationPostSchema}
       validateOnBlur={false}
       onSubmit={(values, { resetForm }) => {
-        addMessage()
+        dispatch(addMessage())
         console.log(values)
         resetForm()
       }}
@@ -49,7 +43,7 @@ const NewMessage = ({
               placeholder="New Message"
               rows={1}
               onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                updateNewMessageText(e.target.value)
+                dispatch(updateNewMessageText(e.target.value))
               }}
             />
             <ErrorMessage
@@ -67,22 +61,3 @@ const NewMessage = ({
     </Formik>
   )
 }
-
-const mapStateToProps = (state: StateTypes) => {
-  return {
-    messages: state.messagesPage.messages
-  }
-}
-
-// const mapDispatchToProps = (dispatch: (action: ActionTypes) => void) => {
-//   return {
-//     updateNewMessage: (newTextMessage: string) =>
-//       dispatch(updateNewMessageText(newTextMessage)),
-//     addNewMessage: () => dispatch(addMessage())
-//   }
-// }
-
-export const NewMessageContainer = connect(mapStateToProps, {
-  updateNewMessageText,
-  addMessage
-})(NewMessage)

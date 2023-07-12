@@ -20,9 +20,9 @@ export const userAPI = {
       }
     })
   },
-  getNotFriends(pageSize: number = 5) {
+  getNotFriends(pageSize: number = 5, pageNumber?: number) {
     return instance.get('users', {
-      params: { count: pageSize, friend: false }
+      params: { count: pageSize, page: pageNumber, friend: false }
     })
   },
   unFollowUserApi(id: number) {

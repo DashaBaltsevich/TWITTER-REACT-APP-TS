@@ -1,5 +1,5 @@
 import React from 'react'
-import { UserPostsContainer } from '../../components'
+import { UserPosts } from '../../components'
 import HomePageStyles from './HomePage.module.scss'
 
 export const HomePage = (): JSX.Element => {
@@ -7,7 +7,7 @@ export const HomePage = (): JSX.Element => {
     <section className={HomePageStyles.s__home}>
       <div className={HomePageStyles.s__home_content}>
         <h2 className={HomePageStyles.s__home_title}>Home</h2>
-        <UserPostsContainer />
+        <UserPosts />
       </div>
       <div></div>
     </section>

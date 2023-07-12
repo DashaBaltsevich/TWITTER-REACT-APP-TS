@@ -1,38 +1,25 @@
 import React from 'react'
 import { EditProfileMode, EditProfileValuesType } from './EditProfileMode'
-import { UserProfileType } from '../../types'
+import { updateProfileThunkCreator } from '../../redux/thunk-creator'
+import { useAppDispatch } from '../../hooks'
 
-interface PropsTypes {
-  profile: UserProfileType | null
-  updateProfileThunkCreator: (
-    newProfileInformation: EditProfileValuesType
-  ) => void
+export const EditProfileModeContainer = ({
+  setIsEditModeFormVisible
+}: {
   setIsEditModeFormVisible: (isEditModeFormVisible: boolean) => void
-}
-
-export class EditProfileModeContainer extends React.Component<PropsTypes> {
-  onSubmit = (values: EditProfileValuesType) => {
-    this.props.updateProfileThunkCreator(values)
-    this.props.setIsEditModeFormVisible(false)
-  }
-  render() {
-    return (
-      <>
-        <EditProfileMode
-          profile={this.props.profile}
-          onSubmit={this.onSubmit}
-        />
-      </>
+}) => {
+  const dispatch = useAppDispatch()
+  const onSubmit = (
+    values: EditProfileValuesType,
+    setStatus: (status: object) => void
+  ) => {
+    dispatch(
+      updateProfileThunkCreator(values, setStatus, setIsEditModeFormVisible)
     )
   }
+  return (
+    <>
+      <EditProfileMode onSubmit={onSubmit} />
+    </>
+  )
 }
-
-// const mapStateToProps = (state: StateTypes) => {
-//   return {
-//     profile: state.userProfilePage.profile
-//   }
-// }
-
-// export const EditProfileModeContainer = connect(mapStateToProps, {
-//   updateProfileThunkCreator
-// })(EditProfileModeContainerAPI)
