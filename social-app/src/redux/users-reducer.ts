@@ -6,15 +6,15 @@ const initialState: UsersPageType = {
     pageSize: 5,
     totalUsersCount: 21,
     currentPage: 1,
-    scrollHeight: null
+    isLoading: true
   },
   friends: {
     users: [],
     pageSize: 5,
     totalUsersCount: 21,
-    currentPage: 1
-  },
-  isLoading: true
+    currentPage: 1,
+    isLoading: true
+  }
 }
 
 export type FollowUserActionType = {
@@ -54,14 +54,14 @@ export type ShowMoreNotFriendsOnPageActionType = {
   type: TypeAction.SHOW_MORE_NOT_FRIENDS_ON_PAGE
 }
 
-export type SetLoadingStateActionType = {
-  type: TypeAction.SET_LOADING_STATE
+export type SetLoadingFriendsStateActionType = {
+  type: TypeAction.SET_LOADING_FRIENDS_STATE
   isLoading: boolean
 }
 
-export type setScrollHeightNotFriendListActionType = {
-  type: TypeAction.SET_SCROLL_HEIGHT_NOT_FRIEND_LIST
-  scrollHeight: number | null
+export type SetLoadingNotFriendsStateActionType = {
+  type: TypeAction.SET_LOADING_NOTFRIENDS_STATE
+  isLoading: boolean
 }
 
 type ActionTypes =
@@ -72,8 +72,8 @@ type ActionTypes =
   | SetMoreNotFriendsActionType
   | SetCurrentFriendsPageActionType
   | ShowMoreNotFriendsOnPageActionType
-  | SetLoadingStateActionType
-  | setScrollHeightNotFriendListActionType
+  | SetLoadingFriendsStateActionType
+  | SetLoadingNotFriendsStateActionType
 
 export const usersReducer = (
   state: UsersPageType = initialState,
@@ -81,12 +81,11 @@ export const usersReducer = (
 ): UsersPageType => {
   switch (action.type) {
     case TypeAction.FOLLOW_USER:
-      const updatedFriends = state.notFriends.users.map((el) => {
-        if (el.id === action.id) {
+      const updatedFriends = state.notFriends.users
+        .filter((el) => el.id === action.id)
+        .map((el) => {
           return { ...el, followed: true }
-        }
-        return el
-      })
+        })
       return {
         ...state,
         friends: {
@@ -99,12 +98,11 @@ export const usersReducer = (
         }
       }
     case TypeAction.UNFOLLOW_USER:
-      const updatedNotFriends = state.friends.users.map((el) => {
-        if (el.id === action.id) {
+      const updatedNotFriends = state.friends.users
+        .filter((el) => el.id === action.id)
+        .map((el) => {
           return { ...el, followed: false }
-        }
-        return el
-      })
+        })
       return {
         ...state,
         notFriends: {
@@ -149,7 +147,8 @@ export const usersReducer = (
         ...state,
         notFriends: {
           ...state.notFriends,
-          currentPage: (state.notFriends.currentPage += 1)
+
+          pageSize: (state.notFriends.pageSize += 5)
         }
       }
     case TypeAction.SET_MORE_NOT_FRIENDS:
@@ -162,19 +161,24 @@ export const usersReducer = (
         }
       }
 
-    case TypeAction.SET_LOADING_STATE:
+    case TypeAction.SET_LOADING_FRIENDS_STATE:
       return {
         ...state,
-        isLoading: action.isLoading !== undefined ? action.isLoading : false
+        friends: {
+          ...state.friends,
+          isLoading: action.isLoading
+        }
+        // isLoading: action.isLoading !== undefined ? action.isLoading : false
       }
-    // case TypeAction.SET_SCROLL_HEIGHT_NOT_FRIEND_LIST:
-    //   return {
-    //     ...state,
-    //     notFriends: {
-    //       ...state.notFriends,
-    //       scrollHeight: action.scrollHeight
-    //     }
-    //   }
+    case TypeAction.SET_LOADING_NOTFRIENDS_STATE:
+      return {
+        ...state,
+        notFriends: {
+          ...state.notFriends,
+          isLoading: action.isLoading
+        }
+      }
+
     default:
       return state
   }

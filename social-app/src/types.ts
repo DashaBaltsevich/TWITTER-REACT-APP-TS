@@ -17,7 +17,6 @@ export type PostType = {
 export interface MessagesPageType {
   messages: MessageType[]
   dialogUsers: DialogUserType[]
-  newMessageText: string
 }
 
 export interface UserType {
@@ -38,15 +37,15 @@ export interface UsersPageType {
     pageSize: number
     totalUsersCount: number
     currentPage: number
-    scrollHeight: number | null
+    isLoading: boolean
   }
   friends: {
     users: UserType[]
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isLoading: boolean
   }
-  isLoading: boolean
 }
 
 export interface UserProfileType {
@@ -74,7 +73,6 @@ export interface UserProfilePageType {
   profile: UserProfileType | null
   status: string | null
   posts: PostType[]
-  newText: string
   isMyFriend: boolean
 }
 
@@ -99,15 +97,14 @@ export interface StateTypes {
 export enum TypeAction {
   ADD_POST,
   ADD_MESSAGE,
-  UPDATE_NEW_POST_TEXT,
-  UPDATE_NEW_MESSAGE_TEXT,
   FOLLOW_USER,
   UNFOLLOW_USER,
   SET_NOT_FRIENDS,
   SET_MORE_NOT_FRIENDS,
   SET_FRIENDS,
   SET_CURRENT_FRIENDS_PAGE,
-  SET_LOADING_STATE,
+  SET_LOADING_FRIENDS_STATE,
+  SET_LOADING_NOTFRIENDS_STATE,
   SET_USER_PROFILE,
   SET_USER_INFORMATION,
   SET_AUTHORIZATION_STATE,
@@ -116,6 +113,5 @@ export enum TypeAction {
   UPDATE_STATUS,
   UPDATE_PROFILE,
   GET_IS_MY_FRIEND,
-  SET_IS_MY_FRIEND,
-  SET_SCROLL_HEIGHT_NOT_FRIEND_LIST
+  SET_IS_MY_FRIEND
 }

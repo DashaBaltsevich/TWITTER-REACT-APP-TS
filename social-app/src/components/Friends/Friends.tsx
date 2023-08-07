@@ -1,6 +1,6 @@
 import React from 'react'
 import { UserType } from '../../types'
-import { UserPrevue } from '../../components'
+import { UserPrevue } from '..'
 import styles from './Friends.module.scss'
 
 interface FriendsPropsType {
@@ -44,7 +44,7 @@ export const Friends = ({
             return ''
           } else {
             return (
-              <li key={p}>
+              <li key={p} data-testid="paginationNumber">
                 <button
                   className={
                     p === friends.currentPage
@@ -63,7 +63,11 @@ export const Friends = ({
       {friends.users && (
         <ul className={styles.l__users}>
           {friends.users.map((user) => (
-            <li className={styles.l__users_item} key={user.id}>
+            <li
+              className={styles.l__users_item}
+              key={user.id}
+              data-testid="user"
+            >
               <UserPrevue user={user} />
               <button onClick={() => handleUnfollowButton(user.id)}>
                 Unfollow

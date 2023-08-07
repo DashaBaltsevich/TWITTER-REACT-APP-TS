@@ -20,7 +20,7 @@ export const Users = ({
     if (userList.current) {
       const scrollHeight =
         userList.current.scrollHeight - userList.current.scrollTop
-      userList.current.scrollBy({ top: scrollHeight })
+      userList.current.scrollTop = scrollHeight
     }
   }, [users])
   return (

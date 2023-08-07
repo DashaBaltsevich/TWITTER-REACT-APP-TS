@@ -12,7 +12,7 @@ import { useAppDispatch } from '../../hooks'
 export const FriendsContainer = () => {
   const friends = useSelector((state: StateTypes) => state.usersPage.friends)
   const isLoading = useSelector(
-    (state: StateTypes) => state.usersPage.isLoading
+    (state: StateTypes) => state.usersPage.friends.isLoading
   )
   const dispatch = useAppDispatch()
 
@@ -25,7 +25,7 @@ export const FriendsContainer = () => {
   }
 
   const handleUnfollowButton = (id: number) => {
-    unFollowUserThunkCreator(id)
+    dispatch(unFollowUserThunkCreator(id))
   }
   return (
     <>

@@ -3,8 +3,6 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import Avatar from '../../assets/avatar.png'
 import NewPostStyles from './NewPost.module.scss'
-import { useAppDispatch } from '../../hooks'
-import { addPost, updateNewPostText } from '../../redux/action-creator'
 
 const validationPostSchema = Yup.object({
   text: Yup.string().required().min(4, 'Must be more than 4 characters')
@@ -14,13 +12,12 @@ type InitialValue = {
   text: string
 }
 
-export const NewPost = () => {
-  const dispatch = useAppDispatch()
+export const NewPost = ({
+  onSubmitNewPost
+}: {
+  onSubmitNewPost: (values: InitialValue) => void
+}) => {
   const initialValues: InitialValue = { text: '' }
-
-  const onInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateNewPostText(e.target.value))
-  }
 
   return (
     <Formik
@@ -28,8 +25,7 @@ export const NewPost = () => {
       validationSchema={validationPostSchema}
       validateOnBlur={false}
       onSubmit={(values, { resetForm }) => {
-        dispatch(addPost())
-        console.log(values)
+        onSubmitNewPost(values)
         resetForm()
       }}
     >
@@ -44,7 +40,6 @@ export const NewPost = () => {
               className={NewPostStyles.f__post_field}
               value={values.text}
               placeholder="What is new?"
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) => onInput(e)}
             />
             <ErrorMessage
               name="text"

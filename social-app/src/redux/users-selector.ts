@@ -19,5 +19,3 @@ export const getTotalUsersCount = (state: StateTypes) =>
 
 export const getCurrentPage = (state: StateTypes) =>
   state.usersPage.notFriends.currentPage
-
-export const getIsLoading = (state: StateTypes) => state.usersPage.isLoading

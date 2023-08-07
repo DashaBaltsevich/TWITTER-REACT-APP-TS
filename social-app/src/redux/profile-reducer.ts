@@ -20,7 +20,6 @@ const initialState: UserProfilePageType = {
       likeCount: 1
     }
   ],
-  newText: '',
   status: null,
   isMyFriend: false
 }
@@ -37,16 +36,12 @@ export type UpdateStatusType = {
 
 export type AddPostActionType = {
   type: TypeAction.ADD_POST
+  text: string
 }
 
 export type GetStatusType = {
   type: TypeAction.GET_USER_STATUS
   status: string
-}
-
-export type UpdateNewPostTextActionType = {
-  type: TypeAction.UPDATE_NEW_POST_TEXT
-  text: string
 }
 
 export type UpdateProfileActionType = {
@@ -68,7 +63,6 @@ export type ProfileActionTypes =
   | SetUserProfileActionType
   | UpdateStatusType
   | AddPostActionType
-  | UpdateNewPostTextActionType
   | GetStatusType
   | UpdateProfileActionType
   | GetIsMyFriendActionType
@@ -87,7 +81,7 @@ export const userProfileReducer = (
     case TypeAction.ADD_POST:
       const newPost = {
         id: 5,
-        post: state.newText,
+        post: action.text,
         likeCount: 3
       }
       return {
@@ -95,11 +89,6 @@ export const userProfileReducer = (
         posts: [...state.posts, newPost]
       }
 
-    case TypeAction.UPDATE_NEW_POST_TEXT:
-      return {
-        ...state,
-        newText: action.text ? action.text : ''
-      }
     case TypeAction.GET_USER_STATUS:
       return {
         ...state,

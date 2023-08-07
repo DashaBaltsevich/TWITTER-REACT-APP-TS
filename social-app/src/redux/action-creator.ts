@@ -4,16 +4,12 @@ import {
   SetAuthorizationStateActionType,
   SetUserInformationActionType
 } from './auth-reducer'
-import {
-  AddMessageActionType,
-  UpdateNewMessageTextActionType
-} from './messages-reducer'
+import { AddMessageActionType } from './messages-reducer'
 import {
   SetUserProfileActionType,
   UpdateStatusType,
   AddPostActionType,
   GetStatusType,
-  UpdateNewPostTextActionType,
   UpdateProfileActionType,
   GetIsMyFriendActionType,
   SetIsMyFriendActionType
@@ -22,34 +18,22 @@ import {
   FollowUserActionType,
   SetCurrentFriendsPageActionType,
   SetFriendsActionType,
-  SetLoadingStateActionType,
+  SetLoadingFriendsStateActionType,
+  SetLoadingNotFriendsStateActionType,
   SetMoreNotFriendsActionType,
   SetNotFriendsActionType,
   ShowMoreNotFriendsOnPageActionType,
-  UnfollowUserActionType,
-  setScrollHeightNotFriendListActionType
+  UnfollowUserActionType
 } from './users-reducer'
 
-export const addPost = (): AddPostActionType => ({
-  type: TypeAction.ADD_POST
-})
-
-export const updateNewPostText = (
-  text: string
-): UpdateNewPostTextActionType => ({
-  type: TypeAction.UPDATE_NEW_POST_TEXT,
+export const addPost = (text: string): AddPostActionType => ({
+  type: TypeAction.ADD_POST,
   text: text
 })
 
-export const addMessage = (): AddMessageActionType => ({
-  type: TypeAction.ADD_MESSAGE
-})
-
-export const updateNewMessageText = (
-  text: string
-): UpdateNewMessageTextActionType => ({
-  type: TypeAction.UPDATE_NEW_MESSAGE_TEXT,
-  text: text
+export const addMessage = (text: string): AddMessageActionType => ({
+  type: TypeAction.ADD_MESSAGE,
+  text
 })
 
 export const followUser = (id: number): FollowUserActionType => ({
@@ -115,10 +99,17 @@ export const showMoreNotFriendsOnPage =
     type: TypeAction.SHOW_MORE_NOT_FRIENDS_ON_PAGE
   })
 
-export const setIsLoading = (
+export const setIsLoadingFriends = (
   isLoading: boolean
-): SetLoadingStateActionType => ({
-  type: TypeAction.SET_LOADING_STATE,
+): SetLoadingFriendsStateActionType => ({
+  type: TypeAction.SET_LOADING_FRIENDS_STATE,
+  isLoading: isLoading
+})
+
+export const setIsLoadingNotFriends = (
+  isLoading: boolean
+): SetLoadingNotFriendsStateActionType => ({
+  type: TypeAction.SET_LOADING_NOTFRIENDS_STATE,
   isLoading: isLoading
 })
 
@@ -158,11 +149,4 @@ export const setAuthorizationState = (
 ): SetAuthorizationStateActionType => ({
   type: TypeAction.SET_AUTHORIZATION_STATE,
   isAuthorized: isAuthorized
-})
-
-export const setScrollHeightNotFriendList = (
-  scrollHeight: number | null
-): setScrollHeightNotFriendListActionType => ({
-  type: TypeAction.SET_SCROLL_HEIGHT_NOT_FRIEND_LIST,
-  scrollHeight
 })

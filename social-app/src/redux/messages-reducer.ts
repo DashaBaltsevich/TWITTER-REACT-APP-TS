@@ -24,38 +24,27 @@ const initialState: MessagesPageType = {
       id: 2,
       name: 'Masha'
     }
-  ],
-  newMessageText: ''
+  ]
 }
 
 export type AddMessageActionType = {
   type: TypeAction.ADD_MESSAGE
-}
-
-export type UpdateNewMessageTextActionType = {
-  type: TypeAction.UPDATE_NEW_MESSAGE_TEXT
   text: string
 }
 
 export const messagesReducer = (
   state: MessagesPageType = initialState,
-  action: AddMessageActionType | UpdateNewMessageTextActionType
+  action: AddMessageActionType
 ): MessagesPageType => {
   switch (action.type) {
     case TypeAction.ADD_MESSAGE:
       const newMessage = {
         id: 4,
-        text: state.newMessageText
+        text: action.text
       }
       return {
         ...state,
         messages: [...state.messages, newMessage]
-      }
-
-    case TypeAction.UPDATE_NEW_MESSAGE_TEXT:
-      return {
-        ...state,
-        newMessageText: action.text
       }
 
     default:

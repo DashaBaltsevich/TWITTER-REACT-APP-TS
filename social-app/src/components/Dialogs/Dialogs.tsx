@@ -5,7 +5,7 @@ import DialogsStyles from './Dialogs.module.scss'
 import { DialogUserType, StateTypes } from '../../types'
 import { useAppSelector } from '../../hooks'
 
-export const Dialogs = (): JSX.Element => {
+export const Dialogs = () => {
   const dialogUsers: DialogUserType[] = useAppSelector(
     (state: StateTypes) => state.messagesPage.dialogUsers
   )
@@ -15,9 +15,9 @@ export const Dialogs = (): JSX.Element => {
       : DialogsStyles.l__dialogs_item_link
 
   return (
-    dialogUsers && (
-      <div className={DialogsStyles.b__dialogs}>
-        <h2 className={DialogsStyles.b__dialogs_title}>Messages</h2>
+    <div className={DialogsStyles.b__dialogs}>
+      <h2 className={DialogsStyles.b__dialogs_title}>Messages</h2>
+      {dialogUsers && (
         <ul className={DialogsStyles.l__dialogs}>
           {dialogUsers.map(({ id, name }) => (
             <li className={DialogsStyles.l__dialogs_item} key={id}>
@@ -28,7 +28,7 @@ export const Dialogs = (): JSX.Element => {
             </li>
           ))}
         </ul>
-      </div>
-    )
+      )}
+    </div>
   )
 }

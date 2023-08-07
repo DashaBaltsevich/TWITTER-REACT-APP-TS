@@ -6,7 +6,6 @@ import {
   followUser,
   setAuthorizationState,
   setFriends,
-  setIsLoading,
   setNotFriends,
   setUserInformation,
   setUserProfile,
@@ -16,7 +15,9 @@ import {
   setCurrentFriendsPage,
   showMoreNotFriendsOnPage,
   updateProfile,
-  getIsMyFriend
+  getIsMyFriend,
+  setIsLoadingFriends,
+  setIsLoadingNotFriends
 } from './action-creator'
 import { ProfileActionTypes } from './profile-reducer'
 import { AppDispatch, RootState } from './redux-store'
@@ -73,10 +74,10 @@ export const getFriendsThunkCreator = (
   pageNumber: number = 1
 ): any => {
   return async (dispatch: AppDispatch) => {
-    dispatch(setIsLoading(true))
+    dispatch(setIsLoadingFriends(true))
     dispatch(setCurrentFriendsPage(pageNumber))
     await userAPI.getFriends(pageSize, pageNumber).then((response) => {
-      dispatch(setIsLoading(false))
+      dispatch(setIsLoadingFriends(false))
       dispatch(setFriends(response.data.items, response.data.totalCount))
     })
   }
@@ -84,22 +85,20 @@ export const getFriendsThunkCreator = (
 
 export const getNotFriendsThunkCreator = (pageSize: number): any => {
   return async (dispatch: AppDispatch) => {
-    await dispatch(setIsLoading(true))
+    await dispatch(setIsLoadingNotFriends(true))
     userAPI.getNotFriends(pageSize).then((response) => {
-      dispatch(setIsLoading(false))
+      dispatch(setIsLoadingNotFriends(false))
       dispatch(setNotFriends(response.data.items, response.data.totalCount))
     })
   }
 }
 
-export const showMoreNotFriendsOnPageThunkCreator = (
-  pageNumber: number
-): any => {
+export const showMoreNotFriendsOnPageThunkCreator = (pageSize: number): any => {
   return async (dispatch: AppDispatch) => {
-    dispatch(setIsLoading(true))
+    dispatch(setIsLoadingNotFriends(true))
     dispatch(showMoreNotFriendsOnPage())
-    await userAPI.getNotFriends(pageNumber).then((response) => {
-      dispatch(setIsLoading(false))
+    await userAPI.getNotFriends(pageSize).then((response) => {
+      dispatch(setIsLoadingNotFriends(false))
       dispatch(setNotFriends(response.data.items, response.data.totalCount))
     })
   }
@@ -118,8 +117,11 @@ export const followUserThunkCreator =
 export const unFollowUserThunkCreator =
   (id: number): any =>
   async (dispatch: AppDispatch) => {
-    await userAPI.unFollowUserApi(id)
-    dispatch(unFollowUser(id))
+    await userAPI.unFollowUserApi(id).then((response) => {
+      if (response.data.resultCode === 0) {
+        dispatch(unFollowUser(id))
+      }
+    })
   }
 
 export const getUserProfileThunkCreator =

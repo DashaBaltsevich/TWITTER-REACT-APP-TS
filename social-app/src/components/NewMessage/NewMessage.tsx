@@ -3,8 +3,6 @@ import * as Yup from 'yup'
 import { BiSend } from 'react-icons/bi'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import NewMessageStyles from './NewMessage.module.scss'
-import { addMessage, updateNewMessageText } from '../../redux/action-creator'
-import { useAppDispatch } from '../../hooks'
 
 const validationPostSchema = Yup.object({
   newMessage: Yup.string().required().min(4, 'Must be more than 4 characters')
@@ -14,8 +12,11 @@ type NewMassageType = {
   newMessage: string
 }
 
-export const NewMessage = () => {
-  const dispatch = useAppDispatch()
+export const NewMessage = ({
+  onSubmitNewMessage
+}: {
+  onSubmitNewMessage: (values: NewMassageType) => void
+}) => {
   const initialValues: NewMassageType = {
     newMessage: ''
   }
@@ -26,8 +27,7 @@ export const NewMessage = () => {
       validationSchema={validationPostSchema}
       validateOnBlur={false}
       onSubmit={(values, { resetForm }) => {
-        dispatch(addMessage())
-        console.log(values)
+        onSubmitNewMessage(values)
         resetForm()
       }}
     >
@@ -42,9 +42,6 @@ export const NewMessage = () => {
               value={values.newMessage}
               placeholder="New Message"
               rows={1}
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                dispatch(updateNewMessageText(e.target.value))
-              }}
             />
             <ErrorMessage
               name="text"
